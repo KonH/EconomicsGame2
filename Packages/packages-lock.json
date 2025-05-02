@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "fe31ad0904abee296b5ea72c6073157accba59e8"
     },
+    "com.konh.arch.unity": {
+      "version": "https://github.com/KonH/Arch.Unity.git?path=src/Arch.Unity/Assets/Arch.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "29c16d20300e0a03319a2bd6f9b866f3d4614b8e"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
@@ -250,6 +257,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5e6f5cc14b6dc8b94251bf6c0d6c37025a6ecf77"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
