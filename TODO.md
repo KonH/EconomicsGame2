@@ -10,5 +10,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 ## Tasks
 
 - **Dev experience**
-  - [ ] Set up Rider + Copilot (minimal rules)
+  - [x] Set up Rider + Copilot (minimal rules)
   - [ ] Set up Cursor (Unity support and minimal rules)
+- **Tech**
+  - [ ] Integrate some ECS library 
