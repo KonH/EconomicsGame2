@@ -1,0 +1,89 @@
+# EconomicsGame2 Cursor Coding Rules
+
+## Code Style and Formatting
+
+### Indentation and Spacing
+- Use tabs for indentation (4 spaces equivalent)
+- Always place opening braces on the same line as declarations
+- Add a single space after keywords in control flow statements
+- No space before square brackets in array access
+- No space between method declaration/call parentheses
+- Preserve single-line statements and blocks when appropriate
+
+### Line Endings and Encoding
+- Use UTF-8 encoding
+- Use LF line endings
+- Ensure final newline at end of file
+- Trim trailing whitespace
+
+## Naming Conventions
+
+### Classes and Types
+- Use PascalCase for class names
+- Mark classes as `sealed` when inheritance is not needed
+- Always use namespaces
+- Place opening braces on same line as class declaration
+
+### Fields and Properties
+- Public static fields: PascalCase (e.g., `PublicStaticField`)
+- Public static properties: PascalCase (e.g., `PublicStaticProperty`)
+- Private static fields: underscore + camelCase (e.g., `_privateStaticField`)
+- Private static properties: PascalCase (e.g., `PrivateStaticProperty`)
+- Public serialized fields: camelCase (e.g., `publicFieldSerialized`)
+- Public properties: PascalCase (e.g., `PublicProperty`)
+- Private fields: underscore + camelCase (e.g., `_privateField`)
+- Private properties: PascalCase (e.g., `PrivateProperty`)
+- Private serialized fields: underscore + camelCase (e.g., `_privateFieldSerialized`)
+
+### Methods
+- Use PascalCase for all methods
+- Place opening braces on same line as method declaration
+- Keep methods focused and single-responsibility
+- Use descriptive names that indicate purpose
+
+## Code Organization
+
+### Member Ordering
+1. Static fields and properties
+2. Nested types
+3. Public instance fields and properties
+4. Private instance fields and properties
+5. Unity lifecycle methods
+6. Public methods
+7. Private methods
+
+### Using Directives
+- Sort system directives first
+- Separate import directive groups
+- Use `var` for local variables when type is apparent
+
+## Unity-Specific Rules
+
+### MonoBehaviour Pattern
+- Extend `MonoBehaviour` for Unity components
+- Implement Unity lifecycle methods as needed
+- Keep `Update` methods efficient or empty when unused
+
+### Unity Object Handling
+- Use implicit bool conversion for Unity object null checks
+- Cache Unity object references and validate before use
+- Use `[SerializeField]` for private fields that need Inspector access
+
+## Control Structures
+- Always place opening braces on the same line
+- Format conditionals with consistent indentation
+- Invert conditions to reduce nesting when it improves readability
+- Use `var` for local variable declarations
+
+## Best Practices
+- Keep methods short and focused
+- Add comments for complex logic
+- Do not add obvious comments
+- Use Debug.Log with meaningful context for debugging
+- Avoid public fields unless needed for serialization
+- Prefer properties over direct field access
+- Never use explicit 'private' keyword
+- Avoid unnecessary 'this' keyword
+- Minimize nesting and complexity
+- Use meaningful variable names
+- Follow Unity's component-based architecture 

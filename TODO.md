@@ -11,6 +11,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 
 - **Dev experience**
   - [x] Set up Rider + Copilot (minimal rules)
-  - [ ] Set up Cursor (Unity support and minimal rules)
+  - [x] Set up Cursor (Unity support and minimal rules)
+  - [ ] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
 - **Tech**
   - [ ] Integrate some ECS library 
