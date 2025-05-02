@@ -8,6 +8,7 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 - Use PascalCase for class names and type names (e.g., `PlainClass`)
 - Mark classes as `sealed` when inheritance is not planned
 - Namespace all classes (e.g., `namespace Prototype { ... }`)
+- Place opening braces on the same line for class and method declarations (e.g., `class MyClass {`)
 
 ### Fields and Properties
 - Public static fields use PascalCase (e.g., `PublicStaticField`)
@@ -23,8 +24,12 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 ### Methods and Functions
 - Use PascalCase for public methods
 - Use PascalCase for Unity lifecycle methods (e.g., `Start`, `Update`)
+- Place opening braces on the same line for method declarations (e.g., `void MyMethod() {`)
 
 ## Code Organization
+
+### Tabs vs Spaces
+- Use tabs for indentation
 
 ### Namespaces
 - Group related classes under meaningful namespaces (e.g., `Prototype`)
@@ -46,7 +51,13 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 - Implement Unity lifecycle methods as needed (`Awake`, `Start`, `Update`, etc.)
 - Keep `Update` methods efficient or empty when not needed
 
-### Control Structures
+### Unity Object Null Checks
+- Use implicit bool conversion when checking Unity objects (`if (!obj)`) instead of explicit null comparison (`if (obj == null)`)
+- Unity overrides the bool conversion operator for UnityEngine.Object to properly handle destroyed objects
+- Always check if Unity objects are valid before accessing them using this pattern
+- When caching references to Unity objects, validate them before usage
+
+## Control Structures
 - Use standard bracing style with braces on the same line as the statement
 - Format conditional statements with consistent indentation:
 ```csharp
@@ -56,12 +67,14 @@ if (condition) {
     // code
 }
 ```
+- Invert conditions to reduce nesting it it is make sense and do not make code less readable
 
-- Use the var keyword for local variables when the type is obvious:
+
+## Variable Declarations
+- Use the `var` keyword for local variables whenever possible:
 ```csharp
-for (var i = 0; i < 10; i++) {
-    // code
-}
+var currentPosition = transform.position;
+var deltaPosition = currentPosition - lastPosition;
 ```
 
 ## General Practices
