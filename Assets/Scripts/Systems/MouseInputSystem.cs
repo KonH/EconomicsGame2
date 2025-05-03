@@ -9,22 +9,20 @@ namespace Systems {
 	public sealed class MouseInputSystem : UnitySystemBase {
 		readonly MouseInputSettings _mouseInputSettings;
 
-		readonly QueryDescription _cleanupQueryDescription =
-			new QueryDescription()
-				.WithAny<MouseButtonPress, MouseButtonRelease, MouseButtonHold, MousePositionDelta>();
+		Entity _mouseDataEntity;
 
 		public MouseInputSystem(World world, MouseInputSettings mouseInputSettings) : base(world) {
 			_mouseInputSettings = mouseInputSettings;
 		}
 
 		public override void Update(in SystemState _) {
-			CleanupOneShotEntities();
+			if (!World.IsAlive(_mouseDataEntity)) {
+				_mouseDataEntity = World.Create(new MousePosition());
+			}
 
-			var mouseDataEntity = this.World.Create();
-			mouseDataEntity.Add(new MousePosition {
-				Position = Input.mousePosition
-			});
-			mouseDataEntity.Add(new MousePositionDelta {
+			ref var mousePosition = ref _mouseDataEntity.Get<MousePosition>();
+			mousePosition.Position = Input.mousePosition;
+			_mouseDataEntity.Add(new MousePositionDelta {
 				Delta = Input.mousePositionDelta
 			});
 
@@ -49,16 +47,6 @@ namespace Systems {
 					e.Add(new MouseButtonRelease {
 						Button = mouseButton
 					});
-				}
-			}
-		}
-
-		void CleanupOneShotEntities() {
-			foreach (var chunk in World.Query(_cleanupQueryDescription)) {
-				foreach (var entity in chunk.Entities) {
-					if (World.IsAlive(entity)) {
-						World.Destroy(entity);
-					}
 				}
 			}
 		}
