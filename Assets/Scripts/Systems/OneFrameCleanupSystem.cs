@@ -39,7 +39,7 @@ namespace Systems {
 							continue;
 						}
 						World.Remove(entity, componentType);
-						if (IsOrhpanEntity(entity)) {
+						if (IsOrphanEntity(entity)) {
 							World.Destroy(entity);
 						}
 					}
