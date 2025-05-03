@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Services.State;
 
 namespace Services {
@@ -13,14 +11,14 @@ namespace Services {
 			_state = state;
 		}
 
-		public void Save(List<List<object>> data) {
+		public void Save(StateData data) {
 			var json = _serializer.Serialize(data);
 			_state.Save(SaveId, json);
 		}
 
-		public List<List<object>> Load() {
+		public StateData Load() {
 			var json = _state.Load(SaveId);
-			var result = _serializer.Deserialize<List<List<object>>>(json);
+			var result = _serializer.Deserialize<StateData>(json);
 			return result;
 		}
 	}
