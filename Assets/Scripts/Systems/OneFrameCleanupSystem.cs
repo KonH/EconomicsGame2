@@ -47,7 +47,7 @@ namespace Systems {
 			}
 		}
 
-		bool IsOrhpanEntity(Entity entity) {
+		bool IsOrphanEntity(Entity entity) {
 			return World.GetComponentTypes(entity).Length == 0;
 		}
 	}
