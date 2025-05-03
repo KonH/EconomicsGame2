@@ -17,9 +17,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Integrate ECS library - Arch
   - [x] One-frame components auto-removal
   - [ ] Persistence state management
-  - [ ] Window management
   - [ ] CI/CD WebGL build
 - **Core**
   - [ ] Character cell-to-cell movement
   - [ ] A* pathfinding
   - [ ] Character inventory
+- **UI**
+  - [ ] Window management
+  - [ ] Main menu basics (New game, Load game)
