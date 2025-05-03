@@ -1,12 +1,9 @@
 {
-    "name": "EconomicsGame.Bootstrap",
+    "name": "EconomicsGame.UnityComponents",
     "rootNamespace": "",
     "references": [
         "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:b9786bef0a65448028008ae58d333763",
-        "GUID:e0d4142e6c0cdd541be99eccb2c54b7b",
-        "GUID:eeced467ae95f1e4b904488b610b4ed5",
-        "GUID:a55ded2ebf20a4c4689804cae0808613"
+        "GUID:4daab2a0f7e4b9d489fa2661306892a8"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
