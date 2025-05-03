@@ -233,10 +233,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 118715493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbf552440a8f27a4d9b6819648eef204, type: 3}
+  m_Script: {fileID: 11500000, guid: 764209863bc04302aa36f1a3c0cf9d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dragSpeed: 10
 --- !u!1 &143892541
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +284,11 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  mouseInputSettings:
+    trackedMouseButtons: 2
+  cameraScrollSettings:
+    targetButton: 0
+    dragSpeed: 10
 --- !u!1 &1657915036
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,57 +376,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1883965287
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1883965289}
-  - component: {fileID: 1883965288}
-  m_Layer: 0
-  m_Name: PrototypeMouseScroll
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1883965288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883965287}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30f3a80317bec7489a52cc6c3ccc7cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragSpeed: 10
-  targetCamera: {fileID: 118715495}
---- !u!4 &1883965289
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883965287}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 118715496}
   - {fileID: 1657915038}
-  - {fileID: 1883965289}
   - {fileID: 143892542}
