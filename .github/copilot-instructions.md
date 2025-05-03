@@ -88,3 +88,14 @@ var deltaPosition = currentPosition - lastPosition;
 - Do not use explicit 'private' keyword for private members
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`)
+
+## Project Specifics
+
+### Scripts Directory Structure
+
+- **Bootstrap** - initialization and entry point
+- **Components** - ECS components, plain structs
+- **Configs** - configuration, data classes
+- **Services** - shared logic, services, accessible from anywhere
+- **Systems** - ECS systems, logic that operates on components
+- **UnityComponents** - Unity-specific components, MonoBehaviours
