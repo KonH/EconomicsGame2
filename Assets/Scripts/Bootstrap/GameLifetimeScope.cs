@@ -25,6 +25,7 @@ namespace Bootstrap {
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
+				c.Add<WorldPositionSystem>();
 			});
 		}
 	}
