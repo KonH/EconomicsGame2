@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Components {
-	[Persistant]
+	[Persistent]
 	public struct WorldPosition {
 		public Vector2 Position;
 	}

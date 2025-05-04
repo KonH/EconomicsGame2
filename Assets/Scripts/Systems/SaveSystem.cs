@@ -7,15 +7,15 @@ using Services.State;
 
 namespace Systems {
 	public sealed class SaveSystem : UnitySystemBase {
-		readonly PersistantService _persistantService;
+		readonly PersistentService _persistentService;
 
 		readonly QueryDescription _saveQuery = new QueryDescription()
 			.WithAll<SaveState>();
 
 		readonly QueryDescription _allEntitiesQuery = new();
 
-		public SaveSystem(World world, PersistantService persistantService) : base(world) {
-			_persistantService = persistantService;
+		public SaveSystem(World world, PersistentService persistentService) : base(world) {
+			_persistentService = persistentService;
 		}
 
 		public override void Update(in SystemState t) {
@@ -35,7 +35,7 @@ namespace Systems {
 
 						var components = World.GetAllComponents(entity);
 						foreach (var component in components) {
-							if (component?.GetType().GetCustomAttribute<PersistantAttribute>() == null) {
+							if (component?.GetType().GetCustomAttribute<PersistentAttribute>() == null) {
 								continue;
 							}
 							entityState ??= new EntityState();
@@ -48,7 +48,7 @@ namespace Systems {
 					}
 				}
 
-				_persistantService.Save(stateData);
+				_persistentService.Save(stateData);
 			}
 		}
 	}

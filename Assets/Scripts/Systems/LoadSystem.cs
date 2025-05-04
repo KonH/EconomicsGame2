@@ -5,14 +5,14 @@ using Services;
 
 namespace Systems {
 	public sealed class LoadSystem : UnitySystemBase {
-		readonly PersistantService _persistantService;
+		readonly PersistentService _persistentService;
 
-		public LoadSystem(World world, PersistantService persistantService) : base(world) {
-			_persistantService = persistantService;
+		public LoadSystem(World world, PersistentService persistentService) : base(world) {
+			_persistentService = persistentService;
 		}
 
 		public override void Initialize() {
-			var stateData = _persistantService.Load();
+			var stateData = _persistentService.Load();
 			foreach (var newEntityState in stateData.Entities) {
 				var targetEntity = this.World.Create();
 				foreach (var newComponent in newEntityState.Components) {

@@ -5,7 +5,7 @@ namespace Components {
 		public GameObject GameObject;
 	}
 
-	[Persistant]
+	[Persistent]
 	public struct UniqueReferenceId {
 		public string Id;
 	}

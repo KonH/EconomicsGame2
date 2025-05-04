@@ -1,13 +1,13 @@
 using Services.State;
 
 namespace Services {
-	public sealed class PersistantService {
+	public sealed class PersistentService {
 		const string SaveId = "default_save";
 
 		readonly JsonSerializerWrapper _serializer = new();
 		readonly IState _state;
 
-		public PersistantService(IState state) {
+		public PersistentService(IState state) {
 			_state = state;
 		}
 

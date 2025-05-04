@@ -19,7 +19,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(oneFrameComponentRegistry).AsSelf();
 
 			builder.Register<PersistentDataFileState>(Lifetime.Scoped).As<IState>();
-			builder.Register<PersistantService>(Lifetime.Scoped).AsSelf();
+			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
