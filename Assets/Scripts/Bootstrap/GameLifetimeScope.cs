@@ -20,8 +20,10 @@ namespace Bootstrap {
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
 
 			builder.RegisterComponentInHierarchy<CameraReferenceLink>();
+			builder.RegisterComponentInHierarchy<UniqueReferenceLink>();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
+				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
