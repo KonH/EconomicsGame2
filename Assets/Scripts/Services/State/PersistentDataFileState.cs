@@ -10,7 +10,9 @@ namespace Services.State {
 		}
 
 		public void Save(string saveId, string json) {
-			File.WriteAllText(GetSavePath(saveId), json);
+			var savePath = GetSavePath(saveId);
+			File.WriteAllText(savePath, json);
+			Debug.Log($"State saved to PersistentDataFileState ({saveId}) at '{savePath}'");
 		}
 
 		public string Load(string saveId) {

@@ -17,6 +17,9 @@ namespace Services {
 		}
 
 		public StateData Load() {
+			if (!_state.CanLoad(SaveId)) {
+				return new StateData();
+			}
 			var json = _state.Load(SaveId);
 			var result = _serializer.Deserialize<StateData>(json);
 			return result;

@@ -3,6 +3,8 @@ using VContainer;
 using VContainer.Unity;
 using Arch.Unity;
 using Configs;
+using Services;
+using Services.State;
 using Systems;
 using UnityComponents;
 
@@ -16,14 +18,20 @@ namespace Bootstrap {
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
 			builder.RegisterInstance(oneFrameComponentRegistry).AsSelf();
 
+			builder.Register<PersistentDataFileState>(Lifetime.Scoped).As<IState>();
+			builder.Register<PersistantService>(Lifetime.Scoped).AsSelf();
+
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
 
-			builder.RegisterComponentInHierarchy<CameraReferenceLink>();
+			builder.RegisterComponentInHierarchy<ManualSaveTrigger>();
+
 			builder.RegisterComponentInHierarchy<UniqueReferenceLink>();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
+				c.Add<SaveSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
+				c.Add<LoadSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
