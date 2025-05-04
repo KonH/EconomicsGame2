@@ -33,7 +33,7 @@ namespace Systems {
 						Button = mouseButton
 					});
 					e.Add(new MouseDrag {
-						Delta = Input.mousePositionDelta
+						Delta = Input.GetMouseButtonDown(mouseButton) ? Vector2.zero : Input.mousePositionDelta
 					});
 				}
 				if (Input.GetMouseButtonDown(mouseButton)) {
