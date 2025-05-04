@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Services.State {
 	public sealed class InMemoryState : IState {
-		string _json;
+		string _json = string.Empty;
 
 		public bool CanLoad(string saveId) {
 			return !string.IsNullOrEmpty(_json);
@@ -20,7 +20,7 @@ namespace Services.State {
 
 		public void Delete(string saveId) {
 			Debug.Log($"Deleting InMemoryState ({saveId})");
-			_json = null;
+			_json = string.Empty;
 		}
 	}
 }

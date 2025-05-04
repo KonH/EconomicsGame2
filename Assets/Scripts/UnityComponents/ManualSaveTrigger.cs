@@ -6,7 +6,7 @@ using Components;
 
 namespace UnityComponents {
 	public sealed class ManualSaveTrigger : MonoBehaviour {
-		World _world;
+		World _world = null!;
 
 		[Inject]
 		public void Construct(World world) {

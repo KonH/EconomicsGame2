@@ -6,9 +6,9 @@ using Components;
 
 namespace UnityComponents {
 	public sealed class UniqueReferenceLink : MonoBehaviour {
-		[SerializeField] string id;
+		[SerializeField] string id = string.Empty;
 
-		World _world;
+		World _world = null!;
 
 		[Inject]
 		public void Construct(World world) {

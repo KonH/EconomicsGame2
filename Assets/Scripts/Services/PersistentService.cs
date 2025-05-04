@@ -17,12 +17,15 @@ namespace Services {
 		}
 
 		public StateData Load() {
-			if (!_state.CanLoad(SaveId)) {
-				return new StateData();
+			if (_state.CanLoad(SaveId)) {
+				var json = _state.Load(SaveId);
+				var result = _serializer.Deserialize<StateData>(json);
+				if (result != null) {
+					return result;
+				}
 			}
-			var json = _state.Load(SaveId);
-			var result = _serializer.Deserialize<StateData>(json);
-			return result;
+
+			return new StateData();
 		}
 	}
 }

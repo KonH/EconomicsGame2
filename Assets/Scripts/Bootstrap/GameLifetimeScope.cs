@@ -10,8 +10,8 @@ using UnityComponents;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
-		[SerializeField] MouseInputSettings mouseInputSettings;
-		[SerializeField] CameraScrollSettings cameraScrollSettings;
+		[SerializeField] MouseInputSettings mouseInputSettings = null!;
+		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
 
 		protected override void Configure(IContainerBuilder builder) {
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();

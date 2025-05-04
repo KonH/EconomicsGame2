@@ -6,7 +6,7 @@ namespace Services.State {
 		public string Serialize(object data) =>
 			JsonConvert.SerializeObject(data, CreateSettings());
 
-		public T Deserialize<T>(string json) =>
+		public T? Deserialize<T>(string json) =>
 			JsonConvert.DeserializeObject<T>(json, CreateSettings());
 
 		JsonSerializerSettings CreateSettings() {

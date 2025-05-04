@@ -16,7 +16,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - **Tech**
   - [x] Integrate ECS library - Arch
   - [x] One-frame components auto-removal
-  - [ ] Nullable reference types usage
+  - [x] Nullable reference types usage
   - [ ] Code quality check
   - [x] Persistence state management
   - [ ] CI/CD WebGL build
