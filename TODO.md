@@ -22,7 +22,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] CI/CD WebGL build
   - [ ] Convenient way to attach ECS components to GameObjects
 - **Core**
-  - [ ] Character cell-to-cell movement
+  - [x] Character cell-to-cell movement
   - [ ] A* pathfinding
   - [ ] Character inventory
 - **UI**
