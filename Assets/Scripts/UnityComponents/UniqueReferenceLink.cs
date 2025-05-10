@@ -7,6 +7,7 @@ using Components;
 namespace UnityComponents {
 	public sealed class UniqueReferenceLink : MonoBehaviour {
 		[SerializeField] string id = string.Empty;
+		[SerializeField] bool isManualMovable;
 
 		World _world = null!;
 
@@ -19,7 +20,8 @@ namespace UnityComponents {
 			var entity = _world.Create();
 			entity.Add(new NeedCreateUniqueReference {
 				Id = id,
-				GameObject = gameObject
+				GameObject = gameObject,
+				IsManualMovable = isManualMovable
 			});
 		}
 	}

@@ -18,6 +18,9 @@ namespace Systems {
 			World.Query(_needCreateQuery, (Entity _, ref NeedCreateUniqueReference needCreateUniqueReference) => {
 				var targetEntity = GetTargetEntity(needCreateUniqueReference.Id);
 				ConfigureEntity(targetEntity, needCreateUniqueReference.GameObject);
+				if (needCreateUniqueReference.IsManualMovable) {
+					targetEntity.Add(new IsManualMovable());
+				}
 			});
 		}
 
@@ -30,6 +33,9 @@ namespace Systems {
 			});
 			if (!World.IsAlive(targetEntityId)) {
 				targetEntityId = this.World.Create();
+				targetEntityId.Add(new UniqueReferenceId {
+					Id = targetUniqueReferenceId
+				});
 			}
 			return targetEntityId;
 		}

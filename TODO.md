@@ -20,6 +20,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Code quality check
   - [x] Persistence state management
   - [ ] CI/CD WebGL build
+  - [ ] Convenient way to attach ECS components to GameObjects
 - **Core**
   - [ ] Character cell-to-cell movement
   - [ ] A* pathfinding
