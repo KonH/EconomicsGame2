@@ -19,37 +19,39 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState t) {
-			foreach (var chunk in World.Query(_saveQuery)) {
-				if (chunk.Entities.Length == 0) {
+			World.Query(_saveQuery, _ => {
+				PerformSave();
+			});
+		}
+
+		void PerformSave() {
+			var stateData = new StateData();
+			World.Query(_allEntitiesQuery, entity => {
+				var entityState = TryCollectEntityState(entity);
+				if (entityState != null) {
+					stateData.Entities.Add(entityState);
+				}
+			});
+			_persistentService.Save(stateData);
+		}
+
+		EntityState? TryCollectEntityState(Entity entity) {
+			if (!World.IsAlive(entity)) {
+				return null;
+			}
+
+			EntityState? entityState = null;
+
+			var components = World.GetAllComponents(entity);
+			foreach (var component in components) {
+				if (component?.GetType().GetCustomAttribute<PersistentAttribute>() == null) {
 					continue;
 				}
-
-				var stateData = new StateData();
-				foreach (var saveChunk in World.Query(_allEntitiesQuery)) {
-					foreach (var entity in saveChunk.Entities) {
-						EntityState entityState = null;
-
-						if (!World.IsAlive(entity)) {
-							continue;
-						}
-
-						var components = World.GetAllComponents(entity);
-						foreach (var component in components) {
-							if (component?.GetType().GetCustomAttribute<PersistentAttribute>() == null) {
-								continue;
-							}
-							entityState ??= new EntityState();
-							entityState.Components.Add(component);
-						}
-
-						if (entityState != null) {
-							stateData.Entities.Add(entityState);
-						}
-					}
-				}
-
-				_persistentService.Save(stateData);
+				entityState ??= new EntityState();
+				entityState.Components.Add(component);
 			}
+
+			return entityState;
 		}
 	}
 }
