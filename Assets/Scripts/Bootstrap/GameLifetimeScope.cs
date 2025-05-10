@@ -12,6 +12,7 @@ namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
 		[SerializeField] MouseInputSettings mouseInputSettings = null!;
 		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
+		[SerializeField] MovementSettings movementSettings = null!;
 
 		protected override void Configure(IContainerBuilder builder) {
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -27,6 +28,7 @@ namespace Bootstrap {
 			builder.RegisterComponentInHierarchy<ManualSaveTrigger>();
 
 			builder.RegisterComponentInHierarchy<UniqueReferenceLink>();
+			builder.RegisterInstance(movementSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<SaveSystem>();
@@ -35,8 +37,10 @@ namespace Bootstrap {
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
+				c.Add<MovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
+				c.Add<FinishMoveToPositionSystem>();
 			});
 		}
 	}
