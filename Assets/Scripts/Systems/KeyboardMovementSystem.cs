@@ -6,9 +6,6 @@ using Configs;
 
 namespace Systems {
 	public sealed class KeyboardMovementSystem : UnitySystemBase {
-		readonly QueryDescription _moveFinishedQuery = new QueryDescription()
-			.WithAll<MoveToPosition, ActionFinished>();
-
 		readonly QueryDescription _movableQuery = new QueryDescription()
 			.WithAll<WorldPosition, IsManualMovable>()
 			.WithNone<MoveToPosition>();
@@ -25,10 +22,6 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState _) {
-			World.Query(_moveFinishedQuery, entity => {
-				World.Remove<MoveToPosition>(entity);
-			});
-
 			var movementDirection = GetMovementDirection();
 			if (movementDirection == Vector2.zero) {
 				return;
