@@ -14,5 +14,6 @@ namespace Components {
 	public struct NeedCreateUniqueReference {
 		public string Id;
 		public GameObject GameObject;
+		public bool IsManualMovable;
 	}
 }

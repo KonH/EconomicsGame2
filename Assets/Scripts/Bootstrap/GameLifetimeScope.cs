@@ -11,7 +11,9 @@ using UnityComponents;
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
 		[SerializeField] MouseInputSettings mouseInputSettings = null!;
+		[SerializeField] KeyboardInputSettings keyboardInputSettings = null!;
 		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
+		[SerializeField] MovementSettings movementSettings = null!;
 
 		protected override void Configure(IContainerBuilder builder) {
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -22,11 +24,9 @@ namespace Bootstrap {
 			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
+			builder.RegisterInstance(keyboardInputSettings).AsSelf();
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
-
-			builder.RegisterComponentInHierarchy<ManualSaveTrigger>();
-
-			builder.RegisterComponentInHierarchy<UniqueReferenceLink>();
+			builder.RegisterInstance(movementSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<SaveSystem>();
@@ -34,8 +34,13 @@ namespace Bootstrap {
 				c.Add<LoadSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
+				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
+				c.Add<KeyboardMovementSystem>();
+				c.Add<MovementSystem>();
+				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
+				c.Add<FinishMoveToPositionSystem>();
 			});
 		}
 	}
