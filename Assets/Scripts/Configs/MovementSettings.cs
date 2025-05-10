@@ -6,7 +6,7 @@ namespace Configs {
 	public sealed class MovementSettings {
 		[SerializeField] float speed = 1;
 
-		[SerializeField] AnimationCurve standardCurve;
+		[SerializeField] AnimationCurve standardCurve = null!;
 
 		public float Speed => speed;
 
