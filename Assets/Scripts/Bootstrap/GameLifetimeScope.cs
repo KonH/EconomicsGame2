@@ -36,6 +36,7 @@ namespace Bootstrap {
 				c.Add<LoadSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
+				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
 				c.Add<MovementSystem>();
 				c.Add<ActionProgressSystem>();
