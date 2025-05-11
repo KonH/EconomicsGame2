@@ -8,7 +8,7 @@ namespace Configs {
 		[Serializable]
 		public struct MovementPair {
 			public KeyCode key;
-			public Vector2 direction;
+			public Vector2Int direction;
 		}
 
 		[SerializeField] List<MovementPair> movementKeys = new();

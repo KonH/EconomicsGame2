@@ -3,23 +3,56 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Components;
+using Services;
 
 namespace Systems {
 	public sealed class UniqueReferenceLinkSystem : UnitySystemBase {
+		readonly CellService _cellService;
+
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
 			.WithAll<NeedCreateUniqueReference>();
 
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
 
-		public UniqueReferenceLinkSystem(World world) : base(world) {}
+		public UniqueReferenceLinkSystem(World world, CellService cellService) : base(world) {
+			_cellService = cellService;
+		}
 
 		public override void Update(in SystemState _) {
 			World.Query(_needCreateQuery, (Entity _, ref NeedCreateUniqueReference needCreateUniqueReference) => {
 				var targetEntity = GetTargetEntity(needCreateUniqueReference.Id);
-				ConfigureEntity(targetEntity, needCreateUniqueReference.GameObject);
-				if (needCreateUniqueReference.IsManualMovable) {
+				var gameObject = needCreateUniqueReference.GameObject;
+				var transform = gameObject.transform;
+				var position = new Vector2(transform.position.x, transform.position.y);
+
+				ConfigureEntity(targetEntity, gameObject, position);
+
+				var options = needCreateUniqueReference.Options;
+				if (options.HasFlag(AdditionalComponentOptions.WorldPosition)) {
+					if (!targetEntity.Has<WorldPosition>()) {
+						targetEntity.Add(new WorldPosition {
+							Position = position
+						});
+					}
+				}
+				if (options.HasFlag(AdditionalComponentOptions.Camera)) {
+					targetEntity.Add(new CameraReference {
+						Camera = gameObject.GetComponent<Camera>()
+					});
+				}
+				if (options.HasFlag(AdditionalComponentOptions.ManualMovable)) {
 					targetEntity.Add(new IsManualMovable());
+				}
+				if (options.HasFlag(AdditionalComponentOptions.OnCell)) {
+					var cellPosition = _cellService.GetCellPosition(position);
+					targetEntity.Add(new OnCell {
+						Position = cellPosition
+					});
+					if (options.HasFlag(AdditionalComponentOptions.Obstacle)) {
+						targetEntity.Add(new Obstacle());
+						_cellService.TryLockCell(cellPosition);
+					}
 				}
 			});
 		}
@@ -40,24 +73,10 @@ namespace Systems {
 			return targetEntityId;
 		}
 
-		void ConfigureEntity(Entity entity, GameObject gameObject) {
+		void ConfigureEntity(Entity entity, GameObject gameObject, Vector2 position) {
 			entity.Add(new GameObjectReference {
 				GameObject = gameObject
 			});
-
-			var camera = gameObject.GetComponent<Camera>();
-			if (camera) {
-				entity.Add(new CameraReference {
-					Camera = camera
-				});
-			}
-
-			if (!entity.Has<WorldPosition>()) {
-				var transform = gameObject.transform;
-				entity.Add(new WorldPosition {
-					Position = new Vector2(transform.position.x, transform.position.y)
-				});
-			}
 		}
 	}
 }

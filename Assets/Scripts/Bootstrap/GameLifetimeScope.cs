@@ -6,7 +6,6 @@ using Configs;
 using Services;
 using Services.State;
 using Systems;
-using UnityComponents;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
@@ -14,6 +13,7 @@ namespace Bootstrap {
 		[SerializeField] KeyboardInputSettings keyboardInputSettings = null!;
 		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
 		[SerializeField] MovementSettings movementSettings = null!;
+		[SerializeField] GridSettings gridSettings = null!;
 
 		protected override void Configure(IContainerBuilder builder) {
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -22,6 +22,8 @@ namespace Bootstrap {
 
 			builder.Register<PersistentDataFileState>(Lifetime.Scoped).As<IState>();
 			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
+			builder.RegisterInstance(gridSettings).AsSelf();
+			builder.Register<CellService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
@@ -29,6 +31,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(movementSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
+				c.Add<CellInitSystem>();
 				c.Add<SaveSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<LoadSystem>();
@@ -37,10 +40,12 @@ namespace Bootstrap {
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
 				c.Add<KeyboardMovementSystem>();
+				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
 				c.Add<FinishMoveToPositionSystem>();
+				c.Add<FinishCellMovementSystem>();
 			});
 		}
 	}
