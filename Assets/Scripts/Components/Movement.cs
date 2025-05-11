@@ -9,4 +9,10 @@ namespace Components {
 		public Vector2 OldPosition;
 		public Vector2 NewPosition;
 	}
+
+	[Persistent]
+	public struct MoveToCell {
+		public Vector2Int OldPosition;
+		public Vector2Int NewPosition;
+	}
 }

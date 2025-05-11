@@ -40,10 +40,12 @@ namespace Bootstrap {
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
 				c.Add<KeyboardMovementSystem>();
+				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
 				c.Add<FinishMoveToPositionSystem>();
+				c.Add<FinishCellMovementSystem>();
 			});
 		}
 	}

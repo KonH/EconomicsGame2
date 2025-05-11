@@ -6,11 +6,11 @@ using Configs;
 
 namespace Systems {
 	public sealed class KeyboardMovementSystem : UnitySystemBase {
-		readonly QueryDescription _movableQuery = new QueryDescription()
-			.WithAll<WorldPosition, IsManualMovable>()
-			.WithNone<MoveToPosition>();
+		readonly QueryDescription _keyboardMovementQuery = new QueryDescription()
+			.WithAll<OnCell, IsManualMovable>()
+			.WithNone<MoveToCell>();
 
-		readonly QueryDescription _buttonQuery = new QueryDescription()
+		readonly QueryDescription _buttonPressQuery = new QueryDescription()
 			.WithAll<ButtonHold>();
 
 		readonly KeyboardInputSettings _keyboardInputSettings;
@@ -27,11 +27,11 @@ namespace Systems {
 				return;
 			}
 
-			World.Query(_movableQuery, (Entity entity, ref WorldPosition worldPosition) => {
-				var newPosition = worldPosition.Position + movementDirection;
+			World.Query(_keyboardMovementQuery, (Entity entity, ref OnCell cellPosition) => {
+				var newPosition = cellPosition.Position + movementDirection;
 
-				World.Add(entity, new MoveToPosition {
-					OldPosition = worldPosition.Position,
+				World.Add(entity, new MoveToCell {
+					OldPosition = cellPosition.Position,
 					NewPosition = newPosition
 				});
 
@@ -41,14 +41,13 @@ namespace Systems {
 			});
 		}
 
-		Vector2 GetMovementDirection() {
-			var movementDirection = Vector2.zero;
+		Vector2Int GetMovementDirection() {
+			var movementDirection = Vector2Int.zero;
 
-			World.Query(_buttonQuery, (Entity _, ref ButtonHold buttonPress) => {
+			World.Query(_buttonPressQuery, (Entity _, ref ButtonHold buttonPress) => {
 				foreach (var movementPair in _keyboardInputSettings.MovementKeys) {
-					if (buttonPress.Button == movementPair.key) {
+					if (buttonPress.Button == movementPair.key)
 						movementDirection += movementPair.direction;
-					}
 				}
 			});
 

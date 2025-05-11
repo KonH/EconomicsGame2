@@ -23,6 +23,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
 - **Core**
   - [x] Character cell-to-cell movement
+  - [x] Obstacles & limits
   - [ ] A* pathfinding
   - [ ] Character inventory
 - **UI**
