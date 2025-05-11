@@ -17,6 +17,8 @@ namespace Components {
 		WorldPosition = 1,
 		Camera = 2,
 		ManualMovable = 4,
+		OnCell = 8,
+		Obstacle = 16
 	}
 
 	[OneFrame]

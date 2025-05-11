@@ -3,16 +3,21 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Components;
+using Services;
 
 namespace Systems {
 	public sealed class UniqueReferenceLinkSystem : UnitySystemBase {
+		readonly CellService _cellService;
+
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
 			.WithAll<NeedCreateUniqueReference>();
 
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
 
-		public UniqueReferenceLinkSystem(World world) : base(world) {}
+		public UniqueReferenceLinkSystem(World world, CellService cellService) : base(world) {
+			_cellService = cellService;
+		}
 
 		public override void Update(in SystemState _) {
 			World.Query(_needCreateQuery, (Entity _, ref NeedCreateUniqueReference needCreateUniqueReference) => {
@@ -38,6 +43,16 @@ namespace Systems {
 				}
 				if (options.HasFlag(AdditionalComponentOptions.ManualMovable)) {
 					targetEntity.Add(new IsManualMovable());
+				}
+				if (options.HasFlag(AdditionalComponentOptions.OnCell)) {
+					var cellPosition = _cellService.GetCellPosition(position);
+					targetEntity.Add(new OnCell {
+						Position = cellPosition
+					});
+					if (options.HasFlag(AdditionalComponentOptions.Obstacle)) {
+						targetEntity.Add(new Obstacle());
+						_cellService.TryLockCell(cellPosition);
+					}
 				}
 			});
 		}
