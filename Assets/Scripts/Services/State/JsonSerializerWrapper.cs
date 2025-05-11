@@ -15,6 +15,7 @@ namespace Services.State {
 				Formatting = Formatting.Indented
 			};
 			settings.Converters.Add(new Vector2JsonConverter());
+			settings.Converters.Add(new Vector2IntJsonConverter());
 			return settings;
 		}
 	}
