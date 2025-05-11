@@ -17,8 +17,26 @@ namespace Systems {
 		public override void Update(in SystemState _) {
 			World.Query(_needCreateQuery, (Entity _, ref NeedCreateUniqueReference needCreateUniqueReference) => {
 				var targetEntity = GetTargetEntity(needCreateUniqueReference.Id);
-				ConfigureEntity(targetEntity, needCreateUniqueReference.GameObject);
-				if (needCreateUniqueReference.IsManualMovable) {
+				var gameObject = needCreateUniqueReference.GameObject;
+				var transform = gameObject.transform;
+				var position = new Vector2(transform.position.x, transform.position.y);
+
+				ConfigureEntity(targetEntity, gameObject, position);
+
+				var options = needCreateUniqueReference.Options;
+				if (options.HasFlag(AdditionalComponentOptions.WorldPosition)) {
+					if (!targetEntity.Has<WorldPosition>()) {
+						targetEntity.Add(new WorldPosition {
+							Position = position
+						});
+					}
+				}
+				if (options.HasFlag(AdditionalComponentOptions.Camera)) {
+					targetEntity.Add(new CameraReference {
+						Camera = gameObject.GetComponent<Camera>()
+					});
+				}
+				if (options.HasFlag(AdditionalComponentOptions.ManualMovable)) {
 					targetEntity.Add(new IsManualMovable());
 				}
 			});
@@ -40,24 +58,10 @@ namespace Systems {
 			return targetEntityId;
 		}
 
-		void ConfigureEntity(Entity entity, GameObject gameObject) {
+		void ConfigureEntity(Entity entity, GameObject gameObject, Vector2 position) {
 			entity.Add(new GameObjectReference {
 				GameObject = gameObject
 			});
-
-			var camera = gameObject.GetComponent<Camera>();
-			if (camera) {
-				entity.Add(new CameraReference {
-					Camera = camera
-				});
-			}
-
-			if (!entity.Has<WorldPosition>()) {
-				var transform = gameObject.transform;
-				entity.Add(new WorldPosition {
-					Position = new Vector2(transform.position.x, transform.position.y)
-				});
-			}
 		}
 	}
 }

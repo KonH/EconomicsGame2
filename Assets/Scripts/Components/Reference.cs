@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Components {
 	public struct GameObjectReference {
@@ -10,10 +11,18 @@ namespace Components {
 		public string Id;
 	}
 
+	[Flags]
+	public enum AdditionalComponentOptions {
+		None,
+		WorldPosition = 1,
+		Camera = 2,
+		ManualMovable = 4,
+	}
+
 	[OneFrame]
 	public struct NeedCreateUniqueReference {
 		public string Id;
 		public GameObject GameObject;
-		public bool IsManualMovable;
+		public AdditionalComponentOptions Options;
 	}
 }
