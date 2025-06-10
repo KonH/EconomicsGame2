@@ -39,6 +39,7 @@ namespace Bootstrap {
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
+				c.Add<CellClickSystem>();
 				c.Add<KeyboardMovementSystem>();
 				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
