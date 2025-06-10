@@ -17,8 +17,8 @@ namespace Services {
 
 		public Vector2Int GetCellPosition(Vector2 position) {
 			return new Vector2Int(
-				Mathf.FloorToInt(position.x / _gridSettings.CellWidth),
-				Mathf.FloorToInt(position.y / _gridSettings.CellHeight)
+				Mathf.RoundToInt(position.x / _gridSettings.CellWidth),
+				Mathf.RoundToInt(position.y / _gridSettings.CellHeight)
 			);
 		}
 
@@ -54,6 +54,10 @@ namespace Services {
 			} else {
 				Debug.LogWarning($"Cell at {cellPosition} not found.");
 			}
+		}
+
+		public bool TryGetCellEntity(Vector2Int position, out Entity entity) {
+			return _positionToEntity.TryGetValue(position, out entity);
 		}
 	}
 }
