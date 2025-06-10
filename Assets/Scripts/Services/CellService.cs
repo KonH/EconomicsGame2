@@ -17,8 +17,8 @@ namespace Services {
 
 		public Vector2Int GetCellPosition(Vector2 position) {
 			return new Vector2Int(
-				Mathf.RoundToInt(position.x),
-				Mathf.RoundToInt(position.y)
+				Mathf.RoundToInt(position.x / _gridSettings.CellWidth),
+				Mathf.RoundToInt(position.y / _gridSettings.CellHeight)
 			);
 		}
 
