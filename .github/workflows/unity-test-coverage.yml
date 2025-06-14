@@ -44,7 +44,7 @@ jobs:
         with:
           projectPath: .
           testMode: editmode
-          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport;pathFilters=-Assets/Scripts/Tests/**
+          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport
           
       - name: Check Project Directory Structure
         if: always()

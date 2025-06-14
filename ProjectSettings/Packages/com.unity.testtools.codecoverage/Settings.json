@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "IncludeAssemblies",
-                "value": "{\"m_Value\":\"EconomicsGame.Bootstrap,EconomicsGame.Common,EconomicsGame.Components,EconomicsGame.Configs,EconomicsGame.Editor,EconomicsGame.Prototype,EconomicsGame.Services,EconomicsGame.Systems,EconomicsGame.UnityComponents,Tests\"}"
+                "value": "{\"m_Value\":\"EconomicsGame.Bootstrap,EconomicsGame.Common,EconomicsGame.Components,EconomicsGame.Configs,EconomicsGame.Editor,EconomicsGame.Prototype,EconomicsGame.Services,EconomicsGame.Systems,EconomicsGame.UnityComponents\"}"
             },
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
