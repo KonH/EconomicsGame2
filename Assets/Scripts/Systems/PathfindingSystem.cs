@@ -142,9 +142,10 @@ namespace Systems {
 			
 			while (cameFrom.ContainsKey(current)) {
 				current = cameFrom[current];
-				path.Insert(0, current); // Add to beginning of path
+				path.Add(current); // Add to end of path
 			}
 			
+			path.Reverse(); // Reverse the path to get the correct order
 			return path;
 		}
 		
