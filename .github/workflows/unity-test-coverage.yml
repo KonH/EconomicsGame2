@@ -1,0 +1,103 @@
+name: Unity Test Coverage
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Run Tests and Generate Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+      
+      - name: Install NuGetForUnity CLI Tool
+        run: dotnet tool install --global NuGetForUnity.Cli
+      
+      - name: Restore NuGet Packages
+        run: nugetforunity restore .
+      
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: Library-
+      
+      - name: Run Unity Tests and Generate Coverage
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .
+          testMode: editmode
+          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport;assemblyFilters:+<assets>,-*Tests*,-*.Tests*
+          
+      - name: Check Project Directory Structure
+        if: always()
+        run: |
+          echo "=== Project Root Directory ==="
+          ls -la
+          
+          echo "=== Assets Directory ==="
+          ls -la Assets || echo "No Assets directory found"
+          
+          echo "=== Looking for CodeCoverage directory ==="
+          find . -name "CodeCoverage" -type d
+          
+          echo "=== Looking for artifacts directory ==="
+          find . -name "artifacts" -type d
+          
+          echo "=== GitHub Workspace Directory ==="
+          ls -la $GITHUB_WORKSPACE
+          
+          echo "=== Check test-results location ==="
+          find $GITHUB_WORKSPACE -name "test-results" -type d
+          
+          echo "=== Artifacts in GitHub Workspace ==="
+          if [ -d "$GITHUB_WORKSPACE/artifacts" ]; then
+            ls -la $GITHUB_WORKSPACE/artifacts
+            echo "=== Artifacts Contents ==="
+            find $GITHUB_WORKSPACE/artifacts -type f | sort
+          else
+            echo "No artifacts directory found in GitHub Workspace"
+          fi
+      
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Test Results
+          path: artifacts
+          
+      - name: Upload Coverage Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Coverage Results
+          path: CodeCoverage
+      
+      - name: Process Coverage for Codecov
+        run: |
+          ls -la CodeCoverage
+          find CodeCoverage -name "*.xml" -type f -exec cp {} ./coverage.xml \;
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: false

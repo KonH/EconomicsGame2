@@ -19,8 +19,12 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Nullable reference types usage
   - [ ] Code quality check
   - [x] Persistence state management
+  - [x] Test coverage tracking with Codecov
+  - [ ] Ignore coverage in Tests directory
+  - [ ] Unit tests for regression
   - [ ] CI/CD WebGL build
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
+  - [ ] Resource management (addressables)
 - **Core**
   - [x] Character cell-to-cell movement
   - [x] Obstacles & limits
