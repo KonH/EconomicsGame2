@@ -1,0 +1,59 @@
+name: Unity Test Coverage
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Run Tests and Generate Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: Library-
+      
+      - name: Run Unity Tests and Generate Coverage
+        uses: game-ci/unity-test-runner@v3
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: .
+          testMode: editmode
+          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Test Results
+          path: artifacts
+          
+      - name: Upload Coverage Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Coverage Results
+          path: CodeCoverage
+      
+      - name: Process Coverage for Codecov
+        run: |
+          ls -la CodeCoverage
+          find CodeCoverage -name "*.xml" -type f -exec cp {} ./coverage.xml \;
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
