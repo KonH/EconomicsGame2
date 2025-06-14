@@ -42,6 +42,7 @@ namespace Bootstrap {
 				c.Add<CellClickSystem>();
 				c.Add<KeyboardMovementSystem>();
 				c.Add<PathfindingTargetSystem>();
+				c.Add<PathfindingSystem>();
 				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
 				c.Add<ActionProgressSystem>();

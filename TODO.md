@@ -24,7 +24,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - **Core**
   - [x] Character cell-to-cell movement
   - [x] Obstacles & limits
-  - [ ] A* pathfinding
+  - [x] A* pathfinding
   - [ ] Character inventory
 - **UI**
   - [ ] Window management
