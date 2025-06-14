@@ -57,9 +57,8 @@ namespace Systems {
 		}
 
 		List<Vector2Int> FindPath(Vector2Int start, Vector2Int goal) {
-			// Use a priority queue for more efficient node selection
-			var openSet = new PriorityQueue<Vector2Int, float>();
-			var inOpenSet = new HashSet<Vector2Int>();
+			// Use an improved priority queue with direct priority updates
+			var openSet = new IndexedPriorityQueue<Vector2Int>();
 			var closedSet = new HashSet<Vector2Int>();
 
 			var cameFrom = new Dictionary<Vector2Int, Vector2Int>();
@@ -68,14 +67,12 @@ namespace Systems {
 			var fScore = new Dictionary<Vector2Int, float>();
 
 			openSet.Enqueue(start, 0);
-			inOpenSet.Add(start);
 			gScore[start] = 0;
 			fScore[start] = HeuristicCostEstimate(start, goal);
 
-			while (openSet.Count > 0) {
-				// Efficiently get node with lowest fScore using the priority queue (O(log n))
+			while (!openSet.IsEmpty) {
+				// Efficiently get node with lowest fScore
 				var current = openSet.Dequeue();
-				inOpenSet.Remove(current);
 
 				// If we reached the goal, reconstruct and return the path
 				if (current == goal) {
@@ -101,22 +98,20 @@ namespace Systems {
 					// Distance between adjacent cells is always 1
 					var tentativeGScore = gScore[current] + 1;
 
-					// Add to open set if not already there
-					if (!inOpenSet.Contains(neighbor)) {
-						cameFrom[neighbor] = current;
-						gScore[neighbor] = tentativeGScore;
-						fScore[neighbor] = gScore[neighbor] + HeuristicCostEstimate(neighbor, goal);
-						openSet.Enqueue(neighbor, fScore[neighbor]);
-						inOpenSet.Add(neighbor);
-					} else if (tentativeGScore < gScore.GetValueOrDefault(neighbor, float.MaxValue)) {
-						// Found a better path
+					var isInOpenSet = openSet.Contains(neighbor);
+					if (!isInOpenSet || tentativeGScore < gScore.GetValueOrDefault(neighbor, float.MaxValue)) {
+						// This path is better than any previous one
 						cameFrom[neighbor] = current;
 						gScore[neighbor] = tentativeGScore;
 						fScore[neighbor] = gScore[neighbor] + HeuristicCostEstimate(neighbor, goal);
 
-						// Update priority - since C# PriorityQueue doesn't support changing priority,
-						// we re-enqueue with the new priority (the old entry will be ignored)
-						openSet.Enqueue(neighbor, fScore[neighbor]);
+						if (isInOpenSet) {
+							// Update priority if already in open set
+							openSet.UpdatePriority(neighbor, fScore[neighbor]);
+						} else {
+							// Add to open set with priority
+							openSet.Enqueue(neighbor, fScore[neighbor]);
+						}
 					}
 				}
 			}
@@ -125,50 +120,103 @@ namespace Systems {
 			return new List<Vector2Int> { start };
 		}
 
-		// Simple priority queue implementation since .NET Standard 2.0 doesn't have it built-in
-		class PriorityQueue<TItem, TPriority> where TPriority : System.IComparable<TPriority> {
-			private List<(TItem item, TPriority priority)> _elements = new List<(TItem, TPriority)>();
+		// Improved priority queue with direct priority updates and O(1) contains check
+		class IndexedPriorityQueue<T> where T : notnull {
+			readonly Dictionary<T, int> _itemToIndex = new Dictionary<T, int>();
+			readonly List<(T item, float priority)> _heap = new List<(T, float)>();
 
-			public int Count => _elements.Count;
+			public bool IsEmpty => _heap.Count == 0;
+			public int Count => _heap.Count;
 
-			public void Enqueue(TItem item, TPriority priority) {
-				_elements.Add((item, priority));
-				int ci = _elements.Count - 1;
-				while (ci > 0) {
-					int pi = (ci - 1) / 2;
-					if (_elements[ci].priority.CompareTo(_elements[pi].priority) >= 0)
-						break;
-					var tmp = _elements[ci];
-					_elements[ci] = _elements[pi];
-					_elements[pi] = tmp;
-					ci = pi;
+			public bool Contains(T item) => _itemToIndex.ContainsKey(item);
+
+			public void Enqueue(T item, float priority) {
+				_heap.Add((item, priority));
+				var currentIndex = _heap.Count - 1;
+				_itemToIndex[item] = currentIndex;
+
+				SiftUp(currentIndex);
+			}
+
+			public T Dequeue() {
+				if (IsEmpty) {
+					throw new System.InvalidOperationException("Priority queue is empty");
+				}
+
+				var item = _heap[0].item;
+				_itemToIndex.Remove(item);
+
+				if (_heap.Count > 1) {
+					// Move the last element to the root and sift down
+					_heap[0] = _heap[_heap.Count - 1];
+					_itemToIndex[_heap[0].item] = 0;
+					_heap.RemoveAt(_heap.Count - 1);
+					SiftDown(0);
+				} else {
+					_heap.Clear();
+				}
+
+				return item;
+			}
+
+			public void UpdatePriority(T item, float newPriority) {
+				if (!_itemToIndex.TryGetValue(item, out var index)) {
+					throw new System.InvalidOperationException("Item not found in priority queue");
+				}
+
+				var oldPriority = _heap[index].priority;
+				_heap[index] = (item, newPriority);
+
+				if (newPriority < oldPriority) {
+					SiftUp(index);
+				} else if (newPriority > oldPriority) {
+					SiftDown(index);
 				}
 			}
 
-			public TItem Dequeue() {
-				var result = _elements[0].item;
-				int li = _elements.Count - 1;
-				_elements[0] = _elements[li];
-				_elements.RemoveAt(li);
+			void SiftUp(int index) {
+				var (item, priority) = _heap[index];
 
-				li--;
-				int pi = 0;
-				while (true) {
-					int ci = pi * 2 + 1;
-					if (ci > li)
-						break;
-					int rc = ci + 1;
-					if (rc <= li && _elements[rc].priority.CompareTo(_elements[ci].priority) < 0)
-						ci = rc;
-					if (_elements[pi].priority.CompareTo(_elements[ci].priority) <= 0)
-						break;
-					var tmp = _elements[ci];
-					_elements[ci] = _elements[pi];
-					_elements[pi] = tmp;
-					pi = ci;
+				while (index > 0) {
+					var parentIndex = (index - 1) / 2;
+					if (_heap[parentIndex].priority <= priority) break;
+
+					// Swap with parent
+					_heap[index] = _heap[parentIndex];
+					_itemToIndex[_heap[index].item] = index;
+
+					index = parentIndex;
 				}
 
-				return result;
+				_heap[index] = (item, priority);
+				_itemToIndex[item] = index;
+			}
+
+			void SiftDown(int index) {
+				var count = _heap.Count;
+				var lastIndex = count - 1;
+				var (item, priority) = _heap[index];
+
+				while (true) {
+					var childIndex = index * 2 + 1;
+					if (childIndex > lastIndex) break;
+
+					var rightChildIndex = childIndex + 1;
+					if (rightChildIndex <= lastIndex && _heap[rightChildIndex].priority < _heap[childIndex].priority) {
+						childIndex = rightChildIndex;
+					}
+
+					if (priority <= _heap[childIndex].priority) break;
+
+					// Swap with smaller child
+					_heap[index] = _heap[childIndex];
+					_itemToIndex[_heap[index].item] = index;
+
+					index = childIndex;
+				}
+
+				_heap[index] = (item, priority);
+				_itemToIndex[item] = index;
 			}
 		}
 

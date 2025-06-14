@@ -71,10 +71,12 @@ if (condition) {
 
 
 ## Variable Declarations
-- Use the `var` keyword for local variables whenever possible:
+- ALWAYS use the `var` keyword for local variables when the type is obvious from the right side of the assignment:
 ```csharp
 var currentPosition = transform.position;
 var deltaPosition = currentPosition - lastPosition;
+var index = 0;
+var count = myList.Count;
 ```
 
 ## General Practices
@@ -85,7 +87,7 @@ var deltaPosition = currentPosition - lastPosition;
 - Use Debug.Log statements for temporary debugging, include meaningful context
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
-- Do not use explicit 'private' keyword for private members
+- Do not use explicit 'private' keyword for private members (omit access modifier for private members)
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`)
 
@@ -133,3 +135,7 @@ var deltaPosition = currentPosition - lastPosition;
 - Commit changes with descriptive messages after each logical step
 - Update TODO.md to track progress on features
 - When implementing algorithms like A*, start with a simple version and optimize later
+
+### Data Structures
+- Use appropriate data structures for performance-critical operations
+- Consider memory usage and allocation patterns in frequently executed code
