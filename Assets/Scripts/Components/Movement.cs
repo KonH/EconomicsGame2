@@ -15,4 +15,9 @@ namespace Components {
 		public Vector2Int OldPosition;
 		public Vector2Int NewPosition;
 	}
+
+	[Persistent]
+	public struct MovementTargetCell {
+		public Vector2Int Position;
+	}
 }
