@@ -46,6 +46,36 @@ jobs:
           testMode: editmode
           customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport
           
+      - name: Check Project Directory Structure
+        if: always()
+        run: |
+          echo "=== Project Root Directory ==="
+          ls -la
+          
+          echo "=== Assets Directory ==="
+          ls -la Assets || echo "No Assets directory found"
+          
+          echo "=== Looking for CodeCoverage directory ==="
+          find . -name "CodeCoverage" -type d
+          
+          echo "=== Looking for artifacts directory ==="
+          find . -name "artifacts" -type d
+          
+          echo "=== GitHub Workspace Directory ==="
+          ls -la $GITHUB_WORKSPACE
+          
+          echo "=== Check test-results location ==="
+          find $GITHUB_WORKSPACE -name "test-results" -type d
+          
+          echo "=== Artifacts in GitHub Workspace ==="
+          if [ -d "$GITHUB_WORKSPACE/artifacts" ]; then
+            ls -la $GITHUB_WORKSPACE/artifacts
+            echo "=== Artifacts Contents ==="
+            find $GITHUB_WORKSPACE/artifacts -type f | sort
+          else
+            echo "No artifacts directory found in GitHub Workspace"
+          fi
+      
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
