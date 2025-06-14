@@ -99,3 +99,37 @@ var deltaPosition = currentPosition - lastPosition;
 - **Services** - shared logic, services, accessible from anywhere
 - **Systems** - ECS systems, logic that operates on components
 - **UnityComponents** - Unity-specific components, MonoBehaviours
+
+## ECS Architecture Guidelines
+
+### Components
+- Create small, focused components that store data only
+- Use `[Persistent]` attribute for components that need to be saved/loaded
+- Components should be simple structs with minimal logic
+- Use descriptive names that clearly indicate purpose (e.g., `MovementTargetCell`)
+
+### Systems
+- Systems should focus on a single responsibility
+- Use clear naming that describes what the system does (e.g., `PathfindingSystem`)
+- Define QueryDescription at the class level for system queries
+- Register systems in GameLifetimeScope in the order they should execute
+- Use dependency injection for required services and settings
+
+### Pathfinding Implementation
+- Use A* algorithm for movement pathfinding
+- Consider using Manhattan distance for grid-based movement with cardinal directions
+- Check cell walkability by querying for obstacles or locked cells
+- Process one step at a time for smooth movement visualization
+- Add movement target components instead of direct movement components to enable pathfinding
+- For keyboard/direct movement, add movement components directly when appropriate
+
+### Services
+- Use services for shared functionality across systems
+- Inject services where needed rather than creating new instances
+- Use services for complex operations that don't fit within the ECS paradigm
+
+### Development Process
+- Implement features incrementally with small, testable steps
+- Commit changes with descriptive messages after each logical step
+- Update TODO.md to track progress on features
+- When implementing algorithms like A*, start with a simple version and optimize later
