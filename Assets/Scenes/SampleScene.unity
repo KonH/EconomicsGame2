@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &108742779
 SpriteRenderer:
@@ -819,6 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: MainCamera
+  useGameObjectNameAsId: 0
   options: 3
 --- !u!1 &138371414
 GameObject:
@@ -2211,6 +2213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &451083508
 SpriteRenderer:
@@ -2746,6 +2749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &607560598
 SpriteRenderer:
@@ -3109,6 +3113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &620661486
 SpriteRenderer:
@@ -3472,6 +3477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &691982127
 SpriteRenderer:
@@ -4311,6 +4317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &861873480
 SpriteRenderer:
@@ -5365,6 +5372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &1065059172
 SpriteRenderer:
@@ -5728,6 +5736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &1174031249
 SpriteRenderer:
@@ -5830,6 +5839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &1174822093
 SpriteRenderer:
@@ -6106,6 +6116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &1251720362
 SpriteRenderer:
@@ -7467,6 +7478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &1563045961
 SpriteRenderer:
@@ -8422,6 +8434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: MainCharacter
+  useGameObjectNameAsId: 0
   options: 29
 --- !u!1 &1661612966
 GameObject:
@@ -10450,6 +10463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &2087599901
 SpriteRenderer:
@@ -10941,6 +10955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
+  useGameObjectNameAsId: 1
   options: 25
 --- !u!212 &2126489613
 SpriteRenderer:

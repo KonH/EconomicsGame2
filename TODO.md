@@ -27,6 +27,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
   - [ ] Resource management (addressables)
   - [!] ECS viewer filters
+  - [+] Unique reference guard & generation
 
 - **Core**
   - [x] Character cell-to-cell movement

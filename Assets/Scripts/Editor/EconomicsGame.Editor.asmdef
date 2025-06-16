@@ -1,7 +1,9 @@
 {
     "name": "EconomicsGame.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:a55ded2ebf20a4c4689804cae0808613"
+    ],
     "includePlatforms": [
         "Editor"
     ],
