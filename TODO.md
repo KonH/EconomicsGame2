@@ -13,6 +13,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Set up Rider + Copilot (minimal rules)
   - [x] Set up Cursor (Unity support and minimal rules)
   - [ ] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
+
 - **Tech**
   - [x] Integrate ECS library - Arch
   - [x] One-frame components auto-removal
@@ -25,11 +26,24 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] CI/CD WebGL build
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
   - [ ] Resource management (addressables)
+  - [!] ECS viewer filters
+
 - **Core**
   - [x] Character cell-to-cell movement
   - [x] Obstacles & limits
   - [x] A* pathfinding
-  - [ ] Character inventory
+  - [!] Inventory basics:
+    - [!] Item storage
+    - [!] Item pickup
+    - [!] Item transfer
+  - [ ] Inventory improvements:
+    - [ ] Crafting
+    - [ ] Item/storage ID factories
+  
 - **UI**
-  - [ ] Window management
+  - [!] HUD:
+    - [!] Current unit inventory 
+  - [!] Window management:
+    -  [!] Transfer window (shows when stay on specific cell, drag & drop)
+    -  [!] Transfer select count window (input field, slider)
   - [ ] Main menu basics (New game, Load game)
