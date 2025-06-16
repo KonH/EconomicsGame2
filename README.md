@@ -8,3 +8,15 @@
 TODO
 
 Re-implementation of unfinished https://github.com/KonH/EconomicsGame2 using modern dev tools.
+
+## Git Submodules
+
+This project uses Git submodules for certain dependencies.
+
+### Initializing Submodules
+
+To initialize and update all submodules:
+
+```bash
+git submodule update --init --recursive
+```
