@@ -27,7 +27,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
   - [ ] Resource management (addressables)
   - [!] ECS viewer filters
-  - [+] Unique reference guard & generation
+  - [x] Unique reference guard & generation
     - [ ] Validate entities created after Initialization considering world loading
 
 - **Core**
@@ -35,7 +35,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Obstacles & limits
   - [x] A* pathfinding
   - [!] Inventory basics:
-    - [!] Item storage
+    - [x] Item storage
     - [!] Item pickup
     - [!] Item transfer
   - [ ] Inventory improvements:

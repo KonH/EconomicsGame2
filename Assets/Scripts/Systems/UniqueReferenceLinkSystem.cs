@@ -8,6 +8,7 @@ using Services;
 namespace Systems {
 	public sealed class UniqueReferenceLinkSystem : UnitySystemBase {
 		readonly CellService _cellService;
+		readonly StorageIdService _storageIdService;
 
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
 			.WithAll<NeedCreateUniqueReference>();
@@ -15,8 +16,9 @@ namespace Systems {
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
 
-		public UniqueReferenceLinkSystem(World world, CellService cellService) : base(world) {
+		public UniqueReferenceLinkSystem(World world, CellService cellService, StorageIdService storageIdService) : base(world) {
 			_cellService = cellService;
+			_storageIdService = storageIdService;
 		}
 
 		public override void Update(in SystemState _) {
@@ -54,6 +56,19 @@ namespace Systems {
 						_cellService.TryLockCell(cellPosition);
 					}
 				}
+
+				if (options.HasFlag(AdditionalComponentOptions.Storage) || options.HasFlag(AdditionalComponentOptions.StorageWithTestItem)) {
+					if (!targetEntity.Has<ItemStorage>()) {
+						var storageId = _storageIdService.GenerateId();
+						targetEntity.Add(new ItemStorage {
+							StorageId = storageId
+						});
+
+						if (options.HasFlag(AdditionalComponentOptions.StorageWithTestItem)) {
+							CreateTestItem(storageId);
+						}
+					}
+				}
 			});
 		}
 
@@ -76,6 +91,17 @@ namespace Systems {
 		void ConfigureEntity(Entity entity, GameObject gameObject, Vector2 position) {
 			entity.Add(new GameObjectReference {
 				GameObject = gameObject
+			});
+		}
+
+		void CreateTestItem(long storageId) {
+			var itemEntity = this.World.Create();
+			itemEntity.Add(new Item {
+				ID = "TestItem",
+				Count = 1
+			});
+			itemEntity.Add(new ItemOwner {
+				StorageId = storageId
 			});
 		}
 	}

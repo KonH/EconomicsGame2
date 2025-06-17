@@ -18,7 +18,9 @@ namespace Components {
 		Camera = 2,
 		ManualMovable = 4,
 		OnCell = 8,
-		Obstacle = 16
+		Obstacle = 16,
+		Storage = 32,
+		StorageWithTestItem = 64
 	}
 
 	[OneFrame]

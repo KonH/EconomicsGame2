@@ -24,6 +24,7 @@ namespace Bootstrap {
 			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
 			builder.RegisterInstance(gridSettings).AsSelf();
 			builder.Register<CellService>(Lifetime.Scoped).AsSelf();
+			builder.Register<StorageIdService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
@@ -36,6 +37,7 @@ namespace Bootstrap {
 				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<LoadSystem>();
+				c.Add<StorageIdInitializationSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
