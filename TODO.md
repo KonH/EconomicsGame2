@@ -26,7 +26,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] CI/CD WebGL build
   - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
   - [ ] Resource management (addressables)
-  - [!] ECS viewer filters
+  - [x] ECS viewer filters
   - [x] Unique reference guard & generation
     - [ ] Validate entities created after Initialization considering world loading
   - [ ] Localization support
@@ -48,6 +48,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [!] HUD:
     - [!] Current unit inventory 
   - [!] Window management:
-    -  [!] Transfer window (shows when stay on specific cell, drag & drop)
-    -  [!] Transfer select count window (input field, slider)
+    - [!] Pass context using dynamic variables
+    - [!] Inventory window (item scroller list, item details - name and unique sprites)
+    - [!] Transfer window (shows when stay on specific cell, drag & drop)
+    - [!] Transfer select count window (input field, slider)
+  - [ ] Window management improvements:
+    - [ ] Caching
+    - [ ] Stack and queue
   - [ ] Main menu basics (New game, Load game)

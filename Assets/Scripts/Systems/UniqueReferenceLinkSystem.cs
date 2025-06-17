@@ -65,7 +65,7 @@ namespace Systems {
 						});
 
 						if (options.HasFlag(AdditionalComponentOptions.StorageWithTestItem)) {
-							CreateTestItem(storageId);
+							CreateTestItems(storageId);
 						}
 					}
 				}
@@ -94,11 +94,16 @@ namespace Systems {
 			});
 		}
 
-		void CreateTestItem(long storageId) {
+		void CreateTestItems(long storageId) {
+			CreateTestItem(storageId, "TestItem1", 1);
+			CreateTestItem(storageId, "TestItem2", 2);
+		}
+
+		void CreateTestItem(long storageId, string itemId, int count) {
 			var itemEntity = this.World.Create();
 			itemEntity.Add(new Item {
-				ID = "TestItem",
-				Count = 1
+				ID = itemId,
+				Count = count
 			});
 			itemEntity.Add(new ItemOwner {
 				StorageId = storageId

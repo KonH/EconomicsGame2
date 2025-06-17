@@ -498,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &108742779
 SpriteRenderer:
@@ -2168,7 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &451083508
 SpriteRenderer:
@@ -2704,7 +2704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &607560598
 SpriteRenderer:
@@ -3068,7 +3068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &620661486
 SpriteRenderer:
@@ -3432,7 +3432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &691982127
 SpriteRenderer:
@@ -4351,7 +4351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &861873480
 SpriteRenderer:
@@ -5406,7 +5406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &1065059172
 SpriteRenderer:
@@ -5770,7 +5770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &1174031249
 SpriteRenderer:
@@ -5873,7 +5873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &1174822093
 SpriteRenderer:
@@ -6150,7 +6150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &1251720362
 SpriteRenderer:
@@ -7512,7 +7512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &1563045961
 SpriteRenderer:
@@ -10542,7 +10542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &2087599901
 SpriteRenderer:
@@ -11034,7 +11034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Obstacle
-  useGameObjectNameAsId: 1
+  useGameObjectNameAsId: 0
   options: 25
 --- !u!212 &2126489613
 SpriteRenderer:
@@ -11198,6 +11198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9104754174703695220, guid: 3d333906571240747b35c9d4265829e1, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -11297,6 +11301,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 558040567839876869, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621813825569712905, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621813825569712905, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621813825569712905, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2621813825569712905, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6983622196204712339, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
