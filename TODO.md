@@ -29,6 +29,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [!] ECS viewer filters
   - [x] Unique reference guard & generation
     - [ ] Validate entities created after Initialization considering world loading
+  - [ ] Localization support
 
 - **Core**
   - [x] Character cell-to-cell movement
@@ -37,10 +38,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [!] Inventory basics:
     - [x] Item storage
     - [!] Item pickup
-    - [!] Item transfer
+    - [!] Item drop
+    - [!] Item transfer (requires unique item ID)
   - [ ] Inventory improvements:
     - [ ] Crafting
-    - [ ] Item/storage ID factories
+    - [!] Item/storage ID factories
   
 - **UI**
   - [!] HUD:
