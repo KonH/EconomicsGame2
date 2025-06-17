@@ -33,6 +33,7 @@ namespace Bootstrap {
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<CellInitSystem>();
 				c.Add<SaveSystem>();
+				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<LoadSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();

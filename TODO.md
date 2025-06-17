@@ -28,6 +28,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Resource management (addressables)
   - [!] ECS viewer filters
   - [+] Unique reference guard & generation
+    - [ ] Validate entities created after Initialization considering world loading
 
 - **Core**
   - [x] Character cell-to-cell movement
