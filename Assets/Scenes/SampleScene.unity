@@ -1089,6 +1089,7 @@ MonoBehaviour:
   - {fileID: 118715493}
   - {fileID: 539124880}
   - {fileID: 1897484514}
+  - {fileID: 1232757463}
   mouseInputSettings:
     trackedMouseButtons: 2
   keyboardInputSettings:
@@ -6032,6 +6033,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1232757463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7679933672900721267, guid: 3d333906571240747b35c9d4265829e1, type: 3}
+  m_PrefabInstance: {fileID: 1327058654510206538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1244907349
 GameObject:
   m_ObjectHideFlags: 0
