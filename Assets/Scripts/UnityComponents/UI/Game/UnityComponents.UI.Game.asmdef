@@ -1,3 +1,19 @@
 {
-	"name": "UnityComponents.UI.Game"
+    "name": "UnityComponents.UI.Game",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:b9786bef0a65448028008ae58d333763",
+        "GUID:c07e867cfc275ed4da6f79a231b7d9c4",
+        "GUID:4daab2a0f7e4b9d489fa2661306892a8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
