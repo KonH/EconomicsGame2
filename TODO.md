@@ -27,12 +27,13 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Convenient way to attach ECS components to GameObjects (with parameters)
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
-- [x] Unique reference guard & generation
+- [ ] Unique reference guard & generation
   - [ ] Validate entities created after Initialization considering world loading
+  - [ ] Reference ID storage, select IDs from dropdown
 - [ ] Localization support
 - [ ] Window management:
   - [x] Minimal open/close functionality
-  - [!] Pass context using DI
+  - [x] Pass context using DI
 - [ ] Window management improvements:
   - [ ] Caching
   - [ ] Stack and queue
