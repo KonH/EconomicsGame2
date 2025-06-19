@@ -27,6 +27,7 @@ namespace Bootstrap {
 			builder.Register<StorageIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
