@@ -25,6 +25,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(gridSettings).AsSelf();
 			builder.Register<CellService>(Lifetime.Scoped).AsSelf();
 			builder.Register<StorageIdService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();

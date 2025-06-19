@@ -9,6 +9,7 @@ namespace Systems {
 	public sealed class UniqueReferenceLinkSystem : UnitySystemBase {
 		readonly CellService _cellService;
 		readonly StorageIdService _storageIdService;
+		readonly ItemIdService _itemIdService;
 
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
 			.WithAll<NeedCreateUniqueReference>();
@@ -16,9 +17,10 @@ namespace Systems {
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
 
-		public UniqueReferenceLinkSystem(World world, CellService cellService, StorageIdService storageIdService) : base(world) {
+		public UniqueReferenceLinkSystem(World world, CellService cellService, StorageIdService storageIdService, ItemIdService itemIdService) : base(world) {
 			_cellService = cellService;
 			_storageIdService = storageIdService;
+			_itemIdService = itemIdService;
 		}
 
 		public override void Update(in SystemState _) {
@@ -102,7 +104,8 @@ namespace Systems {
 		void CreateTestItem(long storageId, string itemId, int count) {
 			var itemEntity = this.World.Create();
 			itemEntity.Add(new Item {
-				ID = itemId,
+				ResourceID = itemId,
+				UniqueID = _itemIdService.GenerateId(),
 				Count = count
 			});
 			itemEntity.Add(new ItemOwner {

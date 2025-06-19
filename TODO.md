@@ -43,7 +43,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] A* pathfinding
 - [x] Inventory basics:
   - [x] Item storage
-  - [!] Item/storage ID factories
+  - [x] Item/storage ID factories
 - [ ] Inventory improvements:
   - [ ] Item pickup
   - [ ] Item drop
