@@ -19,14 +19,12 @@ namespace Bootstrap {
 		[SerializeField] ItemsConfig? itemsConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
-			if (!this.Validate(mouseInputSettings) ||
-				!this.Validate(keyboardInputSettings) ||
-				!this.Validate(cameraScrollSettings) ||
-				!this.Validate(movementSettings) ||
-				!this.Validate(gridSettings) ||
-				!this.Validate(itemsConfig)) {
-				return;
-			}
+			this.ValidateOrThrow(mouseInputSettings);
+			this.ValidateOrThrow(keyboardInputSettings);
+			this.ValidateOrThrow(cameraScrollSettings);
+			this.ValidateOrThrow(movementSettings);
+			this.ValidateOrThrow(gridSettings);
+			this.ValidateOrThrow(itemsConfig);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
