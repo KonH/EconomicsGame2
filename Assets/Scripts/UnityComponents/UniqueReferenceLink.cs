@@ -18,7 +18,7 @@ namespace UnityComponents {
 			_world = world;
 		}
 
-		void OnEnable() {
+		void Start() {
 			if (!this.Validate(_world)) {
 				return;
 			}
