@@ -1,12 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
 using Arch.Core;
+using Common;
 using Services;
 
 namespace UnityComponents.UI.Game {
 	public sealed class InventoryWindow : MonoBehaviour {
-		[SerializeField] ItemStorageView itemStorageView = null!;
+		[SerializeField] ItemStorageView? itemStorageView;
 		[SerializeField] string playerId = "MainCharacter";
 
 		Entity _playerEntity;
@@ -20,6 +20,9 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void Awake() {
+			if (!this.Validate(itemStorageView)) {
+				return;
+			}
 			itemStorageView.Initialize(_playerEntity);
 		}
 	}

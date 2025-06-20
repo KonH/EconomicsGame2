@@ -131,6 +131,8 @@ SerializedMember => this.ValidateOrThrow(serializedMember);
 ```csharp
 World _world = null!;
 ```
+- Don't use string?, use string.Empty instead of null for strings that can be empty
+- For collections use empty collections instead of null (e.g., `List<T>()` or `Array.Empty<T>()` instead of `null`)
 
 ## Project Specifics
 

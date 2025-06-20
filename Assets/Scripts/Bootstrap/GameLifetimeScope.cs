@@ -2,6 +2,7 @@
 using VContainer;
 using VContainer.Unity;
 using Arch.Unity;
+using Common;
 using Configs;
 using Services;
 using Services.State;
@@ -9,13 +10,21 @@ using Systems;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
-		[SerializeField] MouseInputSettings mouseInputSettings = null!;
-		[SerializeField] KeyboardInputSettings keyboardInputSettings = null!;
-		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
-		[SerializeField] MovementSettings movementSettings = null!;
-		[SerializeField] GridSettings gridSettings = null!;
+		[SerializeField] MouseInputSettings? mouseInputSettings;
+		[SerializeField] KeyboardInputSettings? keyboardInputSettings;
+		[SerializeField] CameraScrollSettings? cameraScrollSettings;
+		[SerializeField] MovementSettings? movementSettings;
+		[SerializeField] GridSettings? gridSettings;
 
 		protected override void Configure(IContainerBuilder builder) {
+			if (!this.Validate(mouseInputSettings) ||
+				!this.Validate(keyboardInputSettings) ||
+				!this.Validate(cameraScrollSettings) ||
+				!this.Validate(movementSettings) ||
+				!this.Validate(gridSettings)) {
+				return;
+			}
+
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
 			builder.RegisterInstance(oneFrameComponentRegistry).AsSelf();

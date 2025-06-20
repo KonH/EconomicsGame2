@@ -1,13 +1,13 @@
-using UnityEngine;
 using UnityEditor;
 using UnityComponents;
+using Editor;
 
 namespace Editor {
 	[CustomEditor(typeof(UniqueReferenceLink))]
 	public sealed class UniqueReferenceLinkEditor : UnityEditor.Editor {
-		SerializedProperty _useGameObjectNameAsIdProperty = null!;
-		SerializedProperty _idProperty = null!;
-		SerializedProperty _optionsProperty = null!;
+		SerializedProperty? _useGameObjectNameAsIdProperty;
+		SerializedProperty? _idProperty;
+		SerializedProperty? _optionsProperty;
 
 		void OnEnable() {
 			_useGameObjectNameAsIdProperty = serializedObject.FindProperty("useGameObjectNameAsId");
@@ -16,6 +16,10 @@ namespace Editor {
 		}
 
 		public override void OnInspectorGUI() {
+			if (!this.Validate(_useGameObjectNameAsIdProperty) || !this.Validate(_idProperty) || !this.Validate(_optionsProperty)) {
+				return;
+			}
+
 			serializedObject.Update();
 
 			EditorGUILayout.PropertyField(_useGameObjectNameAsIdProperty);

@@ -1,11 +1,9 @@
 {
-    "name": "EconomicsGame.UnityComponents",
+    "name": "EconomicsGame.UnityComponents.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:0c7130b91d9d5514fba56921c88d2bfa",
-        "GUID:4daab2a0f7e4b9d489fa2661306892a8",
-        "GUID:c07e867cfc275ed4da6f79a231b7d9c4"
+        "GUID:a55ded2ebf20a4c4689804cae0808613",
+        "GUID:8a05166957cbe2447983fe0697cd1243"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

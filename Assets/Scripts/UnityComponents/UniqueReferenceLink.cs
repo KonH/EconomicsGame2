@@ -2,6 +2,7 @@
 using VContainer;
 using Arch.Core;
 using Arch.Core.Extensions;
+using Common;
 using Components;
 
 namespace UnityComponents {
@@ -10,7 +11,7 @@ namespace UnityComponents {
 		[SerializeField] bool useGameObjectNameAsId = false;
 		[SerializeField] AdditionalComponentOptions options;
 
-		World _world = null!;
+		World? _world;
 
 		[Inject]
 		public void Construct(World world) {
@@ -18,6 +19,10 @@ namespace UnityComponents {
 		}
 
 		void OnEnable() {
+			if (!this.Validate(_world)) {
+				return;
+			}
+
 			var effectiveId = useGameObjectNameAsId ? gameObject.name : id;
 
 			var entity = _world.Create();

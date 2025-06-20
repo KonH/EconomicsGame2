@@ -1,13 +1,14 @@
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Common;
 
 namespace UnityComponents {
 	public class PrefabSpawner : MonoBehaviour {
-		[SerializeField] GameObject prefab = null!;
-		[SerializeField] GameObject root = null!;
+		[SerializeField] GameObject? prefab;
+		[SerializeField] GameObject? root;
 
-		IObjectResolver _objectResolver = null!;
+		IObjectResolver? _objectResolver;
 
 		[Inject]
 		public void Construct(IObjectResolver objectResolver) {
@@ -15,6 +16,9 @@ namespace UnityComponents {
 		}
 
 		public void Spawn() {
+			if (!this.Validate(prefab) || !this.Validate(root) || !this.Validate(_objectResolver)) {
+				return;
+			}
 			_objectResolver.Instantiate(prefab, root.transform);
 		}
 	}

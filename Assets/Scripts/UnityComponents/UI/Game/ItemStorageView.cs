@@ -1,17 +1,15 @@
 using System.Collections.Generic;
-
 using UnityEngine;
 using Arch.Core;
 using Arch.Core.Extensions;
-
 using Components;
-
+using Common;
 using VContainer;
 using Services;
 
 namespace UnityComponents.UI.Game {
 	public class ItemStorageView : MonoBehaviour {
-		ItemStorageService _itemStorageService = null!;
+		ItemStorageService? _itemStorageService;
 
 		Entity _targetEntity;
 		IList<Entity> _targetItems = new List<Entity>();
@@ -22,6 +20,10 @@ namespace UnityComponents.UI.Game {
 		}
 
 		public void Initialize(Entity targetEntity) {
+			if (!this.Validate(_itemStorageService)) {
+				return;
+			}
+
 			Debug.Log($"Initializing ItemStorageView for entity: {targetEntity}", gameObject);
 			_targetEntity = targetEntity;
 			var itemStorage = _targetEntity.TryGetRef<ItemStorage>(out var isStorageFound);
@@ -45,4 +47,3 @@ namespace UnityComponents.UI.Game {
 		}
 	}
 }
-
