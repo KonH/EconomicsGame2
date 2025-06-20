@@ -1145,6 +1145,7 @@ MonoBehaviour:
     cellHeight: 1
     gridWidth: 10
     gridHeight: 10
+  itemsConfig: {fileID: 11400000, guid: a007d0407c1ec19488a2938c36a7c71c, type: 2}
 --- !u!1 &155857781
 GameObject:
   m_ObjectHideFlags: 0

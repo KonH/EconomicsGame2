@@ -16,12 +16,15 @@ namespace Bootstrap {
 		[SerializeField] MovementSettings? movementSettings;
 		[SerializeField] GridSettings? gridSettings;
 
+		[SerializeField] ItemsConfig? itemsConfig;
+
 		protected override void Configure(IContainerBuilder builder) {
 			if (!this.Validate(mouseInputSettings) ||
 				!this.Validate(keyboardInputSettings) ||
 				!this.Validate(cameraScrollSettings) ||
 				!this.Validate(movementSettings) ||
-				!this.Validate(gridSettings)) {
+				!this.Validate(gridSettings) ||
+				!this.Validate(itemsConfig)) {
 				return;
 			}
 
@@ -37,6 +40,8 @@ namespace Bootstrap {
 			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
+
+			builder.RegisterInstance(itemsConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
