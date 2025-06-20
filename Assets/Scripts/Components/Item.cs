@@ -7,7 +7,7 @@
 		public string ResourceID;
 
 		/// <summary>
-		/// As unique identifier, world do not have two items with the same UniqueID
+		/// As unique identifier, world does not have two items with the same UniqueID
 		/// </summary>
 		public long UniqueID;
 
@@ -17,5 +17,6 @@
 	[Persistent]
 	public struct ItemOwner {
 		public long StorageId;
+		public long StorageOrder;
 	}
 }

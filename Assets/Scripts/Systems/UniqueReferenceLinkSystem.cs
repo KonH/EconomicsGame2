@@ -97,11 +97,11 @@ namespace Systems {
 		}
 
 		void CreateTestItems(long storageId) {
-			CreateTestItem(storageId, "TestItem1", 1);
-			CreateTestItem(storageId, "TestItem2", 2);
+			CreateTestItem(storageId, "TestItem1", 1, 0);
+			CreateTestItem(storageId, "TestItem2", 2, 1);
 		}
 
-		void CreateTestItem(long storageId, string itemId, int count) {
+		void CreateTestItem(long storageId, string itemId, int count, long order) {
 			var itemEntity = this.World.Create();
 			itemEntity.Add(new Item {
 				ResourceID = itemId,
@@ -109,7 +109,8 @@ namespace Systems {
 				Count = count
 			});
 			itemEntity.Add(new ItemOwner {
-				StorageId = storageId
+				StorageId = storageId,
+				StorageOrder = order
 			});
 		}
 	}
