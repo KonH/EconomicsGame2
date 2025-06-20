@@ -2,6 +2,22 @@
 
 You are an AI assistant helping with the EconomicsGame2 Unity project. Please follow these guidelines when generating code:
 
+## General Guidelines
+
+### Tabs vs Spaces
+- Use tabs for indentation
+
+### Namespaces
+- Group related classes under meaningful namespaces (e.g., `Prototype`)
+- Use namespace structure to separate different aspects of the game
+- Place namespaces in given order, without spaces between them:
+```
+using System; // All system namespaces
+using UnityEngine; // All Unity namespaces
+using ThirdParty; // All third-party libraries
+using EconomicsGame.*; // All project-specific namespaces
+```
+
 ## Naming Conventions
 
 ### Classes and Types
@@ -27,13 +43,6 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 - Place opening braces on the same line for method declarations (e.g., `void MyMethod() {`)
 
 ## Code Organization
-
-### Tabs vs Spaces
-- Use tabs for indentation
-
-### Namespaces
-- Group related classes under meaningful namespaces (e.g., `Prototype`)
-- Use namespace structure to separate different aspects of the game
 
 ### Class Members Ordering
 1. Static fields and properties
@@ -89,7 +98,39 @@ var count = myList.Count;
 - Prefer properties over direct field access for public APIs
 - Do not use explicit 'private' keyword for private members (omit access modifier for private members)
 - Do not use explicit `this` keyword unless necessary for clarity
-- Do not add obvious comments (e.g., `// If that, then this`)
+- Do not add obvious comments (e.g., `// If that, then this`), add comments only when necessary to explain really complex logic or completely unclear implementations
+- Never use standard or XML comments anywhere at all, they are not useful in this project
+
+## Nullable Reference Types
+
+- Use nullable reference types to indicate that a reference can be null
+- Use `?` suffix for nullable types (e.g., `string?`, `GameObject?`)
+- Use `null` checks to handle nullable references safely
+- Use `??` operator to provide default values for nullable references (e.g., `stringValue ?? "default"`)
+- Use `?.` operator to safely access members of nullable references (e.g., `nullableObject?.Method()`)
+- Use `!` only when you can't avoid that or inside tests
+- Use custom validation method for serialized references in Unity components (in OnValidate method and at start of methods where serialized references are used):
+```csharp
+using Common;
+
+[SerializeField] object? serializedMember;
+
+if (!this.Validate(serializedMember)) {
+    return;
+}
+```
+- For fields in ScriptableObjects and classes under Configs use another approach:
+```csharp
+using Common;
+
+[SerializeField] object? serializedMember;
+
+SerializedMember => this.ValidateOrThrow(serializedMember);
+```
+- For tests you should use `!`, it is okay:
+```csharp
+World _world = null!;
+```
 
 ## Project Specifics
 

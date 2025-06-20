@@ -24,7 +24,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Ignore coverage in Tests directory
 - [ ] Unit tests for regression
 - [ ] CI/CD WebGL build
-- [ ] Convenient way to attach ECS components to GameObjects (with parameters)
+- [ ] Convenient way to attach ECS components to GameObjects (with parameters, maybe Wrapper components with nice-to-have code generation)
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
 - [ ] Unique reference guard & generation
