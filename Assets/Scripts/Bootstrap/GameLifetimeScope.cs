@@ -2,6 +2,7 @@
 using VContainer;
 using VContainer.Unity;
 using Arch.Unity;
+using Common;
 using Configs;
 using Services;
 using Services.State;
@@ -9,13 +10,22 @@ using Systems;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
-		[SerializeField] MouseInputSettings mouseInputSettings = null!;
-		[SerializeField] KeyboardInputSettings keyboardInputSettings = null!;
-		[SerializeField] CameraScrollSettings cameraScrollSettings = null!;
-		[SerializeField] MovementSettings movementSettings = null!;
-		[SerializeField] GridSettings gridSettings = null!;
+		[SerializeField] MouseInputSettings? mouseInputSettings;
+		[SerializeField] KeyboardInputSettings? keyboardInputSettings;
+		[SerializeField] CameraScrollSettings? cameraScrollSettings;
+		[SerializeField] MovementSettings? movementSettings;
+		[SerializeField] GridSettings? gridSettings;
+
+		[SerializeField] ItemsConfig? itemsConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
+			this.ValidateOrThrow(mouseInputSettings);
+			this.ValidateOrThrow(keyboardInputSettings);
+			this.ValidateOrThrow(cameraScrollSettings);
+			this.ValidateOrThrow(movementSettings);
+			this.ValidateOrThrow(gridSettings);
+			this.ValidateOrThrow(itemsConfig);
+
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
 			builder.RegisterInstance(oneFrameComponentRegistry).AsSelf();
@@ -24,6 +34,12 @@ namespace Bootstrap {
 			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
 			builder.RegisterInstance(gridSettings).AsSelf();
 			builder.Register<CellService>(Lifetime.Scoped).AsSelf();
+			builder.Register<StorageIdService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
+			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
+
+			builder.RegisterInstance(itemsConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
@@ -33,8 +49,10 @@ namespace Bootstrap {
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<CellInitSystem>();
 				c.Add<SaveSystem>();
+				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<LoadSystem>();
+				c.Add<StorageIdInitializationSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();

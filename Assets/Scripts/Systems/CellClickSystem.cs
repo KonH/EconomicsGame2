@@ -5,6 +5,7 @@ using Arch.Unity.Toolkit;
 using Common;
 using Components;
 using Services;
+using UnityEngine.EventSystems;
 
 namespace Systems {
 	public sealed class CellClickSystem : UnitySystemBase {
@@ -26,6 +27,10 @@ namespace Systems {
 		public override void Update(in SystemState _) {
 			World.Query(_mouseButtonPressQuery, (ref MouseButtonPress press) => {
 				if (press.Button != MouseButtons.Left) {
+					return;
+				}
+
+				if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) {
 					return;
 				}
 

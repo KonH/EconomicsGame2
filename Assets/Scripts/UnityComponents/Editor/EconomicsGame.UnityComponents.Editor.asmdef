@@ -1,0 +1,17 @@
+{
+    "name": "EconomicsGame.UnityComponents.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a55ded2ebf20a4c4689804cae0808613",
+        "GUID:8a05166957cbe2447983fe0697cd1243"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

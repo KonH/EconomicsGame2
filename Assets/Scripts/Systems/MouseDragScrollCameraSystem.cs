@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using Arch.Core;
 using Arch.Unity.Toolkit;
 using Configs;
@@ -24,6 +25,9 @@ namespace Systems {
 			var state = systemState;
 			World.Query(_dragQueryDescription, (Entity _, ref MouseButtonHold mouseButtonHold, ref MouseDrag mouseDrag) => {
 				if (mouseButtonHold.Button != _cameraScrollSettings.TargetButton) {
+					return;
+				}
+				if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) {
 					return;
 				}
 				var delta = mouseDrag.Delta;

@@ -1,0 +1,16 @@
+{
+    "name": "UnityComponents.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0c7130b91d9d5514fba56921c88d2bfa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -8,6 +8,8 @@ using Services;
 namespace Systems {
 	public sealed class UniqueReferenceLinkSystem : UnitySystemBase {
 		readonly CellService _cellService;
+		readonly StorageIdService _storageIdService;
+		readonly ItemIdService _itemIdService;
 
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
 			.WithAll<NeedCreateUniqueReference>();
@@ -15,8 +17,10 @@ namespace Systems {
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
 
-		public UniqueReferenceLinkSystem(World world, CellService cellService) : base(world) {
+		public UniqueReferenceLinkSystem(World world, CellService cellService, StorageIdService storageIdService, ItemIdService itemIdService) : base(world) {
 			_cellService = cellService;
+			_storageIdService = storageIdService;
+			_itemIdService = itemIdService;
 		}
 
 		public override void Update(in SystemState _) {
@@ -54,6 +58,19 @@ namespace Systems {
 						_cellService.TryLockCell(cellPosition);
 					}
 				}
+
+				if (options.HasFlag(AdditionalComponentOptions.Storage) || options.HasFlag(AdditionalComponentOptions.StorageWithTestItem)) {
+					if (!targetEntity.Has<ItemStorage>()) {
+						var storageId = _storageIdService.GenerateId();
+						targetEntity.Add(new ItemStorage {
+							StorageId = storageId
+						});
+
+						if (options.HasFlag(AdditionalComponentOptions.StorageWithTestItem)) {
+							CreateTestItems(storageId);
+						}
+					}
+				}
 			});
 		}
 
@@ -76,6 +93,24 @@ namespace Systems {
 		void ConfigureEntity(Entity entity, GameObject gameObject, Vector2 position) {
 			entity.Add(new GameObjectReference {
 				GameObject = gameObject
+			});
+		}
+
+		void CreateTestItems(long storageId) {
+			CreateTestItem(storageId, "TestItem1", 1, 0);
+			CreateTestItem(storageId, "TestItem2", 2, 1);
+		}
+
+		void CreateTestItem(long storageId, string itemId, int count, long order) {
+			var itemEntity = this.World.Create();
+			itemEntity.Add(new Item {
+				ResourceID = itemId,
+				UniqueID = _itemIdService.GenerateId(),
+				Count = count
+			});
+			itemEntity.Add(new ItemOwner {
+				StorageId = storageId,
+				StorageOrder = order
 			});
 		}
 	}
