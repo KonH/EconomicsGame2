@@ -35,6 +35,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Minimal open/close functionality
   - [x] Pass context using DI
 - [ ] Window management improvements:
+  - [ ] Proper mouse interactions on scene blocking
   - [ ] Caching
   - [ ] Stack and queue
 
@@ -56,7 +57,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] HUD:
   - [+] Current unit inventory
 - [ ] Windows:
-  - [!] Inventory window (item scroller list, item details - name and unique sprites)
+  - [+] Inventory window (item scroller list, item details - name and unique sprites)
   - [ ] Transfer window (shows when stay on specific cell, drag & drop)
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)
