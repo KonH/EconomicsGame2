@@ -16,10 +16,14 @@ namespace UnityComponents {
 		}
 
 		public void Spawn() {
+			SpawnAndReturn();
+		}
+
+		public GameObject? SpawnAndReturn() {
 			if (!this.Validate(prefab) || !this.Validate(root) || !this.Validate(_objectResolver)) {
-				return;
+				return null;
 			}
-			_objectResolver.Instantiate(prefab, root.transform);
+			return _objectResolver.Instantiate(prefab, root.transform);
 		}
 	}
 }
