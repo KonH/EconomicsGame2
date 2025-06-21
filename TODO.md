@@ -38,7 +38,6 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Minimal open/close functionality
   - [x] Pass context using DI
   - [ ] Caching
-  - [!] Stack - new window on top of current
   - [ ] Queue - new window waits for current
 - [+] Spawn new entities with scene presentation at runtime
   - [+] PrefabSource, created flag, system to create specific prefabs by ID, prefabs config
@@ -57,10 +56,10 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Inventory:
   - [x] Item storage
   - [x] Item/storage ID factories
-  - [!] Item pickup - open item transfer when player is on cell with some storage
+  - [+] Item pickup - open item transfer when player is on cell with some storage
   - [+] Item drop - creates new non-obstacle storage on player cell
-  - [!] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
-  - [!] Storage cleaup - any storage with flag AllowDestroyIfEmpty should be destroyed
+  - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
+  - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [ ] Crafting
   
@@ -75,9 +74,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
   - Transfer window
-    - [!] Opens when player moves on cell with storage
-    - [!] Two panel view
-    - [!] Buttons to transfer selected item in both directions
-    - [!] Closes when any of item storages destroyed
+    - [+] Opens when player moves on cell with storage
+    - [+] Two panel view
+    - [+] Buttons to transfer selected item in both directions
+    - [+] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)

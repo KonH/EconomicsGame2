@@ -24,6 +24,15 @@ namespace Services {
 			_itemIdService = itemIdService;
 		}
 
+		public long GetStorageId(Entity storageEntity) {
+			var itemStorage = storageEntity.TryGetRef<ItemStorage>(out var isItemStorageFound);
+			if (!isItemStorageFound) {
+				Debug.LogError($"Entity {storageEntity} does not have ItemStorage component. Cannot get storage ID.");
+				return -1;
+			}
+			return itemStorage.StorageId;
+		}
+
 		/// <returns>List of items, already ordered</returns>
 		public IList<Entity> GetItemsForOwner(long ownerStorageId) {
 			var result = new List<(Entity entity, long order)>();
@@ -58,7 +67,13 @@ namespace Services {
 			}
 			Debug.Log($"Removing item {itemEntity} from storage {storageId}");
 			itemEntity.Remove<ItemOwner>();
-			storageEntity.Add(new ItemStorageUpdated());
+			var itemStorage = storageEntity.Get<ItemStorage>();
+			if (itemStorage.AllowDestroyIfEmpty && !GetItemsForOwner(storageId).Any()) {
+				Debug.Log($"Storage {storageId} is empty and allows destruction. Destroying storage entity.");
+				storageEntity.Add(new ItemStorageRemoved());
+			} else {
+				storageEntity.Add(new ItemStorageUpdated());
+			}
 		}
 
 		public bool TryGetStorageCellPosition(long storageId, out Vector2Int cellPosition) {
@@ -91,6 +106,20 @@ namespace Services {
 			return otherStorageEntity;
 		}
 
+		public Entity TryGetOtherStorageOnSameCell(Entity entity) {
+			var itemStorage = entity.TryGetRef<ItemStorage>(out var isItemStorageFound);
+			if (!isItemStorageFound) {
+				Debug.LogError($"Entity {entity} does not have ItemStorage component. Cannot find other storage.");
+				return Entity.Null;
+			}
+			var onCell = entity.TryGetRef<OnCell>(out var isOnCellFound);
+			if (!isOnCellFound) {
+				Debug.LogError($"Entity {entity} does not have OnCell component. Cannot find other storage.");
+				return Entity.Null;
+			}
+			return TryGetOtherStorageOnSameCell(itemStorage.StorageId, onCell.Position);
+		}
+
 		public void AttachItemToStorage(long storageId, Entity itemEntity, IList<Entity>? items = null) {
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
@@ -107,11 +136,12 @@ namespace Services {
 			storageEntity.Add(new ItemStorageUpdated());
 		}
 
-		public Entity CreateNewStorageAtCell(Vector2Int cellPosition) {
+		public Entity CreateNewStorageAtCell(Vector2Int cellPosition, bool allowDestroyIfEmpty) {
 			var storageEntity = _world.Create();
 			var storageId = _itemIdService.GenerateId();
 			storageEntity.Add(new ItemStorage {
-				StorageId = storageId
+				StorageId = storageId,
+				AllowDestroyIfEmpty = allowDestroyIfEmpty
 			});
 			storageEntity.Add(new WorldPosition {
 				Position = cellPosition

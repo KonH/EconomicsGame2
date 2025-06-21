@@ -5,4 +5,6 @@
 	}
 
 	public struct PrefabLinkCreated {}
+
+	public struct PrefabLinkRemoved {}
 }

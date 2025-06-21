@@ -14,4 +14,7 @@ namespace Components {
 
 	[Persistent]
 	public struct Obstacle {}
+
+	[OneFrame]
+	public struct CellChanged {}
 }

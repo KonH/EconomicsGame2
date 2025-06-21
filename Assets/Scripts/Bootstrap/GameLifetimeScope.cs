@@ -63,7 +63,9 @@ namespace Bootstrap {
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
 				c.Add<DropItemSystem>();
+				c.Add<TransferItemSystem>();
 				c.Add<SubscriptionCallSystem>();
+				c.Add<RemoveEmptyItemStorageSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
@@ -78,6 +80,8 @@ namespace Bootstrap {
 				c.Add<WorldPositionSystem>();
 				c.Add<FinishMoveToPositionSystem>();
 				c.Add<FinishCellMovementSystem>();
+				c.Add<TransferAvailableSystem>();
+				c.Add<ReleaseRemovedPrefabLinkSystem>();
 			});
 		}
 	}

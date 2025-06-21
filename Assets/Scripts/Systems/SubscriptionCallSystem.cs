@@ -17,9 +17,8 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState t) {
-			foreach (var kvp in _subscriptionService.Subscriptions) {
-				var eventType = kvp.Key;
-				var actions = kvp.Value;
+			_subscriptionService.PerformScheduledOperations();
+			foreach (var (eventType, actions) in _subscriptionService.Subscriptions) {
 				var query = LookupQueryDescription(eventType);
 				World.Query(query, e => {
 					foreach (var action in actions) {

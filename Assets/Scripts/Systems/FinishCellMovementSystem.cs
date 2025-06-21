@@ -20,6 +20,7 @@ namespace Systems {
 				_cellService.UnlockCell(moveToCell.OldPosition);
 				onCell.Position = moveToCell.NewPosition;
 				entity.Remove<MoveToCell>();
+				entity.Add(new CellChanged());
 			});
 		}
 	}

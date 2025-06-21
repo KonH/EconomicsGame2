@@ -49,7 +49,7 @@ namespace Systems {
 
 		void AttachItemToNewStorage(Vector2Int cellPosition, Entity itemEntity) {
 			Debug.Log($"Creating new storage at cell {cellPosition} and attaching item {itemEntity}");
-			var newStorageEntity = _storageService.CreateNewStorageAtCell(cellPosition);
+			var newStorageEntity = _storageService.CreateNewStorageAtCell(cellPosition, allowDestroyIfEmpty: true);
 			_storageService.AttachItemToStorage(newStorageEntity.Get<ItemStorage>().StorageId, itemEntity);
 		}
 	}
