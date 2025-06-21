@@ -73,6 +73,6 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [!] Opens when player stay on cell with storage, do not reopen when closed
     - [!] Two panel view
     - [!] Buttons to transfer selected item in both directions
-    - [!] Closes when any item storage destroyed
+    - [!] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)
