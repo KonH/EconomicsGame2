@@ -175,8 +175,9 @@ namespace Services {
 			if (isFound) {
 				return itemOwner.StorageOrder + 1;
 			}
-			Debug.LogError($"ItemOwner not found for last item {lastItem}. Returning 1 as new order.");
-			return 1;
+			Debug.LogWarning($"ItemOwner not found for last item {lastItem}. Falling back to inferred order.");
+			// Infer the new order based on the count of items
+			return items.Count + 1;
 		}
 	}
 }
