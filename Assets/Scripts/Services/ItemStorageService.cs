@@ -13,6 +13,9 @@ namespace Services {
 		readonly QueryDescription _itemOwnerQuery = new QueryDescription()
 			.WithAll<ItemOwner>();
 
+		readonly QueryDescription  _storageQuery = new QueryDescription()
+			.WithAll<ItemStorage>();
+
 		public ItemStorageService(World world, ItemIdService itemIdService) {
 			_world = world;
 			_itemIdService = itemIdService;
@@ -35,18 +38,50 @@ namespace Services {
 		}
 
 		public void AddNewItem(long storageId, string itemId, int count, IList<Entity>? items = null) {
-			items ??= GetItemsForOwner(storageId);
 			var itemEntity = _world.Create();
 			itemEntity.Add(new Item {
 				ResourceID = itemId,
 				UniqueID = _itemIdService.GenerateId(),
 				Count = count
 			});
+			AttachItemToStorage(storageId, itemEntity, items);
+		}
+
+		public void RemoveItemFromStorage(long storageId, Entity itemEntity) {
+			var storageEntity = TryGetStorageEntity(storageId);
+			if (storageEntity == Entity.Null) {
+				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot remove item.");
+				return;
+			}
+			Debug.Log($"Removing item {itemEntity} from storage {storageId}");
+			itemEntity.Remove<ItemOwner>();
+			storageEntity.Add(new ItemStorageUpdated());
+		}
+
+		public void AttachItemToStorage(long storageId, Entity itemEntity, IList<Entity>? items = null) {
+			var storageEntity = TryGetStorageEntity(storageId);
+			if (storageEntity == Entity.Null) {
+				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot attach item.");
+				return;
+			}
+			Debug.Log($"Attaching item {itemEntity} to storage {storageId}");
+			items ??= GetItemsForOwner(storageId);
 			var newOrder = GetNewOrder(items);
 			itemEntity.Add(new ItemOwner {
 				StorageId = storageId,
 				StorageOrder = newOrder
 			});
+			storageEntity.Add(new ItemStorageUpdated());
+		}
+
+		Entity TryGetStorageEntity(long storageId) {
+			var storageEntity = Entity.Null;
+			_world.Query(_storageQuery, (Entity entity, ref ItemStorage itemStorage) => {
+				if (itemStorage.StorageId == storageId) {
+					storageEntity = entity;
+				}
+			});
+			return storageEntity;
 		}
 
 		long GetNewOrder(IList<Entity> items) {

@@ -43,7 +43,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [!] Spawn new entities with scene presentation at runtime
   - [!] PrefabSource, created flag, system to create specific prefabs by ID, prefabs config
   - [!] Attach dependencies & entity at MonoBehaviours in scene presentation
-- [!] Ability to listen for ECS events at Unity side
+- [+] Ability to listen for ECS events at Unity side
+- PrefabSpawner:
+  - [ ] Pooling 
 
 **Core**
 - [x] Character cell-to-cell movement
@@ -69,11 +71,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Windows:
   - Inventory window
     - [+] Item scroller list, item details - name and unique sprites
-    - [!] Ability to select item by click on it
-    - [!] Update on ItemStorageUpdated
-    - [!] Drop button for selected item
+    - [+] Ability to select item by click on it
+    - [+] Update on ItemStorageUpdated
+    - [+] Drop button for selected item
   - Transfer window
-    - [!] Opens when player stay on cell with storage, do not reopen when closed
+    - [!] Opens when player moves on cell with storage
     - [!] Two panel view
     - [!] Buttons to transfer selected item in both directions
     - [!] Closes when any of item storages destroyed

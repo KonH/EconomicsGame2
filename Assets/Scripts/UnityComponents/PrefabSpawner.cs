@@ -25,5 +25,9 @@ namespace UnityComponents {
 			}
 			return _objectResolver.Instantiate(prefab, root.transform);
 		}
+
+		public void Release(GameObject go) {
+			Destroy(go);
+		}
 	}
 }

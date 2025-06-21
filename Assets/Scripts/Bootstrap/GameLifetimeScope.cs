@@ -38,6 +38,7 @@ namespace Bootstrap {
 			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
+			builder.Register<WorldSubscriptionService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(itemsConfig).AsSelf();
 
@@ -53,6 +54,8 @@ namespace Bootstrap {
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
+				c.Add<DropItemSystem>();
+				c.Add<SubscriptionCallSystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();

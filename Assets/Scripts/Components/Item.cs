@@ -19,4 +19,7 @@
 		public long StorageId;
 		public long StorageOrder;
 	}
+
+	[OneFrame]
+	public struct DropItem {}
 }
