@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Arch.Core;
 
 namespace Components {
 	public struct GameObjectReference {
@@ -11,22 +13,10 @@ namespace Components {
 		public string Id;
 	}
 
-	[Flags]
-	public enum AdditionalComponentOptions {
-		None,
-		WorldPosition = 1,
-		Camera = 2,
-		ManualMovable = 4,
-		OnCell = 8,
-		Obstacle = 16,
-		Storage = 32,
-		StorageWithTestItem = 64
-	}
-
 	[OneFrame]
 	public struct NeedCreateUniqueReference {
 		public string Id;
 		public GameObject GameObject;
-		public AdditionalComponentOptions Options;
+		public IList<Action<Entity>> Components;
 	}
 }
