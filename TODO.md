@@ -13,29 +13,30 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Set up Rider + Copilot (minimal rules)
 - [x] Set up Cursor (Unity support and minimal rules)
 - [ ] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
-
-**Tech**
-- [x] Integrate ECS library - Arch
-- [x] One-frame components auto-removal
-- [x] Nullable reference types usage
 - [ ] Code quality check
-- [x] Persistence state management
+- [ ] Code style auto-formatting
+- [x] Nullable reference types usage
 - [x] Test coverage tracking with Codecov
 - [ ] Ignore coverage in Tests directory
 - [ ] Unit tests for regression
 - [ ] CI/CD WebGL build
-- [ ] Convenient way to attach ECS components to GameObjects (with parameters, maybe Wrapper components with nice-to-have code generation)
+
+**Tech**
+- [x] Integrate ECS library - Arch
+- [x] One-frame components auto-removal
+- [x] Persistence state management
+- Convenient way to attach ECS components to GameObjects
+  - [+] With parameters, wrapper components
+  - [ ] Add optional default code generation for wrappers
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
 - [ ] Unique reference guard & generation
   - [ ] Validate entities created after Initialization considering world loading
   - [ ] Reference ID storage, select IDs from dropdown
 - [ ] Localization support
-- [x] Window management:
+- Window management:
   - [x] Minimal open/close functionality
   - [x] Pass context using DI
-- [ ] Window management improvements:
-  - [!] Proper mouse interactions on scene blocking
   - [ ] Caching
   - [!] Stack - new window on top of current
   - [ ] Queue - new window waits for current
@@ -48,10 +49,12 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Character cell-to-cell movement
 - [x] Obstacles & limits
 - [x] A* pathfinding
-- [x] Inventory basics:
+- Input:
+  - [ ] Proper way to block input under UI
+  - [ ] Do not handle cell click when scrolling field
+- Inventory:
   - [x] Item storage
   - [x] Item/storage ID factories
-- [ ] Inventory improvements:
   - [!] Item pickup - open item transfer when player is on cell with some storage
   - [!] Item drop - creates new non-obstacle storage on player cell, initiate item transfer
   - [!] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
@@ -64,12 +67,12 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] HUD:
   - [+] Current unit inventory
 - [ ] Windows:
-  - [+] Inventory window
+  - Inventory window
     - [+] Item scroller list, item details - name and unique sprites
     - [!] Ability to select item by click on it
     - [!] Update on ItemStorageUpdated
     - [!] Drop button for selected item
-  - [!] Transfer window
+  - Transfer window
     - [!] Opens when player stay on cell with storage, do not reopen when closed
     - [!] Two panel view
     - [!] Buttons to transfer selected item in both directions
