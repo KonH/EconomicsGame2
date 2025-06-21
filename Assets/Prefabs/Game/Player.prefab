@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: TestItem1
   itemCount: 1
-  maxCapacity: -1
+  maxCapacity: 2
 --- !u!114 &5066965275017483594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,4 +198,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: TestItem2
   itemCount: 2
-  maxCapacity: -1
+  maxCapacity: 2

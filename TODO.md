@@ -40,9 +40,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Caching
   - [!] Stack - new window on top of current
   - [ ] Queue - new window waits for current
-- [!] Spawn new entities with scene presentation at runtime
-  - [!] PrefabSource, created flag, system to create specific prefabs by ID, prefabs config
-  - [!] Attach dependencies & entity at MonoBehaviours in scene presentation
+- [+] Spawn new entities with scene presentation at runtime
+  - [+] PrefabSource, created flag, system to create specific prefabs by ID, prefabs config
+  - [+] Attach dependencies & entity at MonoBehaviours in scene presentation
 - [+] Ability to listen for ECS events at Unity side
 - PrefabSpawner:
   - [ ] Pooling 
@@ -58,7 +58,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [x] Item storage
   - [x] Item/storage ID factories
   - [!] Item pickup - open item transfer when player is on cell with some storage
-  - [!] Item drop - creates new non-obstacle storage on player cell, initiate item transfer
+  - [+] Item drop - creates new non-obstacle storage on player cell
   - [!] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
   - [!] Storage cleaup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer

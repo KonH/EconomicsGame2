@@ -15,8 +15,10 @@ namespace Bootstrap {
 		[SerializeField] CameraScrollSettings? cameraScrollSettings;
 		[SerializeField] MovementSettings? movementSettings;
 		[SerializeField] GridSettings? gridSettings;
+		[SerializeField] SceneSettings? sceneSettings;
 
 		[SerializeField] ItemsConfig? itemsConfig;
+		[SerializeField] PrefabsConfig? prefabsConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(mouseInputSettings);
@@ -25,6 +27,8 @@ namespace Bootstrap {
 			this.ValidateOrThrow(movementSettings);
 			this.ValidateOrThrow(gridSettings);
 			this.ValidateOrThrow(itemsConfig);
+			this.ValidateOrThrow(prefabsConfig);
+			this.ValidateOrThrow(sceneSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
@@ -39,19 +43,23 @@ namespace Bootstrap {
 			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
 			builder.Register<WorldSubscriptionService>(Lifetime.Scoped).AsSelf();
+			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(itemsConfig).AsSelf();
+			builder.RegisterInstance(prefabsConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
 			builder.RegisterInstance(movementSettings).AsSelf();
+			builder.RegisterInstance(sceneSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<CellInitSystem>();
 				c.Add<SaveSystem>();
 				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
+				c.Add<PrefabLinkSystem>();
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
 				c.Add<DropItemSystem>();

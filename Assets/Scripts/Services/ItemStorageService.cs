@@ -16,6 +16,9 @@ namespace Services {
 		readonly QueryDescription  _storageQuery = new QueryDescription()
 			.WithAll<ItemStorage>();
 
+		readonly QueryDescription _storageOnCellQuery = new QueryDescription()
+			.WithAll<ItemStorage, OnCell>();
+
 		public ItemStorageService(World world, ItemIdService itemIdService) {
 			_world = world;
 			_itemIdService = itemIdService;
@@ -58,6 +61,36 @@ namespace Services {
 			storageEntity.Add(new ItemStorageUpdated());
 		}
 
+		public bool TryGetStorageCellPosition(long storageId, out Vector2Int cellPosition) {
+			Vector2Int? targetCellPosition = null;
+			_world.Query(_storageOnCellQuery, (Entity entity, ref ItemStorage itemStorage, ref OnCell onCell) => {
+				if (itemStorage.StorageId == storageId) {
+					targetCellPosition = onCell.Position;
+				}
+			});
+			if (targetCellPosition == null) {
+				cellPosition = default;
+				return false;
+			}
+			cellPosition = targetCellPosition.Value;
+			return true;
+		}
+
+		public Entity TryGetOtherStorageOnSameCell(long storageId, Vector2Int cellPosition) {
+			var otherStorageEntity = Entity.Null;
+			_world.Query(_storageOnCellQuery, (Entity entity, ref ItemStorage itemStorage, ref OnCell onCell) => {
+				if ((onCell.Position != cellPosition) || (itemStorage.StorageId == storageId)) {
+					return;
+				}
+				if (otherStorageEntity == Entity.Null) {
+					otherStorageEntity = entity;
+				} else {
+					Debug.LogError($"Multiple other storages found on the same cell {cellPosition}. Returning first found.");
+				}
+			});
+			return otherStorageEntity;
+		}
+
 		public void AttachItemToStorage(long storageId, Entity itemEntity, IList<Entity>? items = null) {
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
@@ -72,6 +105,25 @@ namespace Services {
 				StorageOrder = newOrder
 			});
 			storageEntity.Add(new ItemStorageUpdated());
+		}
+
+		public Entity CreateNewStorageAtCell(Vector2Int cellPosition) {
+			var storageEntity = _world.Create();
+			var storageId = _itemIdService.GenerateId();
+			storageEntity.Add(new ItemStorage {
+				StorageId = storageId
+			});
+			storageEntity.Add(new WorldPosition {
+				Position = cellPosition
+			});
+			storageEntity.Add(new OnCell {
+				Position = cellPosition
+			});
+			storageEntity.Add(new PrefabLink {
+				ID = "ItemStorage"
+			});
+			Debug.Log($"Created new storage at {cellPosition} with ID {storageId}");
+			return storageEntity;
 		}
 
 		Entity TryGetStorageEntity(long storageId) {

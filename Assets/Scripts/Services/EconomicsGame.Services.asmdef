@@ -2,6 +2,7 @@
     "name": "EconomicsGame.Services",
     "rootNamespace": "",
     "references": [
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
         "GUID:e0d4142e6c0cdd541be99eccb2c54b7b",
         "GUID:4daab2a0f7e4b9d489fa2661306892a8"
     ],
