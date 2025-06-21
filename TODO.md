@@ -13,43 +13,54 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Set up Rider + Copilot (minimal rules)
 - [x] Set up Cursor (Unity support and minimal rules)
 - [ ] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
-
-**Tech**
-- [x] Integrate ECS library - Arch
-- [x] One-frame components auto-removal
-- [x] Nullable reference types usage
 - [ ] Code quality check
-- [x] Persistence state management
+- [ ] Code style auto-formatting
+- [x] Nullable reference types usage
 - [x] Test coverage tracking with Codecov
 - [ ] Ignore coverage in Tests directory
 - [ ] Unit tests for regression
 - [ ] CI/CD WebGL build
-- [ ] Convenient way to attach ECS components to GameObjects (with parameters, maybe Wrapper components with nice-to-have code generation)
+
+**Tech**
+- [x] Integrate ECS library - Arch
+- [x] One-frame components auto-removal
+- [x] Persistence state management
+- Convenient way to attach ECS components to GameObjects
+  - [+] With parameters, wrapper components
+  - [ ] Add optional default code generation for wrappers
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
 - [ ] Unique reference guard & generation
   - [ ] Validate entities created after Initialization considering world loading
   - [ ] Reference ID storage, select IDs from dropdown
 - [ ] Localization support
-- [ ] Window management:
+- Window management:
   - [x] Minimal open/close functionality
   - [x] Pass context using DI
-- [ ] Window management improvements:
-  - [ ] Proper mouse interactions on scene blocking
   - [ ] Caching
-  - [ ] Stack and queue
+  - [ ] Queue - new window waits for current
+- [+] Spawn new entities with scene presentation at runtime
+  - [+] PrefabSource, created flag, system to create specific prefabs by ID, prefabs config
+  - [+] Attach dependencies & entity at MonoBehaviours in scene presentation
+- [+] Ability to listen for ECS events at Unity side
+- PrefabSpawner:
+  - [ ] Pooling 
 
 **Core**
 - [x] Character cell-to-cell movement
 - [x] Obstacles & limits
 - [x] A* pathfinding
-- [x] Inventory basics:
+- Input:
+  - [ ] Proper way to block input under UI
+  - [ ] Do not handle cell click when scrolling field
+- Inventory:
   - [x] Item storage
   - [x] Item/storage ID factories
-- [ ] Inventory improvements:
-  - [ ] Item pickup
-  - [ ] Item drop
-  - [ ] Item transfer (requires unique item ID)
+  - [+] Item pickup - open item transfer when player is on cell with some storage
+  - [+] Item drop - creates new non-obstacle storage on player cell
+  - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
+  - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
+  - [ ] Split items for partial transfer
   - [ ] Crafting
   
   
@@ -57,7 +68,15 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] HUD:
   - [+] Current unit inventory
 - [ ] Windows:
-  - [+] Inventory window (item scroller list, item details - name and unique sprites)
-  - [ ] Transfer window (shows when stay on specific cell, drag & drop)
+  - Inventory window
+    - [+] Item scroller list, item details - name and unique sprites
+    - [+] Ability to select item by click on it
+    - [+] Update on ItemStorageUpdated
+    - [+] Drop button for selected item
+  - Transfer window
+    - [+] Opens when player moves on cell with storage
+    - [+] Two panel view
+    - [+] Buttons to transfer selected item in both directions
+    - [+] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)

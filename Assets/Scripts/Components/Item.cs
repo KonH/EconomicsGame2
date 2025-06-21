@@ -19,4 +19,15 @@
 		public long StorageId;
 		public long StorageOrder;
 	}
+
+	[OneFrame]
+	public struct DropItem {}
+
+	[OneFrame]
+	public struct TransferAvailable {}
+
+	[OneFrame]
+	public struct TransferItem {
+		public long TargetStorageId;
+	}
 }

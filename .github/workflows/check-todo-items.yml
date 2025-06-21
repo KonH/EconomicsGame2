@@ -1,0 +1,27 @@
+name: Check In-Progress TODO Items
+
+on:
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - '**/*TODO*.md'
+      - '.github/workflows/check-todo-items.yml'
+
+jobs:
+  check-todo:
+    name: Check for in-progress TODO items
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for [!] markers in TODO.md
+        run: |
+          if grep -q "\[\!\]" TODO.md; then
+            echo "::error::Found in-progress [!] items in TODO.md. Please complete these tasks before merging."
+            echo "The following items need to be completed:"
+            grep "\[\!\]" TODO.md
+            exit 1
+          else
+            echo "No in-progress [!] items found in TODO.md. Good to go!"
+          fi

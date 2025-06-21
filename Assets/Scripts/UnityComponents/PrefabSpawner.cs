@@ -1,18 +1,18 @@
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 using Common;
+using Services;
 
 namespace UnityComponents {
 	public class PrefabSpawner : MonoBehaviour {
 		[SerializeField] GameObject? prefab;
 		[SerializeField] GameObject? root;
 
-		IObjectResolver? _objectResolver;
+		PrefabSpawnService? _spawnService;
 
 		[Inject]
-		public void Construct(IObjectResolver objectResolver) {
-			_objectResolver = objectResolver;
+		public void Construct(PrefabSpawnService spawnService) {
+			_spawnService = spawnService;
 		}
 
 		public void Spawn() {
@@ -20,10 +20,14 @@ namespace UnityComponents {
 		}
 
 		public GameObject? SpawnAndReturn() {
-			if (!this.Validate(prefab) || !this.Validate(root) || !this.Validate(_objectResolver)) {
+			if (!this.Validate(prefab) || !this.Validate(root) || !this.Validate(_spawnService)) {
 				return null;
 			}
-			return _objectResolver.Instantiate(prefab, root.transform);
+			return _spawnService.SpawnAndReturn(prefab, root.transform);
+		}
+
+		public void Release(GameObject go) {
+			Destroy(go);
 		}
 	}
 }

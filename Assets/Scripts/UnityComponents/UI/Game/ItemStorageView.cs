@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Arch.Core;
@@ -14,36 +15,52 @@ namespace UnityComponents.UI.Game {
 
 		ItemsConfig? _itemsConfig;
 		ItemStorageService? _itemStorageService;
+		WorldSubscriptionService? _subscriptionService;
 
 		Entity _targetEntity;
+		Action<ItemView>? _selectionCallback;
 		IList<Entity> _targetItems = new List<Entity>();
 
+		ItemView? _selectedItem;
+
+		readonly List<ItemView> _instances = new();
+
 		[Inject]
-		public void Construct(ItemsConfig itemsConfig, ItemStorageService itemStorageService) {
+		public void Construct(ItemsConfig itemsConfig, ItemStorageService itemStorageService, WorldSubscriptionService subscriptionService) {
 			_itemsConfig = itemsConfig;
 			_itemStorageService = itemStorageService;
+			_subscriptionService = subscriptionService;
 		}
 
-		public void Initialize(Entity targetEntity) {
-			if (!this.Validate(_itemStorageService)) {
-				return;
-			}
-
+		public void Init(Entity targetEntity, Action<ItemView>? selectionCallback) {
 			Debug.Log($"Initializing ItemStorageView for entity: {targetEntity}", gameObject);
 			_targetEntity = targetEntity;
-			var itemStorage = _targetEntity.TryGetRef<ItemStorage>(out var isStorageFound);
-			if (!isStorageFound) {
-				Debug.LogError($"Entity {targetEntity} does not have ItemStorage component.", gameObject);
-				return;
-			}
+			_selectionCallback = selectionCallback;
+			InitializeItems();
+			_subscriptionService?.Subscribe<ItemStorageUpdated>(OnItemStorageUpdated);
+		}
 
-			var itemOwnerStorageId = itemStorage.StorageId;
-			_targetItems = _itemStorageService.GetItemsForOwner(itemOwnerStorageId);
-			Debug.Log($"Found {_targetItems.Count} items for storage ID {itemOwnerStorageId}.", gameObject);
+		public void Deinit() {
+			_subscriptionService?.Unsubscribe<ItemStorageUpdated>(OnItemStorageUpdated);
+		}
+
+		public void ClearSelection() {
+			_selectedItem?.SetSelected(false);
+			_selectedItem = null;
+		}
+
+		void OnItemStorageUpdated(Entity _) {
+			Debug.Log("Item storage updated, refreshing items.", gameObject);
+			Refresh();
+		}
+
+		public void Refresh() {
 			InitializeItems();
 		}
 
 		void InitializeItems() {
+			ClearInstances();
+			SetupItems();
 			foreach (var itemEntity in _targetItems) {
 				var item = itemEntity.TryGetRef<Item>(out var isItemFound);
 				if (isItemFound) {
@@ -52,6 +69,31 @@ namespace UnityComponents.UI.Game {
 					Debug.LogError($"Entity {itemEntity} does not have Item component.", gameObject);
 				}
 			}
+		}
+
+		void ClearInstances() {
+			ClearSelection();
+			foreach (var instance in _instances) {
+				if (instance) {
+					prefabSpawner?.Release(instance.gameObject);
+				}
+			}
+			_instances.Clear();
+		}
+
+		void SetupItems() {
+			if (!this.Validate(_itemStorageService)) {
+				return;
+			}
+			var itemStorage = _targetEntity.TryGetRef<ItemStorage>(out var isStorageFound);
+			if (!isStorageFound) {
+				Debug.LogError($"Entity {_targetEntity} does not have ItemStorage component.", gameObject);
+				return;
+			}
+
+			var itemOwnerStorageId = itemStorage.StorageId;
+			_targetItems = _itemStorageService.GetItemsForOwner(itemOwnerStorageId);
+			Debug.Log($"Found {_targetItems.Count} items for storage ID {itemOwnerStorageId}.", gameObject);
 		}
 
 		void InitializeItem(Entity itemEntity, ref Item item) {
@@ -74,7 +116,17 @@ namespace UnityComponents.UI.Game {
 			if (!instance.Validate(itemView)) {
 				return;
 			}
-			itemView.Init(itemConfig, itemEntity, ref item);
+			itemView.Init(itemConfig, itemEntity, ref item, OnItemSelected);
+			_instances.Add(itemView);
+		}
+
+		void OnItemSelected(ItemView itemView) {
+			Debug.Log($"Item selected: {itemView.gameObject.name}", gameObject);
+			_selectedItem = itemView;
+			foreach (var instance in _instances) {
+				instance.SetSelected(instance == itemView);
+			}
+			_selectionCallback?.Invoke(itemView);
 		}
 	}
 }

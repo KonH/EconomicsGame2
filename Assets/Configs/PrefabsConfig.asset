@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8e1eaf353650d48ac4e4782fdd213a, type: 3}
+  m_Name: PrefabsConfig
+  m_EditorClassIdentifier: 
+  prefabs:
+  - id: ItemStorage
+    prefab: {fileID: 6750825955823642901, guid: f8678b2f3d8d7914e90f10a6e0bf831a, type: 3}
