@@ -91,7 +91,6 @@ namespace Tests {
 		}
 
 		[Test]
-		[Ignore("Test is failing - needs further investigation")]
 		public void WhenMultipleActionsInProgress_ShouldUpdateAllCorrectly() {
 			// Arrange
 			var fastEntity = _world.Create();
