@@ -22,9 +22,9 @@ namespace UnityComponents.UI.Game {
 		public void Init(ItemConfig config, Entity entity, ref Item item, Action<ItemView> clickCallback) {
 			_entity = entity;
 			gameObject.name = $"Item_{config.Id}_{item.UniqueID}";
-			if (this.Validate(iconImage)) {
+			//if (this.Validate(iconImage)) {
 				iconImage.sprite = config.Icon;
-			}
+			//}
 			if (this.Validate(nameText)) {
 				nameText.text = config.Name;
 			}
