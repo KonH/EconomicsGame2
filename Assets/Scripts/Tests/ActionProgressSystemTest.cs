@@ -99,7 +99,7 @@ namespace Tests {
 			fastEntity.Add(new ActionProgress { Progress = 0.0f, Speed = 2.0f });
 			slowEntity.Add(new ActionProgress { Progress = 0.0f, Speed = 0.5f });
 
-			var deltaTime = 0.4f;
+			var deltaTime = 0.6f; // Enough to finish fast action, but not slow
 
 			// Act
 			_system.Update(new SystemState { DeltaTime = deltaTime });
@@ -111,7 +111,7 @@ namespace Tests {
 			Assert.IsTrue(slowEntity.Has<ActionProgress>());
 			Assert.IsFalse(slowEntity.Has<ActionFinished>());
 			var slowProgress = slowEntity.Get<ActionProgress>();
-			Assert.AreEqual(0.2f, slowProgress.Progress, 0.0001f);
+			Assert.AreEqual(0.5f * 0.6f, slowProgress.Progress, 0.0001f);
 		}
 	}
 }
