@@ -15,5 +15,14 @@ namespace Configs {
 
 		public int GridWidth => gridWidth;
 		public int GridHeight => gridHeight;
+
+		public GridSettings() {}
+
+		public GridSettings(float cellWidth, float cellHeight, int gridWidth, int gridHeight) {
+			this.cellWidth = cellWidth;
+			this.cellHeight = cellHeight;
+			this.gridWidth = gridWidth;
+			this.gridHeight = gridHeight;
+		}
 	}
 }

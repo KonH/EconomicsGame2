@@ -179,5 +179,13 @@ namespace Services {
 			// Infer the new order based on the count of items
 			return items.Count + 1;
 		}
+
+		public bool HasItemInStorage(long storageId, Entity itemEntity) {
+			if (!itemEntity.Has<ItemOwner>()) {
+				return false;
+			}
+			var itemOwner = itemEntity.Get<ItemOwner>();
+			return itemOwner.StorageId == storageId;
+		}
 	}
 }

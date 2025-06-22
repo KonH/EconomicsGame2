@@ -617,6 +617,7 @@ PlayerSettings:
   additionalCompilerArguments:
     Standalone:
     - -nullable:enable
+    - -warnaserror+
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
