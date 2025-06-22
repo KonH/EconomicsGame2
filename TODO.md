@@ -17,7 +17,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Code style auto-formatting
 - [x] Nullable reference types usage
 - [x] Test coverage tracking with Codecov
-- [!] Unit tests for regression
+- [x] Unit tests for regression
 - [ ] CI/CD WebGL build
 
 **Tech**
