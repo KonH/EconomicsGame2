@@ -12,6 +12,12 @@ namespace Configs {
 		public float Speed => speed;
 
 		public AnimationCurve StandardCurve => this.ValidateOrThrow(standardCurve);
+
+		public MovementSettings() {}
+
+		public MovementSettings(float speed, AnimationCurve? standardCurve) {
+			this.speed = speed;
+			this.standardCurve = standardCurve;
+		}
 	}
 }
-
