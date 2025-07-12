@@ -44,6 +44,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] Ability to listen for ECS events at Unity side
 - PrefabSpawner:
   - [ ] Pooling 
+- [ ] ECS systems dependencies?
 
 **Core**
 - [x] Character cell-to-cell movement
@@ -60,13 +61,18 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
+- [ ] Mining
+- [ ] Crafting
+- AI:
+  - [ ] Idle
+  - [ ] Random walk
+  - [ ] Mining
   - [ ] Crafting
-  
   
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
-- [ ] Windows:
+- Windows:
   - Inventory window
     - [+] Item scroller list, item details - name and unique sprites
     - [+] Ability to select item by click on it
@@ -79,3 +85,10 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)
+
+**Art**
+- Item icons
+  - [ ] Minimal set
+
+**Sound**
+- [ ] Clicks
