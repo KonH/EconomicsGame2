@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.github-glitchenzo.nugetforunity": {
-      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity#v4.4.0",
+      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f8f1902ebec77284fd4ac83d043e0ef664d31831"
+      "hash": "fe31ad0904abee296b5ea72c6073157accba59e8"
     },
     "com.konh.arch.unity": {
       "version": "file:com.konh.arch.unity/src/Arch.Unity/Assets/Arch.Unity",
@@ -21,11 +21,11 @@
       "url": "https://registry.npmjs.org"
     },
     "com.unity.2d.animation": {
-      "version": "11.0.0",
+      "version": "10.2.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "10.0.0",
+        "com.unity.2d.common": "9.1.0",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.collections": "1.2.4",
         "com.unity.modules.animation": "1.0.0",
@@ -34,11 +34,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.aseprite": {
-      "version": "1.2.5",
+      "version": "1.2.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "10.0.0",
+        "com.unity.2d.common": "6.0.6",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.2d.tilemap": "1.0.0",
         "com.unity.mathematics": "1.2.6",
@@ -47,7 +47,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.common": {
-      "version": "10.0.0",
+      "version": "9.1.0",
       "depth": 2,
       "source": "registry",
       "dependencies": {
@@ -69,11 +69,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.psdimporter": {
-      "version": "10.1.1",
+      "version": "10.1.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "10.0.0",
+        "com.unity.2d.common": "9.1.0",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.2d.tilemap": "1.0.0"
       },
@@ -86,11 +86,11 @@
       "dependencies": {}
     },
     "com.unity.2d.spriteshape": {
-      "version": "11.0.0",
+      "version": "10.1.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "10.0.0",
+        "com.unity.2d.common": "9.1.0",
         "com.unity.mathematics": "1.1.0",
         "com.unity.modules.physics2d": "1.0.0"
       },
@@ -106,7 +106,7 @@
       }
     },
     "com.unity.2d.tilemap.extras": {
-      "version": "4.3.1",
+      "version": "4.3.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -117,7 +117,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.23",
+      "version": "1.8.21",
       "depth": 3,
       "source": "registry",
       "dependencies": {
@@ -156,14 +156,14 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.2d.animation": "11.0.0",
+        "com.unity.2d.animation": "10.2.0",
         "com.unity.2d.pixel-perfect": "5.1.0",
-        "com.unity.2d.psdimporter": "10.1.1",
+        "com.unity.2d.psdimporter": "10.1.0",
         "com.unity.2d.sprite": "1.0.0",
-        "com.unity.2d.spriteshape": "11.0.0",
+        "com.unity.2d.spriteshape": "10.1.0",
         "com.unity.2d.tilemap": "1.0.0",
-        "com.unity.2d.tilemap.extras": "4.3.1",
-        "com.unity.2d.aseprite": "1.2.5"
+        "com.unity.2d.tilemap.extras": "4.3.0",
+        "com.unity.2d.aseprite": "1.2.4"
       }
     },
     "com.unity.ide.rider": {
@@ -185,7 +185,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.14.1",
+      "version": "1.14.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -260,7 +260,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.8.8",
+      "version": "1.8.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -281,7 +281,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.8",
+      "version": "1.9.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -291,11 +291,11 @@
       "url": "https://packages.unity.com"
     },
     "jp.hadashikick.vcontainer": {
-      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.9",
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "0522be3ef0bb03a3dd8866d43090b6e7ea22884a"
+      "hash": "5e6f5cc14b6dc8b94251bf6c0d6c37025a6ecf77"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
