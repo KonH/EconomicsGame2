@@ -142,48 +142,28 @@ jobs:
             exit 1
           fi
           
-          # Unity generates coverage in a specific format
-          # We need to create a simple coverage report that Codecov can understand
+          # Unity generates coverage in OpenCover format
+          # We need to convert it to the format Codecov expects
           if [ -f "coverage.xml" ]; then
-            echo "Converting XML coverage..."
+            echo "Converting Unity OpenCover XML to Codecov format..."
             
-            # Check if the original Unity coverage file has the right format
-            if grep -q "coverage" coverage.xml; then
-              echo "Unity coverage file appears to be in correct format, using as-is"
-              # The file is already in the right format, just use it
+            # Check if it's OpenCover format (CoverageSession)
+            if grep -q "CoverageSession" coverage.xml; then
+              echo "Detected OpenCover format, converting to Codecov format..."
+              
+              # Run the conversion script
+              python3 convert_coverage.py
+              
+              echo "Conversion completed"
             else
-              echo "Unity coverage file not in expected format, creating fallback"
-              
-              # Create a simple coverage report in the format Codecov expects
-              echo '<?xml version="1.0" encoding="UTF-8"?>' > coverage_report.xml
-              echo '<coverage version="1">' >> coverage_report.xml
-              echo '  <sources>' >> coverage_report.xml
-              echo '    <source>Assets/Scripts</source>' >> coverage_report.xml
-              echo '  </sources>' >> coverage_report.xml
-              echo '  <packages>' >> coverage_report.xml
-              echo '    <package name="EconomicsGame" line-rate="0.8" branch-rate="0.7" complexity="10">' >> coverage_report.xml
-              echo '      <classes>' >> coverage_report.xml
-              echo '        <class name="SampleClass" filename="Assets/Scripts/Components/SampleClass.cs" line-rate="0.8" branch-rate="0.7">' >> coverage_report.xml
-              echo '          <lines>' >> coverage_report.xml
-              echo '            <line number="1" hits="1"/>' >> coverage_report.xml
-              echo '            <line number="2" hits="1"/>' >> coverage_report.xml
-              echo '            <line number="3" hits="0"/>' >> coverage_report.xml
-              echo '          </lines>' >> coverage_report.xml
-              echo '        </class>' >> coverage_report.xml
-              echo '      </classes>' >> coverage_report.xml
-              echo '    </package>' >> coverage_report.xml
-              echo '  </packages>' >> coverage_report.xml
-              echo '</coverage>' >> coverage_report.xml
-              
-              cp coverage_report.xml ./coverage.xml
-              echo "Created fallback coverage report"
+              echo "Not OpenCover format, using as-is"
             fi
           fi
           
           # Show the final coverage file
           if [ -f "coverage.xml" ]; then
-            echo "=== Final coverage.xml content ==="
-            cat coverage.xml
+            echo "=== Final coverage.xml content (first 50 lines) ==="
+            head -50 coverage.xml
           fi
       
       - name: Upload coverage to Codecov
