@@ -7,6 +7,7 @@ using Configs;
 using Services;
 using Services.State;
 using Systems;
+using Systems.AI;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
@@ -19,6 +20,7 @@ namespace Bootstrap {
 
 		[SerializeField] ItemsConfig? itemsConfig;
 		[SerializeField] PrefabsConfig? prefabsConfig;
+		[SerializeField] AiConfig? aiConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(mouseInputSettings);
@@ -28,6 +30,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(gridSettings);
 			this.ValidateOrThrow(itemsConfig);
 			this.ValidateOrThrow(prefabsConfig);
+			this.ValidateOrThrow(aiConfig);
 			this.ValidateOrThrow(sceneSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -44,9 +47,11 @@ namespace Bootstrap {
 			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
 			builder.Register<WorldSubscriptionService>(Lifetime.Scoped).AsSelf();
 			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
+			builder.Register<AiService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(itemsConfig).AsSelf();
 			builder.RegisterInstance(prefabsConfig).AsSelf();
+			builder.RegisterInstance(aiConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
@@ -82,6 +87,9 @@ namespace Bootstrap {
 				c.Add<FinishCellMovementSystem>();
 				c.Add<TransferAvailableSystem>();
 				c.Add<ReleaseRemovedPrefabLinkSystem>();
+				c.Add<SelectAiStateSystem>();
+				c.Add<IdleStateSystem>();
+				c.Add<RandomWalkSystem>();
 			});
 		}
 	}
