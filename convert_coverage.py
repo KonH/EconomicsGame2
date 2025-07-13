@@ -60,10 +60,11 @@ def convert_opencover_to_codecov(input_file, output_file):
                             full_path = file_elem.get('fullPath', '')
                             if full_path:
                                 # Convert to relative path
-                                if '/github/workspace/' in full_path:
-                                    relative_path = full_path.replace('/github/workspace/', '')
-                                else:
-                                    relative_path = full_path
+                                workspace_root = os.getenv('WORKSPACE_ROOT', '/github/workspace/')
+                                try:
+                                    relative_path = os.path.relpath(full_path, workspace_root)
+                                except ValueError:
+                                    relative_path = full_path  # Fallback if paths are unrelated
                                 class_obj.set('filename', relative_path)
                         
                         # Add lines
