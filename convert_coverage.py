@@ -34,7 +34,11 @@ def convert_opencover_to_codecov(input_file, output_file):
                     branch_coverage = summary.get('branchCoverage', '0')
                     package.set('line-rate', str(float(sequence_coverage) / 100))
                     package.set('branch-rate', str(float(branch_coverage) / 100))
-                    package.set('complexity', '10')
+                    # Compute complexity as the sum of classes and methods
+                    num_classes = len(module.findall('.//Class'))
+                    num_methods = sum(len(class_elem.findall('.//Method')) for class_elem in module.findall('.//Class'))
+                    complexity = num_classes + num_methods
+                    package.set('complexity', str(complexity))
                 
                 # Add classes
                 classes_elem = ET.SubElement(package, 'classes')
