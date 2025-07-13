@@ -84,8 +84,8 @@ def convert_opencover_to_codecov(input_file, output_file):
         return True
         
     except Exception as e:
-        print(f"Error converting coverage: {e}")
-        return False
+        print(f"Error converting coverage: {e}", file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
     input_file = "coverage.xml"
