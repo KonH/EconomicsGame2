@@ -19,7 +19,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Test coverage tracking with Codecov
 - [x] Unit tests for regression
 - [ ] CI/CD WebGL build
-- [ ] Fix code coverage upload 
+- [!] Fix code coverage upload 
 
 **Tech**
 - [x] Integrate ECS library - Arch
