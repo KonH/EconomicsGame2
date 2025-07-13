@@ -1,3 +1,37 @@
 coverage:
   ignore:
     - "Assets/Scripts/Tests/*"
+    - "Assets/Scripts/Editor/*"
+    - "Packages/*"
+    - "Library/*"
+    - "Temp/*"
+    - "*.meta"
+    - "*.asmdef"
+    - "*.asmdef.meta"
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: false
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+coverage:
+  precision: 2
+  round: down
+  range: "80...100"
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+    patch:
+      default:
+        target: auto
+        threshold: 1%
