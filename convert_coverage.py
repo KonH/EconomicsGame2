@@ -34,11 +34,7 @@ def convert_opencover_to_codecov(input_file, output_file):
                     branch_coverage = summary.get('branchCoverage', '0')
                     package.set('line-rate', str(float(sequence_coverage) / 100))
                     package.set('branch-rate', str(float(branch_coverage) / 100))
-                    # Compute complexity as the sum of classes and methods
-                    num_classes = len(module.findall('.//Class'))
-                    num_methods = sum(len(class_elem.findall('.//Method')) for class_elem in module.findall('.//Class'))
-                    complexity = num_classes + num_methods
-                    package.set('complexity', str(complexity))
+                    package.set('complexity', '10')
                 
                 # Add classes
                 classes_elem = ET.SubElement(package, 'classes')
@@ -58,30 +54,16 @@ def convert_opencover_to_codecov(input_file, output_file):
                             class_obj.set('branch-rate', str(float(branch_coverage) / 100))
                         
                         # Add filename if available
-                        # Build a mapping of fileid to <File> elements
-                        file_map = {file_elem.get('id'): file_elem for file_elem in module.findall('.//File')}
-                        
-                        # Find the fileid for the class from its SequencePoint elements
-                        fileid = None
-                        for method in class_elem.findall('.//Method'):
-                            for seq_point in method.findall('.//SequencePoint'):
-                                fileid = seq_point.get('fileid')
-                                if fileid:
-                                    break
-                            if fileid:
-                                break
-                        
-                        # Use the fileid to find the corresponding <File> element
-                        if fileid and fileid in file_map:
-                            file_elem = file_map[fileid]
+                        files = module.findall('.//File')
+                        if files:
+                            file_elem = files[0]
                             full_path = file_elem.get('fullPath', '')
                             if full_path:
                                 # Convert to relative path
-                                workspace_root = os.getenv('WORKSPACE_ROOT', '/github/workspace/')
-                                try:
-                                    relative_path = os.path.relpath(full_path, workspace_root)
-                                except ValueError:
-                                    relative_path = full_path  # Fallback if paths are unrelated
+                                if '/github/workspace/' in full_path:
+                                    relative_path = full_path.replace('/github/workspace/', '')
+                                else:
+                                    relative_path = full_path
                                 class_obj.set('filename', relative_path)
                         
                         # Add lines
@@ -102,8 +84,8 @@ def convert_opencover_to_codecov(input_file, output_file):
         return True
         
     except Exception as e:
-        print(f"Error converting coverage: {e}", file=sys.stderr)
-        sys.exit(1)
+        print(f"Error converting coverage: {e}")
+        return False
 
 if __name__ == "__main__":
     input_file = "coverage.xml"
