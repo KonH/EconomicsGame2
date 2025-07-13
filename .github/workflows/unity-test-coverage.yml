@@ -45,36 +45,29 @@ jobs:
         with:
           projectPath: .
           testMode: editmode
-          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport;assemblyFilters:+<assets>,-*Tests*,-*.Tests*
+          customParameters: -enableCodeCoverage -coverageResultsPath=CodeCoverage -coverageOptions=generateHtmlReport;generateBadgeReport;assemblyFilters:+EconomicsGame.*,-*Tests*,-*.Tests*
           
-      - name: Check Project Directory Structure
+      - name: Debug Coverage Output
         if: always()
         run: |
           echo "=== Project Root Directory ==="
           ls -la
           
-          echo "=== Assets Directory ==="
-          ls -la Assets || echo "No Assets directory found"
-          
           echo "=== Looking for CodeCoverage directory ==="
           find . -name "CodeCoverage" -type d
           
-          echo "=== Looking for artifacts directory ==="
-          find . -name "artifacts" -type d
+          echo "=== CodeCoverage Contents ==="
+          if [ -d "CodeCoverage" ]; then
+            ls -la CodeCoverage
+            find CodeCoverage -type f -name "*.xml" -exec echo "Found XML: {}" \;
+            find CodeCoverage -type f -name "*.json" -exec echo "Found JSON: {}" \;
+            find CodeCoverage -type f -name "*.html" -exec echo "Found HTML: {}" \;
+          fi
           
-          echo "=== GitHub Workspace Directory ==="
-          ls -la $GITHUB_WORKSPACE
-          
-          echo "=== Check test-results location ==="
-          find $GITHUB_WORKSPACE -name "test-results" -type d
-          
-          echo "=== Artifacts in GitHub Workspace ==="
-          if [ -d "$GITHUB_WORKSPACE/artifacts" ]; then
-            ls -la $GITHUB_WORKSPACE/artifacts
-            echo "=== Artifacts Contents ==="
-            find $GITHUB_WORKSPACE/artifacts -type f | sort
-          else
-            echo "No artifacts directory found in GitHub Workspace"
+          echo "=== Artifacts Contents ==="
+          if [ -d "artifacts" ]; then
+            ls -la artifacts
+            find artifacts -type f | sort
           fi
       
       - name: Upload Test Results
@@ -91,14 +84,96 @@ jobs:
           name: Coverage Results
           path: CodeCoverage
       
-      - name: Process Coverage for Codecov
+      - name: Process Unity Coverage for Codecov
+        if: always()
         run: |
-          ls -la CodeCoverage
-          find CodeCoverage -name "*.xml" -type f -exec cp {} ./coverage.xml \;
+          echo "Processing Unity coverage for Codecov..."
+          
+          # Check if CodeCoverage directory exists
+          if [ ! -d "CodeCoverage" ]; then
+            echo "CodeCoverage directory not found"
+            exit 1
+          fi
+          
+          # Look for coverage files
+          COVERAGE_XML=$(find CodeCoverage -name "*.xml" -type f | head -1)
+          COVERAGE_JSON=$(find CodeCoverage -name "*.json" -type f | head -1)
+          
+          echo "Found XML: $COVERAGE_XML"
+          echo "Found JSON: $COVERAGE_JSON"
+          
+          # Unity typically generates coverage in a specific format
+          # We need to convert it to a format Codecov can understand
+          if [ -n "$COVERAGE_XML" ]; then
+            echo "Using XML coverage file: $COVERAGE_XML"
+            cp "$COVERAGE_XML" ./coverage.xml
+            
+            # Check if the XML is in the correct format for Codecov
+            if grep -q "coverage" "$COVERAGE_XML"; then
+              echo "XML appears to be in correct format"
+            else
+              echo "Warning: XML may not be in expected format"
+            fi
+          elif [ -n "$COVERAGE_JSON" ]; then
+            echo "Using JSON coverage file: $COVERAGE_JSON"
+            cp "$COVERAGE_JSON" ./coverage.json
+          else
+            echo "No coverage files found"
+            exit 1
+          fi
+          
+          # List the coverage file
+          ls -la coverage.* || echo "No coverage files copied"
+          
+          # Show first few lines of coverage file for debugging
+          if [ -f "coverage.xml" ]; then
+            echo "=== First 20 lines of coverage.xml ==="
+            head -20 coverage.xml
+          fi
+      
+      - name: Convert Unity Coverage to Codecov Format
+        if: always()
+        run: |
+          echo "Converting Unity coverage to Codecov format..."
+          
+          # Check if we have a coverage file
+          if [ ! -f "coverage.xml" ] && [ ! -f "coverage.json" ]; then
+            echo "No coverage file found to convert"
+            exit 1
+          fi
+          
+          # Unity generates coverage in OpenCover format
+          # We need to convert it to the format Codecov expects
+          if [ -f "coverage.xml" ]; then
+            echo "Converting Unity OpenCover XML to Codecov format..."
+            
+            # Check if it's OpenCover format (CoverageSession)
+            if grep -q "CoverageSession" coverage.xml; then
+              echo "Detected OpenCover format, converting to Codecov format..."
+              
+              # Run the conversion script
+              python3 convert_coverage.py
+              
+              echo "Conversion completed"
+            else
+              echo "Not OpenCover format, using as-is"
+            fi
+          fi
+          
+          # Show the final coverage file
+          if [ -f "coverage.xml" ]; then
+            echo "=== Final coverage.xml content (first 50 lines) ==="
+            head -50 coverage.xml
+          fi
       
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
+          flags: unity
+          name: unity-coverage
           fail_ci_if_error: false
+          verbose: true
+          debug: true
