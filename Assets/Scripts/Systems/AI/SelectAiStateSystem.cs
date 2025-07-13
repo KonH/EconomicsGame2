@@ -17,11 +17,24 @@ namespace Systems.AI {
 		readonly AiService _aiService;
 		readonly AiConfig _aiConfig;
 		readonly System.Random _random;
+		readonly List<IStateConfig> _cachedConfigs;
+		readonly int _totalPriority;
 
 		public SelectAiStateSystem(World world, AiService aiService, AiConfig aiConfig) : base(world) {
 			_aiService = aiService;
 			_aiConfig = aiConfig;
 			_random = new System.Random();
+			
+			// Cache configs and calculate total priority once
+			_cachedConfigs = new List<IStateConfig> {
+				_aiConfig.IdleConfig,
+				_aiConfig.RandomWalkConfig
+			};
+			
+			_totalPriority = 0;
+			foreach (var config in _cachedConfigs) {
+				_totalPriority += config.Priority;
+			}
 		}
 
 		public override void Update(in SystemState _) {
@@ -32,27 +45,17 @@ namespace Systems.AI {
 		}
 
 		IStateConfig SelectRandomState() {
-			var configs = new List<IStateConfig> {
-				_aiConfig.IdleConfig,
-				_aiConfig.RandomWalkConfig
-			};
-
-			var totalPriority = 0;
-			foreach (var config in configs) {
-				totalPriority += config.Priority;
-			}
-
-			var randomValue = _random.Next(totalPriority);
+			var randomValue = _random.Next(_totalPriority);
 			var currentPriority = 0;
 
-			foreach (var config in configs) {
+			foreach (var config in _cachedConfigs) {
 				currentPriority += config.Priority;
 				if (randomValue < currentPriority) {
 					return config;
 				}
 			}
 
-			return configs[configs.Count - 1];
+			return _cachedConfigs[_cachedConfigs.Count - 1];
 		}
 
 		void EnterState(Entity entity, IStateConfig config) {
