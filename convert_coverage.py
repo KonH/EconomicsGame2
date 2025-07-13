@@ -54,9 +54,22 @@ def convert_opencover_to_codecov(input_file, output_file):
                             class_obj.set('branch-rate', str(float(branch_coverage) / 100))
                         
                         # Add filename if available
-                        files = module.findall('.//File')
-                        if files:
-                            file_elem = files[0]
+                        # Build a mapping of fileid to <File> elements
+                        file_map = {file_elem.get('id'): file_elem for file_elem in module.findall('.//File')}
+                        
+                        # Find the fileid for the class from its SequencePoint elements
+                        fileid = None
+                        for method in class_elem.findall('.//Method'):
+                            for seq_point in method.findall('.//SequencePoint'):
+                                fileid = seq_point.get('fileid')
+                                if fileid:
+                                    break
+                            if fileid:
+                                break
+                        
+                        # Use the fileid to find the corresponding <File> element
+                        if fileid and fileid in file_map:
+                            file_elem = file_map[fileid]
                             full_path = file_elem.get('fullPath', '')
                             if full_path:
                                 # Convert to relative path
