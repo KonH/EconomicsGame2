@@ -77,22 +77,6 @@ if (condition) {
 }
 ```
 - Invert conditions to reduce nesting it it is make sense and do not make code less readable
-- Add empty lines between switch case blocks for better readability:
-```csharp
-switch (value) {
-    case Type1:
-        // code
-        break;
-
-    case Type2:
-        // code
-        break;
-
-    default:
-        // code
-        break;
-}
-```
 
 
 ## Variable Declarations
@@ -194,44 +178,6 @@ World _world = null!;
 - Commit changes with descriptive messages after each logical step
 - Update TODO.md to track progress on features
 - When implementing algorithms like A*, start with a simple version and optimize later
-
-### Config, Service and System Registration
-- Always register new services in GameLifetimeScope.Configure() method:
-  ```csharp
-  builder.Register<NewService>(Lifetime.Scoped).AsSelf();
-  ```
-- Always register new configs in GameLifetimeScope:
-  ```csharp
-  [SerializeField] NewConfig? newConfig;
-  this.ValidateOrThrow(newConfig);
-  builder.RegisterInstance(newConfig).AsSelf();
-  ```
-- Always register new systems in the ArchApp configuration:
-  ```csharp
-  c.Add<NewSystem>();
-  ```
-- Register services and configs before systems in the configuration order
-
-### Config Classes for Testability
-- Always provide two constructors for config classes:
-  ```csharp
-  [Serializable]
-  public sealed class MyConfig {
-      [SerializeField] int priority = 1;
-      [SerializeField] float value = 1f;
-
-      public MyConfig() {} // For Unity serialization
-      public MyConfig(int priority, float value) { // For testing
-          this.priority = priority;
-          this.value = value;
-      }
-
-      public int Priority => priority;
-      public float Value => value;
-  }
-  ```
-- Use parameterless constructor for Unity serialization and full constructor for testing
-- Avoid reflection in tests - use constructors instead
 
 ### Data Structures
 - Use appropriate data structures for performance-critical operations
