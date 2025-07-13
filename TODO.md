@@ -65,10 +65,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Mining
 - [ ] Crafting
 - AI:
-  - [!] Idle
-  - [!] Random walk
+  - [+] Idle
+  - [+] Random walk
   - [ ] Mining
   - [ ] Crafting
+  - [ ] Fix stuck after loading issue
   
 **UI**
 - [+] HUD:
