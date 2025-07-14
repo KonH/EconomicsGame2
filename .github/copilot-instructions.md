@@ -173,6 +173,10 @@ World _world = null!;
 - Use `[Persistent]` attribute for components that need to be saved/loaded
 - Components should be simple structs with minimal logic
 - Use descriptive names that clearly indicate purpose (e.g., `MovementTargetCell`)
+- Do NOT use `[Serializable]` attribute on components - it's not needed for ECS components
+- Use `[Persistent]` only for components that need to persist across save/load operations
+- Use `[OneFrame]` attribute for event components that should be automatically removed after processing
+- Do not add obvious comments about marker components - their purpose is clear from the name
 
 ### Systems
 - Systems should focus on a single responsibility
