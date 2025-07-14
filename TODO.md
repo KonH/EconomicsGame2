@@ -63,7 +63,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
-- [ ] Mining
+- [!] Mining
 - [ ] Crafting
 - AI:
   - [+] Idle
