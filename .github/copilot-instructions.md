@@ -226,6 +226,7 @@ When working through implementation phases from plan documents:
    - Example: "- [ ] Fix: Adjust probability calculation in ItemGenerationProcessingSystem"
 5. **Proceed to Next Phase**: Only move to the next phase after user approval of current phase
 6. **Document Progress**: Update TODO.md when features are completed
+7. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message
 
 This workflow ensures iterative development with proper feedback loops and clear tracking of progress and corrections.
 

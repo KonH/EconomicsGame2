@@ -107,9 +107,9 @@ The ItemGenerator system allows entities to automatically generate items when th
 ## Steps To Implement Checklist
 
 ### Phase 1: Core Components
-- [ ] Create ItemGenerator component struct
-- [ ] Create ItemCollector component struct (marker component)
-- [ ] Create ItemGenerationEvent component struct
+- [x] Create ItemGenerator component struct
+- [x] Create ItemCollector component struct (marker component)
+- [x] Create ItemGenerationEvent component struct
 
 ### Phase 2: Configuration
 - [ ] Create ItemGeneratorConfig ScriptableObject
