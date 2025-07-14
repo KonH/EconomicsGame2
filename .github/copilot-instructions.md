@@ -200,6 +200,31 @@ World _world = null!;
 - Update TODO.md to track progress on features
 - When implementing algorithms like A*, start with a simple version and optimize later
 
+### Full Development Process
+
+#### Planning Phase
+1. **User provides general idea** - User describes a feature concept in broad terms
+2. **Create plan document** - Assistant creates `docs/wip/FeatureName.md` with sections:
+   - **Overview**: High-level description of the feature and its purpose
+   - **Tech Spec**: Technical specifications including components, systems, and configuration
+   - **Steps To Implement Checklist**: Detailed implementation phases with checkboxes
+3. **Iterative refinement** - User provides feedback on each section, assistant updates document
+4. **Final plan approval** - User approves the complete plan document
+
+#### Implementation Phase
+When working through implementation phases from plan documents:
+
+1. **Complete Phase Steps**: Implement all tasks in the current phase
+2. **Wait for Feedback**: After completing a phase, wait for user feedback before proceeding
+3. **Mark Completed Steps**: Update the checklist by marking completed steps with [x]
+4. **Handle Corrections**: If user feedback indicates issues or changes needed:
+   - Add new checklist items with "Fix:" prefix and brief description
+   - Example: "- [ ] Fix: Adjust probability calculation in ItemGenerationProcessingSystem"
+5. **Proceed to Next Phase**: Only move to the next phase after user approval of current phase
+6. **Document Progress**: Update TODO.md when features are completed
+
+This workflow ensures iterative development with proper feedback loops and clear tracking of progress and corrections.
+
 ### Config, Service and System Registration
 - Always register new services in GameLifetimeScope.Configure() method:
   ```csharp
