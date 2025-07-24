@@ -18,6 +18,11 @@ using ThirdParty; // All third-party libraries
 using EconomicsGame.*; // All project-specific namespaces
 ```
 
+### File Management
+- When creating new files, ensure Unity generates corresponding `.meta` files
+- Meta files contain Unity's asset metadata and GUIDs and should be committed to version control
+- Trigger Unity compilation or asset refresh after creating new files to ensure proper meta file generation
+
 ## Naming Conventions
 
 ### Classes and Types
@@ -236,3 +241,9 @@ World _world = null!;
 ### Data Structures
 - Use appropriate data structures for performance-critical operations
 - Consider memory usage and allocation patterns in frequently executed code
+
+### Meta File Generation
+- After creating new files, Unity will automatically generate corresponding `.meta` files
+- Meta files contain Unity's asset metadata and GUIDs
+- Ensure files are properly imported by Unity by triggering a compilation or asset refresh
+- Meta files should be committed to version control alongside their source files
