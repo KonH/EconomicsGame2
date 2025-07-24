@@ -1,3 +1,6 @@
 [submodule "Packages/com.konh.arch.unity"]
 	path = Packages/com.konh.arch.unity
 	url = https://github.com/KonH/Arch.Unity.git
+[submodule "Packages/com.konh.unity-mcp"]
+	path = Packages/com.konh.unity-mcp
+	url = https://github.com/KonH/unity-mcp.git

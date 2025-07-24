@@ -12,7 +12,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 **Dev experience**
 - [x] Set up Rider + Copilot (minimal rules)
 - [x] Set up Cursor (Unity support and minimal rules)
-- [ ] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
+- [x] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
+- [ ] Use Unity MCP to run tests
 - [x] Code quality check (no warnings)
 - [ ] Code style auto-formatting
 - [x] Nullable reference types usage
