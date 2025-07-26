@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -7,12 +8,14 @@ using Services;
 using Systems;
 using UnityEngine;
 using System.Collections.Generic;
+using Configs;
 
 namespace Tests {
 	public class TransferItemSystemTest {
 		World _world = null!;
 		ItemStorageService _itemStorageService = null!;
 		ItemIdService _itemIdService = null!;
+		ItemsConfig _itemsConfig = null!;
 		TransferItemSystem _system = null!;
 
 		// Test storage entities
@@ -30,7 +33,9 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService);
+			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
 			_system = new TransferItemSystem(_world, _itemStorageService);
 
 			// Create test storages

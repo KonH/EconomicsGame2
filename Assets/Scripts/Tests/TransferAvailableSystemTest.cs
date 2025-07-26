@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using UnityEngine.TestTools;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -7,12 +8,14 @@ using Components;
 using Services;
 using Systems;
 using UnityEngine;
+using Configs;
 
 namespace Tests {
 	public class TransferAvailableSystemTest {
 		World _world = null!;
 		ItemStorageService _itemStorageService = null!;
 		ItemIdService _itemIdService = null!;
+		ItemsConfig _itemsConfig = null!;
 		TransferAvailableSystem _system = null!;
 
 		// Test entities
@@ -26,10 +29,12 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService);
+			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
 			_system = new TransferAvailableSystem(_world, _itemStorageService);
 
-			// Create test storage entities
+			// Create test storages
 			CreateTestStorages();
 		}
 
@@ -56,6 +61,8 @@ namespace Tests {
 				StorageId = 200
 			});
 		}
+
+
 
 		[Test]
 		public void WhenMovableStorageChangesCell_AndOtherStorageOnSameCell_ShouldAddTransferAvailable() {

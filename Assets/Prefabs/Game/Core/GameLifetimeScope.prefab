@@ -112,3 +112,4 @@ MonoBehaviour:
   itemsConfig: {fileID: 11400000, guid: a007d0407c1ec19488a2938c36a7c71c, type: 2}
   prefabsConfig: {fileID: 11400000, guid: 7d82e2b87f2d63d469b0a20937732fc7, type: 2}
   aiConfig: {fileID: 11400000, guid: 57720554386de7b49841a0bd1e780961, type: 2}
+  itemGeneratorConfig: {fileID: 11400000, guid: 4880d4d83821f304591c5e43ab46efb2, type: 2}

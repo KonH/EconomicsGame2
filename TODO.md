@@ -14,6 +14,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Set up Cursor (Unity support and minimal rules)
 - [x] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
 - [ ] Use Unity MCP to run tests
+- [ ] Use Unity MCP to create config assets
 - [x] Code quality check (no warnings)
 - [ ] Code style auto-formatting
 - [x] Nullable reference types usage
@@ -47,6 +48,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - PrefabSpawner:
   - [ ] Pooling 
 - [ ] ECS systems dependencies?
+- Entity management:
+  - [ ] Remove related gameObject when entity destroyed
+  - [ ] Allow to move to cell after obstacle destroyed
 
 **Core**
 - [x] Character cell-to-cell movement
@@ -63,7 +67,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
-- [ ] Mining
+  - [ ] Merge items after same ID generated
+- [+] Mining
 - [ ] Crafting
 - AI:
   - [+] Idle

@@ -21,6 +21,7 @@ namespace Bootstrap {
 		[SerializeField] ItemsConfig? itemsConfig;
 		[SerializeField] PrefabsConfig? prefabsConfig;
 		[SerializeField] AiConfig? aiConfig;
+		[SerializeField] ItemGeneratorConfig? itemGeneratorConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(mouseInputSettings);
@@ -31,6 +32,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(itemsConfig);
 			this.ValidateOrThrow(prefabsConfig);
 			this.ValidateOrThrow(aiConfig);
+			this.ValidateOrThrow(itemGeneratorConfig);
 			this.ValidateOrThrow(sceneSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -52,6 +54,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(itemsConfig).AsSelf();
 			builder.RegisterInstance(prefabsConfig).AsSelf();
 			builder.RegisterInstance(aiConfig).AsSelf();
+			builder.RegisterInstance(itemGeneratorConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
@@ -65,6 +68,7 @@ namespace Bootstrap {
 				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<PrefabLinkSystem>();
+				c.Add<ItemGeneratorInitializationSystem>();
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
 				c.Add<DropItemSystem>();
@@ -76,6 +80,8 @@ namespace Bootstrap {
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
 				c.Add<CellClickSystem>();
+				c.Add<ItemGenerationIntentSystem>();
+				c.Add<ItemGenerationIntentProcessingSystem>();
 				c.Add<KeyboardMovementSystem>();
 				c.Add<PathfindingTargetSystem>();
 				c.Add<PathfindingSystem>();
@@ -90,6 +96,8 @@ namespace Bootstrap {
 				c.Add<SelectAiStateSystem>();
 				c.Add<IdleStateSystem>();
 				c.Add<RandomWalkSystem>();
+				c.Add<ItemGenerationSystem>();
+				c.Add<ItemGenerationProcessingSystem>();
 			});
 		}
 	}

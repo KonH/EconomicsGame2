@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using UnityEngine.TestTools;
 using Arch.Core;
 using Arch.Core.Extensions;
@@ -8,12 +9,14 @@ using Services;
 using Systems;
 using UnityEngine;
 using System.Collections.Generic;
+using Configs;
 
 namespace Tests {
 	public class DropItemSystemTest {
 		World _world = null!;
 		ItemStorageService _itemStorageService = null!;
 		ItemIdService _itemIdService = null!;
+		ItemsConfig _itemsConfig = null!;
 		DropItemSystem _system = null!;
 
 		// Test entities
@@ -30,7 +33,9 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService);
+			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
 			_system = new DropItemSystem(_world, _itemStorageService);
 
 			// Create test storage entities and item

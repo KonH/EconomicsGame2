@@ -4,11 +4,13 @@ using UnityEngine;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Components;
+using Configs;
 
 namespace Services {
 	public sealed class ItemStorageService {
 		readonly World _world;
 		readonly ItemIdService _itemIdService;
+		readonly ItemsConfig _itemsConfig;
 
 		readonly QueryDescription _itemOwnerQuery = new QueryDescription()
 			.WithAll<ItemOwner>();
@@ -19,9 +21,10 @@ namespace Services {
 		readonly QueryDescription _storageOnCellQuery = new QueryDescription()
 			.WithAll<ItemStorage, OnCell>();
 
-		public ItemStorageService(World world, ItemIdService itemIdService) {
+		public ItemStorageService(World world, ItemIdService itemIdService, ItemsConfig itemsConfig) {
 			_world = world;
 			_itemIdService = itemIdService;
+			_itemsConfig = itemsConfig;
 		}
 
 		public long GetStorageId(Entity storageEntity) {
@@ -49,7 +52,12 @@ namespace Services {
 				.ToList();
 		}
 
-		public void AddNewItem(long storageId, string itemId, int count, IList<Entity>? items = null) {
+		public bool AddNewItem(long storageId, string itemId, int count, IList<Entity>? items = null) {
+			var itemConfig = _itemsConfig.GetItemById(itemId);
+			if (itemConfig == null) {
+				Debug.LogError($"Item with ID '{itemId}' not found in ItemsConfig. Cannot create item.");
+				return false;
+			}
 			var itemEntity = _world.Create();
 			itemEntity.Add(new Item {
 				ResourceID = itemId,
@@ -57,6 +65,7 @@ namespace Services {
 				Count = count
 			});
 			AttachItemToStorage(storageId, itemEntity, items);
+			return true;
 		}
 
 		public void RemoveItemFromStorage(long storageId, Entity itemEntity) {

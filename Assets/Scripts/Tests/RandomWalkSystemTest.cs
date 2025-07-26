@@ -22,7 +22,7 @@ namespace Tests {
 			_world = World.Create();
 			_aiService = new AiService(_world);
 			_cellService = CreateTestCellService();
-			_aiConfig = CreateTestAiConfig();
+			_aiConfig = CreateTestConfig();
 			_gridSettings = CreateTestGridSettings();
 			_system = new RandomWalkSystem(_world, _aiService, _cellService, _aiConfig, _gridSettings);
 		}
@@ -179,10 +179,16 @@ namespace Tests {
 			return cellService;
 		}
 
-		AiConfig CreateTestAiConfig() {
-			var idleConfig = new IdleStateConfig(1, 1f, 5f);
-			var randomWalkConfig = new RandomWalkStateConfig(1, 1, 3);
-			return new AiConfig(idleConfig, randomWalkConfig);
+		AiConfig CreateTestConfig() {
+			var idleConfig = new IdleStateConfig();
+			idleConfig.TestInit(1, 1f, 3f);
+			
+			var randomWalkConfig = new RandomWalkStateConfig();
+			randomWalkConfig.TestInit(2, 2, 5);
+			
+			var config = ScriptableObject.CreateInstance<AiConfig>();
+			config.TestInit(idleConfig, randomWalkConfig);
+			return config;
 		}
 
 		GridSettings CreateTestGridSettings() {

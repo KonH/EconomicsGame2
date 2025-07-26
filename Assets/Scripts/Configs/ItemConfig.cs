@@ -14,5 +14,11 @@ namespace Configs {
 		public string Id => id;
 		public string Name => name;
 		public Sprite Icon => this.ValidateOrThrow(icon);
+
+		public void TestInit(string id, string name, Sprite? icon) {
+			this.id = id;
+			this.name = name;
+			this.icon = icon;
+		}
 	}
 }

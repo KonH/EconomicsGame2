@@ -18,10 +18,19 @@ using ThirdParty; // All third-party libraries
 using EconomicsGame.*; // All project-specific namespaces
 ```
 
-### File Management
-- When creating new files, ensure Unity generates corresponding `.meta` files
+### Script Creation and File Management
+- **Use `manage_script` command only for creating new C# scripts with empty content**
+- **Do NOT use `manage_script` for updating existing scripts** - use normal file editing instead
+- After creating empty script with `manage_script`, add the actual script content using normal file editing
+- All scripts should follow the established code style and naming conventions
+- Unity will automatically generate corresponding `.meta` files for scripts created via `manage_script`
 - Meta files contain Unity's asset metadata and GUIDs and should be committed to version control
-- Trigger Unity compilation or asset refresh after creating new files to ensure proper meta file generation
+
+### Asset Creation
+- **Asset files (.asset) are human user responsibility**
+- Do not attempt to create ScriptableObject assets programmatically
+- Focus on script implementation and system logic
+- Human users will create assets using Unity Editor menus or manual creation
 
 ## Naming Conventions
 
@@ -29,9 +38,10 @@ using EconomicsGame.*; // All project-specific namespaces
 - Use PascalCase for class names and type names (e.g., `PlainClass`)
 - Mark classes as `sealed` when inheritance is not planned
 - Namespace all classes (e.g., `namespace Prototype { ... }`)
-- Place opening braces on the same line for class and method declarations (e.g., `class MyClass {`)
+- **ALWAYS place opening braces on the same line** for class and method declarations (e.g., `class MyClass {`)
 
 ### Fields and Properties
+- **NEVER use explicit 'private' keyword** - always omit access modifier for private members
 - Public static fields use PascalCase (e.g., `PublicStaticField`)
 - Public static properties use PascalCase (e.g., `PublicStaticProperty`)
 - Private static fields use underscore prefix with camelCase (e.g., `_privateStaticField`)
@@ -45,7 +55,7 @@ using EconomicsGame.*; // All project-specific namespaces
 ### Methods and Functions
 - Use PascalCase for public methods
 - Use PascalCase for Unity lifecycle methods (e.g., `Start`, `Update`)
-- Place opening braces on the same line for method declarations (e.g., `void MyMethod() {`)
+- **ALWAYS place opening braces on the same line** for method declarations (e.g., `void MyMethod() {`)
 
 ## Code Organization
 
@@ -72,7 +82,7 @@ using EconomicsGame.*; // All project-specific namespaces
 - When caching references to Unity objects, validate them before usage
 
 ## Control Structures
-- Use standard bracing style with braces on the same line as the statement
+- **ALWAYS use standard bracing style with braces on the same line** as the statement
 - Format conditional statements with consistent indentation:
 ```csharp
 if (condition) {
@@ -117,7 +127,7 @@ var count = myList.Count;
 - Use Debug.Log statements for temporary debugging, include meaningful context
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
-- Do not use explicit 'private' keyword for private members (omit access modifier for private members)
+- **NEVER use explicit 'private' keyword for private members** - always omit access modifier for private members
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`), add comments only when necessary to explain really complex logic or completely unclear implementations
 - Never use standard or XML comments anywhere at all, they are not useful in this project
@@ -173,6 +183,10 @@ World _world = null!;
 - Use `[Persistent]` attribute for components that need to be saved/loaded
 - Components should be simple structs with minimal logic
 - Use descriptive names that clearly indicate purpose (e.g., `MovementTargetCell`)
+- Do NOT use `[Serializable]` attribute on components - it's not needed for ECS components
+- Use `[Persistent]` only for components that need to persist across save/load operations
+- Use `[OneFrame]` attribute for event components that should be automatically removed after processing
+- Do not add obvious comments about marker components - their purpose is clear from the name
 
 ### Systems
 - Systems should focus on a single responsibility
@@ -199,6 +213,32 @@ World _world = null!;
 - Commit changes with descriptive messages after each logical step
 - Update TODO.md to track progress on features
 - When implementing algorithms like A*, start with a simple version and optimize later
+
+### Full Development Process
+
+#### Planning Phase
+1. **User provides general idea** - User describes a feature concept in broad terms
+2. **Create plan document** - Assistant creates `docs/wip/FeatureName.md` with sections:
+   - **Overview**: High-level description of the feature and its purpose
+   - **Tech Spec**: Technical specifications including components, systems, and configuration
+   - **Steps To Implement Checklist**: Detailed implementation phases with checkboxes
+3. **Iterative refinement** - User provides feedback on each section, assistant updates document
+4. **Final plan approval** - User approves the complete plan document
+
+#### Implementation Phase
+When working through implementation phases from plan documents:
+
+1. **Complete Phase Steps**: Implement all tasks in the current phase
+2. **Wait for Feedback**: After completing a phase, wait for user feedback before proceeding
+3. **Mark Completed Steps**: Update the checklist by marking completed steps with [x]
+4. **Handle Corrections**: If user feedback indicates issues or changes needed:
+   - Add new checklist items with "Fix:" prefix and brief description
+   - Example: "- [ ] Fix: Adjust probability calculation in ItemGenerationProcessingSystem"
+5. **Proceed to Next Phase**: Only move to the next phase after user approval of current phase
+6. **Document Progress**: Update TODO.md when features are completed
+7. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message
+
+This workflow ensures iterative development with proper feedback loops and clear tracking of progress and corrections.
 
 ### Config, Service and System Registration
 - Always register new services in GameLifetimeScope.Configure() method:
@@ -241,9 +281,3 @@ World _world = null!;
 ### Data Structures
 - Use appropriate data structures for performance-critical operations
 - Consider memory usage and allocation patterns in frequently executed code
-
-### Meta File Generation
-- After creating new files, Unity will automatically generate corresponding `.meta` files
-- Meta files contain Unity's asset metadata and GUIDs
-- Ensure files are properly imported by Unity by triggering a compilation or asset refresh
-- Meta files should be committed to version control alongside their source files

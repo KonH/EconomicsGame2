@@ -13,17 +13,15 @@ namespace Configs {
 		[SerializeField] float minTime = 1f;
 		[SerializeField] float maxTime = 5f;
 
-		public IdleStateConfig() {}
+		public int Priority => priority;
+		public float MinTime => minTime;
+		public float MaxTime => maxTime;
 
-		public IdleStateConfig(int priority, float minTime, float maxTime) {
+		public void TestInit(int priority, float minTime, float maxTime) {
 			this.priority = priority;
 			this.minTime = minTime;
 			this.maxTime = maxTime;
 		}
-
-		public int Priority => priority;
-		public float MinTime => minTime;
-		public float MaxTime => maxTime;
 	}
 
 	[Serializable]
@@ -32,17 +30,15 @@ namespace Configs {
 		[SerializeField] int minDistance = 1;
 		[SerializeField] int maxDistance = 5;
 
-		public RandomWalkStateConfig() {}
+		public int Priority => priority;
+		public int MinDistance => minDistance;
+		public int MaxDistance => maxDistance;
 
-		public RandomWalkStateConfig(int priority, int minDistance, int maxDistance) {
+		public void TestInit(int priority, int minDistance, int maxDistance) {
 			this.priority = priority;
 			this.minDistance = minDistance;
 			this.maxDistance = maxDistance;
 		}
-
-		public int Priority => priority;
-		public int MinDistance => minDistance;
-		public int MaxDistance => maxDistance;
 	}
 
 	[CreateAssetMenu(fileName = "AiConfig", menuName = "Configs/AiConfig")]
@@ -50,14 +46,12 @@ namespace Configs {
 		[SerializeField] IdleStateConfig? idleConfig;
 		[SerializeField] RandomWalkStateConfig? randomWalkConfig;
 
-		public AiConfig() {}
+		public IdleStateConfig IdleConfig => this.ValidateOrThrow(idleConfig);
+		public RandomWalkStateConfig RandomWalkConfig => this.ValidateOrThrow(randomWalkConfig);
 
-		public AiConfig(IdleStateConfig idleConfig, RandomWalkStateConfig randomWalkConfig) {
+		public void TestInit(IdleStateConfig idleConfig, RandomWalkStateConfig randomWalkConfig) {
 			this.idleConfig = idleConfig;
 			this.randomWalkConfig = randomWalkConfig;
 		}
-
-		public IdleStateConfig IdleConfig => this.ValidateOrThrow(idleConfig);
-		public RandomWalkStateConfig RandomWalkConfig => this.ValidateOrThrow(randomWalkConfig);
 	}
 } 
