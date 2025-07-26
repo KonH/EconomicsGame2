@@ -33,7 +33,8 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
-			_itemsConfig = new ItemsConfig(Array.Empty<ItemConfig>());
+			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
 			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
 			_system = new DropItemSystem(_world, _itemStorageService);
 

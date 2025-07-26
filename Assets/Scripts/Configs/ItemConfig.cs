@@ -11,16 +11,14 @@ namespace Configs {
 		[SerializeField] string name = string.Empty;
 		[SerializeField] Sprite? icon;
 
-		public ItemConfig() {} // For Unity serialization
-		
-		public ItemConfig(string id, string name, Sprite? icon) { // For testing
+		public string Id => id;
+		public string Name => name;
+		public Sprite Icon => this.ValidateOrThrow(icon);
+
+		public void TestInit(string id, string name, Sprite? icon) {
 			this.id = id;
 			this.name = name;
 			this.icon = icon;
 		}
-
-		public string Id => id;
-		public string Name => name;
-		public Sprite Icon => this.ValidateOrThrow(icon);
 	}
 }

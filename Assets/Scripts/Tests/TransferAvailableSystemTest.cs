@@ -29,11 +29,12 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
-			_itemsConfig = new ItemsConfig(Array.Empty<ItemConfig>());
-		_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
+			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
 			_system = new TransferAvailableSystem(_world, _itemStorageService);
 
-			// Create test storage entities
+			// Create test storages
 			CreateTestStorages();
 		}
 
@@ -60,6 +61,8 @@ namespace Tests {
 				StorageId = 200
 			});
 		}
+
+
 
 		[Test]
 		public void WhenMovableStorageChangesCell_AndOtherStorageOnSameCell_ShouldAddTransferAvailable() {

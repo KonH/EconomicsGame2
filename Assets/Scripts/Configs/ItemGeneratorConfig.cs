@@ -10,19 +10,17 @@ namespace Configs {
 		[SerializeField] int minCount;
 		[SerializeField] int maxCount;
 
-		public ItemGenerationRule() {} // For Unity serialization
-		
-		public ItemGenerationRule(string itemType, float probability, int minCount, int maxCount) { // For testing
+		public string ItemType => itemType;
+		public float Probability => probability;
+		public int MinCount => minCount;
+		public int MaxCount => maxCount;
+
+		public void TestInit(string itemType, float probability, int minCount, int maxCount) {
 			this.itemType = itemType;
 			this.probability = probability;
 			this.minCount = minCount;
 			this.maxCount = maxCount;
 		}
-
-		public string ItemType => itemType;
-		public float Probability => probability;
-		public int MinCount => minCount;
-		public int MaxCount => maxCount;
 	}
 
 	[Serializable]
@@ -32,19 +30,17 @@ namespace Configs {
 		[SerializeField] int minCapacity;
 		[SerializeField] int maxCapacity;
 
-		public ItemTypeConfig() {} // For Unity serialization
-		
-		public ItemTypeConfig(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity) { // For testing
+		public string Type => type;
+		public List<ItemGenerationRule> Rules => rules;
+		public int MinCapacity => minCapacity;
+		public int MaxCapacity => maxCapacity;
+
+		public void TestInit(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity) {
 			this.type = type;
 			this.rules = rules;
 			this.minCapacity = minCapacity;
 			this.maxCapacity = maxCapacity;
 		}
-
-		public string Type => type;
-		public List<ItemGenerationRule> Rules => rules;
-		public int MinCapacity => minCapacity;
-		public int MaxCapacity => maxCapacity;
 	}
 
 	[CreateAssetMenu(fileName = "ItemGeneratorConfig", menuName = "Economics Game/Configs/Item Generator Config")]
@@ -52,9 +48,7 @@ namespace Configs {
 		[SerializeField] List<ItemTypeConfig> typeConfigs = new();
 		Dictionary<string, ItemTypeConfig>? _typeConfigLookup;
 
-		public ItemGeneratorConfig() {} // For Unity serialization
-		
-		public ItemGeneratorConfig(List<ItemTypeConfig> typeConfigs) { // For testing
+		public void TestInit(List<ItemTypeConfig> typeConfigs) {
 			this.typeConfigs = typeConfigs;
 		}
 

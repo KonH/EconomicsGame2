@@ -19,7 +19,7 @@ namespace Tests {
 		public void SetUp() {
 			_world = World.Create();
 			_aiService = new AiService(_world);
-			_aiConfig = CreateTestAiConfig();
+			_aiConfig = CreateTestConfig();
 			_system = new SelectAiStateSystem(_world, _aiService, _aiConfig);
 		}
 
@@ -126,10 +126,16 @@ namespace Tests {
 			Assert.IsTrue(entity2.Has<IdleState>() || entity2.Has<RandomWalkState>());
 		}
 
-		AiConfig CreateTestAiConfig() {
-			var idleConfig = new IdleStateConfig(1, 1f, 5f);
-			var randomWalkConfig = new RandomWalkStateConfig(1, 1, 5);
-			return new AiConfig(idleConfig, randomWalkConfig);
+		AiConfig CreateTestConfig() {
+			var idleConfig = new IdleStateConfig();
+			idleConfig.TestInit(1, 1f, 3f);
+			
+			var randomWalkConfig = new RandomWalkStateConfig();
+			randomWalkConfig.TestInit(2, 2, 5);
+			
+			var config = ScriptableObject.CreateInstance<AiConfig>();
+			config.TestInit(idleConfig, randomWalkConfig);
+			return config;
 		}
 	}
 } 

@@ -9,13 +9,11 @@ namespace Configs {
 
 		Dictionary<string, ItemConfig>? _itemDictionary;
 
-		public ItemsConfig() {} // For Unity serialization
-		
-		public ItemsConfig(ItemConfig[] items) { // For testing
+		public ItemConfig[] Items => items;
+
+		public void TestInit(ItemConfig[] items) {
 			this.items = items;
 		}
-
-		public ItemConfig[] Items => items;
 
 		public ItemConfig? GetItemById(string id) {
 			if (_itemDictionary == null) {

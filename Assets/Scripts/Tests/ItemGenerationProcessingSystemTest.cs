@@ -51,22 +51,34 @@ namespace Tests {
 			_system = null!;
 		}
 
-		ItemsConfig CreateTestItemsConfig() {
-			var items = new ItemConfig[] {
-				new ItemConfig("TestItem", "Test Item", null),
-				new ItemConfig("ItemA", "Item A", null),
-				new ItemConfig("ItemB", "Item B", null)
-			};
-			return new ItemsConfig(items);
-		}
+	ItemsConfig CreateTestItemsConfig() {
+		var items = new ItemConfig[] {
+			new ItemConfig(),
+			new ItemConfig(),
+			new ItemConfig()
+		};
+		items[0].TestInit("TestItem", "Test Item", null);
+		items[1].TestInit("ItemA", "Item A", null);
+		items[2].TestInit("ItemB", "Item B", null);
+		
+		var config = ScriptableObject.CreateInstance<ItemsConfig>();
+		config.TestInit(items);
+		return config;
+	}
 
-		ItemGeneratorConfig CreateTestConfig() {
-			var rules = new List<ItemGenerationRule> {
-				new ItemGenerationRule(_itemType, 1.0f, 1, 3) // 100% chance, 1-3 items
-			};
-			var typeConfig = new ItemTypeConfig(_generatorType, rules, 5, 10);
-			return new ItemGeneratorConfig(new List<ItemTypeConfig> { typeConfig });
-		}
+	ItemGeneratorConfig CreateTestConfig() {
+		var rules = new List<ItemGenerationRule> {
+			new ItemGenerationRule()
+		};
+		rules[0].TestInit(_itemType, 1.0f, 1, 3); // 100% chance, 1-3 items
+		
+		var typeConfig = new ItemTypeConfig();
+		typeConfig.TestInit(_generatorType, rules, 5, 10);
+		
+		var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+		config.TestInit(new List<ItemTypeConfig> { typeConfig });
+		return config;
+	}
 
 		Entity CreateGeneratorEntity(int currentCapacity = 0, int maxCapacity = 10) {
 			var entity = _world.Create();
@@ -231,11 +243,17 @@ namespace Tests {
 		public void WhenProbabilityBasedGeneration_ShouldRespectProbabilities() {
 			// Arrange - Create config with multiple rules with different probabilities
 			var rules = new List<ItemGenerationRule> {
-				new ItemGenerationRule("ItemA", 0.3f, 1, 1), // 30% chance
-				new ItemGenerationRule("ItemB", 0.7f, 1, 1)  // 70% chance
+				new ItemGenerationRule(),
+				new ItemGenerationRule()
 			};
-			var typeConfig = new ItemTypeConfig(_generatorType, rules, 5, 10);
-			var config = new ItemGeneratorConfig(new List<ItemTypeConfig> { typeConfig });
+			rules[0].TestInit("ItemA", 0.3f, 1, 1); // 30% chance
+			rules[1].TestInit("ItemB", 0.7f, 1, 1); // 70% chance
+			
+			var typeConfig = new ItemTypeConfig();
+			typeConfig.TestInit(_generatorType, rules, 5, 10);
+			
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { typeConfig });
 			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
@@ -258,11 +276,17 @@ namespace Tests {
 		public void WhenZeroProbabilityRules_ShouldNotGenerateItems() {
 			// Arrange - Create config with zero probability rules
 			var rules = new List<ItemGenerationRule> {
-				new ItemGenerationRule("ItemA", 0.0f, 1, 1), // 0% chance
-				new ItemGenerationRule("ItemB", 0.0f, 1, 1)  // 0% chance
+				new ItemGenerationRule(),
+				new ItemGenerationRule()
 			};
-			var typeConfig = new ItemTypeConfig(_generatorType, rules, 5, 10);
-			var config = new ItemGeneratorConfig(new List<ItemTypeConfig> { typeConfig });
+			rules[0].TestInit("ItemA", 0.0f, 1, 1); // 0% chance
+			rules[1].TestInit("ItemB", 0.0f, 1, 1); // 0% chance
+			
+			var typeConfig = new ItemTypeConfig();
+			typeConfig.TestInit(_generatorType, rules, 5, 10);
+			
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { typeConfig });
 			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
@@ -285,8 +309,11 @@ namespace Tests {
 		public void WhenEmptyRulesList_ShouldNotGenerateItems() {
 			// Arrange - Create config with empty rules
 			var rules = new List<ItemGenerationRule>();
-			var typeConfig = new ItemTypeConfig(_generatorType, rules, 5, 10);
-			var config = new ItemGeneratorConfig(new List<ItemTypeConfig> { typeConfig });
+			var typeConfig = new ItemTypeConfig();
+			typeConfig.TestInit(_generatorType, rules, 5, 10);
+			
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { typeConfig });
 			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
@@ -333,10 +360,15 @@ namespace Tests {
 		public void WhenItemStorageServiceFails_ShouldNotIncrementCapacity() {
 			// Arrange - Create a config that will cause AddNewItem to fail (invalid item type)
 			var rules = new List<ItemGenerationRule> {
-				new ItemGenerationRule("InvalidItemType", 1.0f, 1, 1) // Invalid item type that won't be found in config
+				new ItemGenerationRule()
 			};
-			var typeConfig = new ItemTypeConfig(_generatorType, rules, 5, 10);
-			var config = new ItemGeneratorConfig(new List<ItemTypeConfig> { typeConfig });
+			rules[0].TestInit("InvalidItemType", 1.0f, 1, 1); // Invalid item type that won't be found in config
+			
+			var typeConfig = new ItemTypeConfig();
+			typeConfig.TestInit(_generatorType, rules, 5, 10);
+			
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { typeConfig });
 			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
