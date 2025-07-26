@@ -73,14 +73,14 @@ namespace Systems {
 			};
 
 			foreach (var position in adjacentPositions) {
-				Entity? foundPlayer = null;
+				Entity foundPlayer = Entity.Null;
 				World.Query(_playerQuery, (Entity playerEntity, ref OnCell playerPosition) => {
 					if (playerPosition.Position == position) {
 						foundPlayer = playerEntity;
 					}
 				});
-				if (foundPlayer != null) {
-					return foundPlayer.Value;
+				if (foundPlayer != Entity.Null) {
+					return foundPlayer;
 				}
 			}
 
