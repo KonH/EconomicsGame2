@@ -152,12 +152,12 @@ The ItemGenerator system allows entities to automatically generate items when th
 - [x] Validate probability-based generation works as expected
 
 ### Phase 5: Testing
-- [ ] Create unit tests for ItemGenerationSystem
-- [ ] Create unit tests for ItemGenerationProcessingSystem
-- [ ] Test edge cases (no adjacent collectors, capacity limits)
-- [ ] Verify item count aggregation works correctly
+- [x] Create unit tests for ItemGenerationSystem
+- [x] Create unit tests for ItemGenerationProcessingSystem
+- [x] Test edge cases (no adjacent collectors, capacity limits)
+- [x] Verify item count aggregation works correctly
 
 ### Phase 6: Documentation
-- [ ] Update TODO.md with completed ItemGenerator feature
-- [ ] Add any necessary comments to complex logic
-- [ ] Document configuration format for future reference 
+- [x] Update TODO.md with completed ItemGenerator feature
+- [x] Add any necessary comments to complex logic
+- [x] Document configuration format for future reference 

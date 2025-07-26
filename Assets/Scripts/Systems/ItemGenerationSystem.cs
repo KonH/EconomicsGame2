@@ -19,7 +19,7 @@ namespace Systems {
 
 		public override void Update(in SystemState _) {
 			World.Query(_triggerGenerationQuery, (Entity generatorEntity, ref ItemGenerator itemGenerator, ref TriggerItemGeneration trigger) => {
-				if (itemGenerator.CurrentCapacity >= itemGenerator.MaxCapacity) {
+				if (itemGenerator.CurrentCapacity >= itemGenerator.MaxCapacity || itemGenerator.CurrentCapacity < 0) {
 					return;
 				}
 

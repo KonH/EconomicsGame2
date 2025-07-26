@@ -7,7 +7,7 @@ namespace Configs {
 	public sealed class ItemsConfig : ScriptableObject {
 		[SerializeField] ItemConfig[] items = Array.Empty<ItemConfig>();
 
-		Dictionary<string, ItemConfig> _itemDictionary = new();
+		Dictionary<string, ItemConfig>? _itemDictionary;
 
 		public ItemsConfig() {} // For Unity serialization
 		
@@ -17,14 +17,13 @@ namespace Configs {
 
 		public ItemConfig[] Items => items;
 
-		void OnEnable() {
-			_itemDictionary = new Dictionary<string, ItemConfig>();
-			foreach (var item in items) {
-				_itemDictionary.TryAdd(item.Id, item);
-			}
-		}
-
 		public ItemConfig? GetItemById(string id) {
+			if (_itemDictionary == null) {
+				_itemDictionary = new Dictionary<string, ItemConfig>();
+				foreach (var item in items) {
+					_itemDictionary.TryAdd(item.Id, item);
+				}
+			}
 			return _itemDictionary.GetValueOrDefault(id);
 		}
 	}

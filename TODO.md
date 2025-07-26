@@ -68,7 +68,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [ ] Merge items after same ID generated
-- [!] Mining
+- [+] Mining
 - [ ] Crafting
 - AI:
   - [+] Idle
