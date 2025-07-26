@@ -1,4 +1,5 @@
 using System;
+using Arch.Core;
 
 namespace Components {
 	[Persistent]
@@ -6,5 +7,15 @@ namespace Components {
 		public string Type;
 		public int CurrentCapacity;
 		public int MaxCapacity;
+	}
+
+	[OneFrame]
+	public struct TriggerItemGeneration {
+		public Entity TargetCollectorEntity;
+	}
+
+	[OneFrame]
+	public struct ItemGenerationIntent {
+		public Entity TargetGeneratorEntity;
 	}
 } 

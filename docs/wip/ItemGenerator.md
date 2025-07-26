@@ -120,20 +120,30 @@ The ItemGenerator system allows entities to automatically generate items when th
 - [x] Register config in GameLifetimeScope
 
 ### Phase 3: Systems Implementation
-- [ ] Create ItemGenerationSystem
-  - [ ] Implement adjacency detection logic
-  - [ ] Query for ItemGenerator + Position entities
-  - [ ] Find adjacent ItemCollector entities
-  - [ ] Emit ItemGenerationEvent for valid pairs
-- [ ] Create ItemGenerationProcessingSystem
-  - [ ] Process ItemGenerationEvent entities
-  - [ ] Look up generator type configuration
-  - [ ] Implement probability-based item selection
-  - [ ] Generate random count within min/max range
-  - [ ] Add items to collector's ItemStorage
-  - [ ] Update generator capacity
-  - [ ] Destroy generator if capacity exceeded
-- [ ] Register both systems in ArchApp configuration
+- [x] Create ItemGenerationSystem
+  - [x] Implement adjacency detection logic (including diagonal cells)
+  - [x] Query for ItemGenerator + Position + TriggerItemGeneration entities
+  - [x] Find adjacent ItemCollector entities
+  - [x] Emit ItemGenerationEvent for valid pairs
+  - [x] Reuse collections to avoid allocations in update loops
+- [x] Create ItemGenerationProcessingSystem
+  - [x] Process ItemGenerationEvent entities
+  - [x] Look up generator type configuration
+  - [x] Implement probability-based item selection
+  - [x] Generate random count within min/max range
+  - [x] Add items to collector's ItemStorage
+  - [x] Update generator capacity
+  - [x] Destroy generator if capacity exceeded
+  - [x] Reuse collections to avoid allocations in update loops
+- [x] Create ItemGenerationIntent one-frame component
+- [x] Create ItemGenerationIntentSystem
+  - [x] Handle player clicks on generator cells when player is adjacent
+  - [x] Add ItemGenerationIntent component to player entity
+- [x] Create ItemGenerationIntentProcessingSystem
+  - [x] Convert ItemGenerationIntent to TriggerItemGeneration
+  - [x] Target the specific player entity as collector
+- [x] Create TriggerItemGeneration one-frame component
+- [x] Register all systems in ArchApp configuration
 
 ### Phase 4: Integration
 - [ ] Test adjacency detection with existing positioning system
