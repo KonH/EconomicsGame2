@@ -14,6 +14,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Set up Cursor (Unity support and minimal rules)
 - [x] Try to use MCP for Unity - https://github.com/justinpbarnett/unity-mcp
 - [ ] Use Unity MCP to run tests
+- [ ] Use Unity MCP to create config assets
 - [x] Code quality check (no warnings)
 - [ ] Code style auto-formatting
 - [x] Nullable reference types usage

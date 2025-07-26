@@ -18,10 +18,19 @@ using ThirdParty; // All third-party libraries
 using EconomicsGame.*; // All project-specific namespaces
 ```
 
-### File Management
-- When creating new files, ensure Unity generates corresponding `.meta` files
+### Script Creation and File Management
+- **Use `manage_script` command only for creating new C# scripts with empty content**
+- **Do NOT use `manage_script` for updating existing scripts** - use normal file editing instead
+- After creating empty script with `manage_script`, add the actual script content using normal file editing
+- All scripts should follow the established code style and naming conventions
+- Unity will automatically generate corresponding `.meta` files for scripts created via `manage_script`
 - Meta files contain Unity's asset metadata and GUIDs and should be committed to version control
-- Trigger Unity compilation or asset refresh after creating new files to ensure proper meta file generation
+
+### Asset Creation
+- **Asset files (.asset) are human user responsibility**
+- Do not attempt to create ScriptableObject assets programmatically
+- Focus on script implementation and system logic
+- Human users will create assets using Unity Editor menus or manual creation
 
 ## Naming Conventions
 
@@ -29,9 +38,10 @@ using EconomicsGame.*; // All project-specific namespaces
 - Use PascalCase for class names and type names (e.g., `PlainClass`)
 - Mark classes as `sealed` when inheritance is not planned
 - Namespace all classes (e.g., `namespace Prototype { ... }`)
-- Place opening braces on the same line for class and method declarations (e.g., `class MyClass {`)
+- **ALWAYS place opening braces on the same line** for class and method declarations (e.g., `class MyClass {`)
 
 ### Fields and Properties
+- **NEVER use explicit 'private' keyword** - always omit access modifier for private members
 - Public static fields use PascalCase (e.g., `PublicStaticField`)
 - Public static properties use PascalCase (e.g., `PublicStaticProperty`)
 - Private static fields use underscore prefix with camelCase (e.g., `_privateStaticField`)
@@ -45,7 +55,7 @@ using EconomicsGame.*; // All project-specific namespaces
 ### Methods and Functions
 - Use PascalCase for public methods
 - Use PascalCase for Unity lifecycle methods (e.g., `Start`, `Update`)
-- Place opening braces on the same line for method declarations (e.g., `void MyMethod() {`)
+- **ALWAYS place opening braces on the same line** for method declarations (e.g., `void MyMethod() {`)
 
 ## Code Organization
 
@@ -72,7 +82,7 @@ using EconomicsGame.*; // All project-specific namespaces
 - When caching references to Unity objects, validate them before usage
 
 ## Control Structures
-- Use standard bracing style with braces on the same line as the statement
+- **ALWAYS use standard bracing style with braces on the same line** as the statement
 - Format conditional statements with consistent indentation:
 ```csharp
 if (condition) {
@@ -117,7 +127,7 @@ var count = myList.Count;
 - Use Debug.Log statements for temporary debugging, include meaningful context
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
-- Do not use explicit 'private' keyword for private members (omit access modifier for private members)
+- **NEVER use explicit 'private' keyword for private members** - always omit access modifier for private members
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`), add comments only when necessary to explain really complex logic or completely unclear implementations
 - Never use standard or XML comments anywhere at all, they are not useful in this project
@@ -271,9 +281,3 @@ This workflow ensures iterative development with proper feedback loops and clear
 ### Data Structures
 - Use appropriate data structures for performance-critical operations
 - Consider memory usage and allocation patterns in frequently executed code
-
-### Meta File Generation
-- After creating new files, Unity will automatically generate corresponding `.meta` files
-- Meta files contain Unity's asset metadata and GUIDs
-- Ensure files are properly imported by Unity by triggering a compilation or asset refresh
-- Meta files should be committed to version control alongside their source files

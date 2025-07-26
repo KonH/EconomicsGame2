@@ -21,6 +21,7 @@ namespace Bootstrap {
 		[SerializeField] ItemsConfig? itemsConfig;
 		[SerializeField] PrefabsConfig? prefabsConfig;
 		[SerializeField] AiConfig? aiConfig;
+		[SerializeField] ItemGeneratorConfig? itemGeneratorConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(mouseInputSettings);
@@ -31,6 +32,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(itemsConfig);
 			this.ValidateOrThrow(prefabsConfig);
 			this.ValidateOrThrow(aiConfig);
+			this.ValidateOrThrow(itemGeneratorConfig);
 			this.ValidateOrThrow(sceneSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
@@ -52,6 +54,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(itemsConfig).AsSelf();
 			builder.RegisterInstance(prefabsConfig).AsSelf();
 			builder.RegisterInstance(aiConfig).AsSelf();
+			builder.RegisterInstance(itemGeneratorConfig).AsSelf();
 
 			builder.RegisterInstance(mouseInputSettings).AsSelf();
 			builder.RegisterInstance(keyboardInputSettings).AsSelf();
