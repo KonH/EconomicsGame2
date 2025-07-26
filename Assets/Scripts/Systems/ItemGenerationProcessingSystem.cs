@@ -58,16 +58,20 @@ namespace Systems {
 			var selectedItem = SelectItemToGenerate(typeConfig.Rules);
 			if (selectedItem != null) {
 				var count = _random.Next(selectedItem.MinCount, selectedItem.MaxCount + 1);
-				_itemStorageService.AddNewItem(storageId, selectedItem.ItemType, count);
-				Debug.Log($"Generated {count} {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
-			}
+				var itemCreated = _itemStorageService.AddNewItem(storageId, selectedItem.ItemType, count);
+				
+				if (itemCreated) {
+					Debug.Log($"Generated {count} {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
+					generator.CurrentCapacity++;
+					World.Set(generationEvent.GeneratorEntity, generator);
 
-			generator.CurrentCapacity++;
-			World.Set(generationEvent.GeneratorEntity, generator);
-
-			if (generator.CurrentCapacity >= generator.MaxCapacity) {
-				Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, destroying");
-				World.Destroy(generationEvent.GeneratorEntity);
+					if (generator.CurrentCapacity >= generator.MaxCapacity) {
+						Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, destroying");
+						World.Destroy(generationEvent.GeneratorEntity);
+					}
+				} else {
+					Debug.LogWarning($"Failed to create item {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
+				}
 			}
 		}
 

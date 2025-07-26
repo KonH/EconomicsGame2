@@ -21,37 +21,36 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState _) {
-			var targetCell = GetClickedCellPosition();
-			if (targetCell == null) {
+			var clickedCellData = GetClickedCellData();
+			if (clickedCellData == null) {
 				return;
 			}
+			var (position, clickEntity) = clickedCellData.Value;
 
 			World.Query(_movableEntitiesQuery, (Entity entity, ref OnCell cellPosition) => {
-				if (cellPosition.Position == targetCell.Value) {
+				if (cellPosition.Position == position) {
 					return;
 				}
 
 				World.Remove<MovementTargetCell>(entity);
 				World.Add(entity, new MovementTargetCell {
-					Position = targetCell.Value
+					Position = position
 				});
 
-				Debug.Log($"Setting target cell for entity from {cellPosition.Position} to {targetCell.Value}");
+				Debug.Log($"Setting target cell for entity from {cellPosition.Position} to {position}");
 			});
 
-			World.Query(_clickedCellsQuery, (cellEntity) => {
-				World.Remove<CellClick>(cellEntity);
-			});
+			World.Remove<CellClick>(clickEntity);
 		}
 
-		Vector2Int? GetClickedCellPosition() {
-			Vector2Int? clickedCellPos = null;
+		(Vector2Int Position, Entity Entity)? GetClickedCellData() {
+			(Vector2Int Position, Entity Entity)? clickedCellData = null;
 
 			World.Query(_clickedCellsQuery, (Entity cellEntity, ref Cell cell) => {
-				clickedCellPos = cell.Position;
+				clickedCellData = (cell.Position, cellEntity);
 			});
 
-			return clickedCellPos;
+			return clickedCellData;
 		}
 	}
 }

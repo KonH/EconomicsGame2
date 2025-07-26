@@ -68,6 +68,7 @@ namespace Bootstrap {
 				c.Add<UniqueReferenceValidationSystem>();
 				c.Add<UniqueReferenceLinkSystem>();
 				c.Add<PrefabLinkSystem>();
+				c.Add<ItemGeneratorInitializationSystem>();
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
 				c.Add<DropItemSystem>();

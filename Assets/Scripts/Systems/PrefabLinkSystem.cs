@@ -43,6 +43,11 @@ namespace Systems {
 					GameObject = gameObject
 				});
 				entity.Add(new PrefabLinkCreated());
+
+				if (!entity.Has<EntityCreated>()) {
+					entity.Add(new EntityCreated());
+					entity.Add(new NewEntity());
+				}
 			});
 		}
 	}

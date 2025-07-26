@@ -9,6 +9,12 @@ namespace Configs {
 
 		Dictionary<string, ItemConfig> _itemDictionary = new();
 
+		public ItemsConfig() {} // For Unity serialization
+		
+		public ItemsConfig(ItemConfig[] items) { // For testing
+			this.items = items;
+		}
+
 		public ItemConfig[] Items => items;
 
 		void OnEnable() {

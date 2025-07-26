@@ -24,6 +24,11 @@ namespace Systems {
 				foreach (var componentInit in needCreateUniqueReference.Components) {
 					componentInit(targetEntity);
 				}
+
+				if (!targetEntity.Has<EntityCreated>()) {
+					targetEntity.Add(new EntityCreated());
+					targetEntity.Add(new NewEntity());
+				}
 			});
 		}
 

@@ -146,10 +146,10 @@ The ItemGenerator system allows entities to automatically generate items when th
 - [x] Register all systems in ArchApp configuration
 
 ### Phase 4: Integration
-- [ ] Test adjacency detection with existing positioning system
-- [ ] Verify ItemStorage integration works correctly
-- [ ] Test capacity management and generator destruction
-- [ ] Validate probability-based generation works as expected
+- [x] Test adjacency detection with existing positioning system
+- [x] Verify ItemStorage integration works correctly
+- [x] Test capacity management and generator destruction
+- [x] Validate probability-based generation works as expected
 
 ### Phase 5: Testing
 - [ ] Create unit tests for ItemGenerationSystem

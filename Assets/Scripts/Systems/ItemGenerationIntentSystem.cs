@@ -24,28 +24,40 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState _) {
-			var clickedCellPosition = GetClickedCellPosition();
-			if (clickedCellPosition == null) {
+			var clickedCellData = GetClickedCellData();
+			if (clickedCellData == null) {
 				return;
 			}
+			var (position, clickEntity) = clickedCellData.Value;
 
-			var playerEntity = FindPlayerOnAdjacentCell(clickedCellPosition.Value);
-			if (playerEntity == Entity.Null) {
-				return;
-			}
+			var playerEntity = FindPlayerOnAdjacentCell(position);
+			var isGeneratorClicked = false;
 
 			World.Query(_itemGeneratorQuery, (Entity generatorEntity, ref OnCell generatorPosition) => {
-				if (generatorPosition.Position == clickedCellPosition.Value) {
-					World.Add(playerEntity, new ItemGenerationIntent {
-						TargetGeneratorEntity = generatorEntity
-					});
-					Debug.Log($"Created ItemGenerationIntent for player {playerEntity} targeting generator {generatorEntity}");
+				if (generatorPosition.Position == position) {
+					if (playerEntity != Entity.Null) {
+                        World.Add(playerEntity, new ItemGenerationIntent {
+                            TargetGeneratorEntity = generatorEntity
+                        });
+                        Debug.Log($"Created ItemGenerationIntent for player {playerEntity} targeting generator {generatorEntity}");
+					}
+					isGeneratorClicked = true;
 				}
 			});
 
-			World.Query(_clickedCellsQuery, (cellEntity) => {
-				World.Remove<CellClick>(cellEntity);
+            if (isGeneratorClicked) {
+				World.Remove<CellClick>(clickEntity);
+			}
+		}
+
+		(Vector2Int Position, Entity Entity)? GetClickedCellData() {
+			(Vector2Int Position, Entity Entity)? clickedCellData = null;
+
+			World.Query(_clickedCellsQuery, (Entity cellEntity, ref Cell cell) => {
+				clickedCellData = (cell.Position, cellEntity);
 			});
+
+			return clickedCellData;
 		}
 
 		Entity FindPlayerOnAdjacentCell(Vector2Int generatorPosition) {
@@ -74,15 +86,5 @@ namespace Systems {
 
 			return Entity.Null;
 		}
-
-		Vector2Int? GetClickedCellPosition() {
-			Vector2Int? clickedCellPos = null;
-
-			World.Query(_clickedCellsQuery, (Entity cellEntity, ref Cell cell) => {
-				clickedCellPos = cell.Position;
-			});
-
-			return clickedCellPos;
-		}
 	}
-}
+} 

@@ -10,6 +10,15 @@ namespace Configs {
 		[SerializeField] int minCount;
 		[SerializeField] int maxCount;
 
+		public ItemGenerationRule() {} // For Unity serialization
+		
+		public ItemGenerationRule(string itemType, float probability, int minCount, int maxCount) { // For testing
+			this.itemType = itemType;
+			this.probability = probability;
+			this.minCount = minCount;
+			this.maxCount = maxCount;
+		}
+
 		public string ItemType => itemType;
 		public float Probability => probability;
 		public int MinCount => minCount;
@@ -23,6 +32,15 @@ namespace Configs {
 		[SerializeField] int minCapacity;
 		[SerializeField] int maxCapacity;
 
+		public ItemTypeConfig() {} // For Unity serialization
+		
+		public ItemTypeConfig(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity) { // For testing
+			this.type = type;
+			this.rules = rules;
+			this.minCapacity = minCapacity;
+			this.maxCapacity = maxCapacity;
+		}
+
 		public string Type => type;
 		public List<ItemGenerationRule> Rules => rules;
 		public int MinCapacity => minCapacity;
@@ -33,6 +51,12 @@ namespace Configs {
 	public sealed class ItemGeneratorConfig : ScriptableObject {
 		[SerializeField] List<ItemTypeConfig> typeConfigs = new();
 		Dictionary<string, ItemTypeConfig>? _typeConfigLookup;
+
+		public ItemGeneratorConfig() {} // For Unity serialization
+		
+		public ItemGeneratorConfig(List<ItemTypeConfig> typeConfigs) { // For testing
+			this.typeConfigs = typeConfigs;
+		}
 
 		public ItemTypeConfig? GetTypeConfig(string generatorType) {
 			if (_typeConfigLookup == null) {
