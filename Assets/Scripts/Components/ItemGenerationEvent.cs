@@ -1,4 +1,3 @@
-using System;
 using Arch.Core;
 
 namespace Components {

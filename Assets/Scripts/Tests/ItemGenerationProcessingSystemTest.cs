@@ -51,36 +51,36 @@ namespace Tests {
 			_system = null!;
 		}
 
-	ItemsConfig CreateTestItemsConfig() {
-		var items = new ItemConfig[] {
-			new ItemConfig(),
-			new ItemConfig(),
-			new ItemConfig()
-		};
-		items[0].TestInit("TestItem", "Test Item", null);
-		items[1].TestInit("ItemA", "Item A", null);
-		items[2].TestInit("ItemB", "Item B", null);
-		
-		var config = ScriptableObject.CreateInstance<ItemsConfig>();
-		config.TestInit(items);
-		return config;
-	}
+		private ItemsConfig CreateTestItemsConfig() {
+			var items = new ItemConfig[] {
+				new ItemConfig(),
+				new ItemConfig(),
+				new ItemConfig()
+			};
+			items[0].TestInit("TestItem", "Test Item", null);
+			items[1].TestInit("ItemA", "Item A", null);
+			items[2].TestInit("ItemB", "Item B", null);
+			
+			var config = ScriptableObject.CreateInstance<ItemsConfig>();
+			config.TestInit(items);
+			return config;
+		}
 
-	ItemGeneratorConfig CreateTestConfig() {
-		var rules = new List<ItemGenerationRule> {
-			new ItemGenerationRule()
-		};
-		rules[0].TestInit(_itemType, 1.0f, 1, 3); // 100% chance, 1-3 items
-		
-		var typeConfig = new ItemTypeConfig();
-		typeConfig.TestInit(_generatorType, rules, 5, 10);
-		
-		var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
-		config.TestInit(new List<ItemTypeConfig> { typeConfig });
-		return config;
-	}
+		private ItemGeneratorConfig CreateTestConfig() {
+			var rules = new List<ItemGenerationRule> {
+				new ItemGenerationRule()
+			};
+			rules[0].TestInit(_itemType, 1.0f, 1, 3); // 100% chance, 1-3 items
+			
+			var typeConfig = new ItemTypeConfig();
+			typeConfig.TestInit(_generatorType, rules, 5, 10);
+			
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { typeConfig });
+			return config;
+		}
 
-		Entity CreateGeneratorEntity(int currentCapacity = 0, int maxCapacity = 10) {
+		private Entity CreateGeneratorEntity(int currentCapacity = 0, int maxCapacity = 10) {
 			var entity = _world.Create();
 			entity.Add(new ItemGenerator {
 				Type = _generatorType,
@@ -90,13 +90,13 @@ namespace Tests {
 			return entity;
 		}
 
-		Entity CreateCollectorEntity() {
+		private Entity CreateCollectorEntity() {
 			var entity = _world.Create();
 			entity.Add(new ItemStorage { StorageId = _storageId });
 			return entity;
 		}
 
-		Entity CreateGenerationEvent(Entity generatorEntity, Entity collectorEntity) {
+		private Entity CreateGenerationEvent(Entity generatorEntity, Entity collectorEntity) {
 			var entity = _world.Create();
 			entity.Add(new ItemGenerationEvent {
 				GeneratorEntity = generatorEntity,

@@ -36,16 +36,16 @@ namespace Systems {
 			World.Query(_itemGeneratorQuery, (Entity generatorEntity, ref OnCell generatorPosition) => {
 				if (generatorPosition.Position == position) {
 					if (playerEntity != Entity.Null) {
-                        World.Add(playerEntity, new ItemGenerationIntent {
-                            TargetGeneratorEntity = generatorEntity
-                        });
-                        Debug.Log($"Created ItemGenerationIntent for player {playerEntity} targeting generator {generatorEntity}");
+						World.Add(playerEntity, new ItemGenerationIntent {
+							TargetGeneratorEntity = generatorEntity
+						});
+						Debug.Log($"Created ItemGenerationIntent for player {playerEntity} targeting generator {generatorEntity}");
 					}
 					isGeneratorClicked = true;
 				}
 			});
 
-            if (isGeneratorClicked) {
+			if (isGeneratorClicked) {
 				World.Remove<CellClick>(clickEntity);
 			}
 		}
