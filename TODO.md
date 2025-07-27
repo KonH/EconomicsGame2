@@ -76,30 +76,43 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Mining
   - [ ] Crafting
   - [ ] Fix stuck after loading issue
+- Stats:
+  - [ ] Traits - personal characteristics
+  - [ ] Skills - experience
+  - [ ] Needs - what is required now
   
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
 - Windows:
-  - Inventory window
+  - Inventory window:
     - [+] Item scroller list, item details - name and unique sprites
     - [+] Ability to select item by click on it
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
-  - Transfer window
+  - Transfer window:
     - [+] Opens when player moves on cell with storage
     - [+] Two panel view
     - [+] Buttons to transfer selected item in both directions
     - [+] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
+  - Stats view:
+    - [ ] Traits
+    - [ ] Skills
+    - [ ] Needs
 - [ ] Main menu basics (New game, Load game)
 - Notifications
   - [ ] Item change - over character
   - [ ] Item change - on inventory button (player)
 
 **Art**
-- Item icons
-  - [ ] Minimal set
+- Item icons:
+  - [ ] Apple
+- Props:
+  - [ ] Apple tree
+- Characters:
+  - [ ] Player
+  - [ ] Bot
 
 **Sound**
-- [ ] Clicks
+- [ ] Click
