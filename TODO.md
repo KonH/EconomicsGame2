@@ -51,6 +51,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Entity management:
   - [ ] Remove related gameObject when entity destroyed
   - [ ] Allow to move to cell after obstacle destroyed
+- Asset management:
+  - [ ] Auto-atlas management
 
 **Core**
 - [x] Character cell-to-cell movement
@@ -81,25 +83,38 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] HUD:
   - [+] Current unit inventory
 - Windows:
-  - Inventory window
+  - Inventory window:
     - [+] Item scroller list, item details - name and unique sprites
     - [+] Ability to select item by click on it
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
-  - Transfer window
+  - Transfer window:
     - [+] Opens when player moves on cell with storage
     - [+] Two panel view
     - [+] Buttons to transfer selected item in both directions
     - [+] Closes when any of item storages destroyed
   - [ ] Transfer select count window (input field, slider)
 - [ ] Main menu basics (New game, Load game)
-- Notifications
+- Notifications:
   - [ ] Item change - over character
   - [ ] Item change - on inventory button (player)
 
 **Art**
-- Item icons
-  - [ ] Minimal set
+- Characters:
+  - [+] Player
+  - [+] Bot
+- Items:
+  - [+] Apple
+- Props:
+  - [+] Apple Tree
+  - [+] Barrel
+  - [+] Backpack
+- Tiles:
+  - [+] Floor
+- UI:
+  - [ ] Button
+  - [ ] Window background
+  - [ ] Inventory button (from backpack)
 
 **Sound**
 - [ ] Clicks
