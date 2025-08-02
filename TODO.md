@@ -51,6 +51,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Entity management:
   - [ ] Remove related gameObject when entity destroyed
   - [ ] Allow to move to cell after obstacle destroyed
+- Asset management:
+  - [ ] Auto-atlas management
 
 **Core**
 - [x] Character cell-to-cell movement
@@ -101,18 +103,26 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [ ] Skills
     - [ ] Needs
 - [ ] Main menu basics (New game, Load game)
-- Notifications
+- Notifications:
   - [ ] Item change - over character
   - [ ] Item change - on inventory button (player)
 
 **Art**
-- Item icons:
-  - [ ] Apple
-- Props:
-  - [ ] Apple tree
 - Characters:
-  - [ ] Player
-  - [ ] Bot
+  - [+] Player
+  - [+] Bot
+- Items:
+  - [+] Apple
+- Props:
+  - [+] Apple Tree
+  - [+] Barrel
+  - [+] Backpack
+- Tiles:
+  - [+] Floor
+- UI:
+  - [ ] Button
+  - [ ] Window background
+  - [ ] Inventory button (from backpack)
 
 **Sound**
 - [ ] Click

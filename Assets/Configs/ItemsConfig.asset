@@ -13,12 +13,6 @@ MonoBehaviour:
   m_Name: ItemsConfig
   m_EditorClassIdentifier: 
   items:
-  - id: TestItem1
-    name: Item 1
-    icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  - id: TestItem2
-    name: Item 2
-    icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   - id: Apple
     name: Apple
-    icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: -7832214784768987486, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}
