@@ -27,7 +27,7 @@ namespace Systems {
 				var prefab = _prefabsConfig.GetPrefabById(prefabLink.ID);
 				if (prefab == null) {
 					Debug.LogError($"Prefab with ID {prefabLink.ID} not found in PrefabsConfig.");
-					World.Destroy(entity);
+					World.Add<DestroyEntity>(entity);
 					return;
 				}
 
@@ -35,7 +35,7 @@ namespace Systems {
 				var gameObject = _spawnService.SpawnAndReturn(prefab.Prefab, root);
 				if (gameObject == null) {
 					Debug.LogError($"Failed to spawn prefab with ID {prefabLink.ID}.");
-					World.Destroy(entity);
+					World.Add<DestroyEntity>(entity);
 					return;
 				}
 

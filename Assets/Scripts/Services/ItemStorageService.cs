@@ -77,12 +77,16 @@ namespace Services {
 			Debug.Log($"Removing item {itemEntity} from storage {storageId}");
 			itemEntity.Remove<ItemOwner>();
 			var itemStorage = storageEntity.Get<ItemStorage>();
-			if (itemStorage.AllowDestroyIfEmpty && !GetItemsForOwner(storageId).Any()) {
-				Debug.Log($"Storage {storageId} is empty and allows destruction. Destroying storage entity.");
-				storageEntity.Add(new ItemStorageRemoved());
-			} else {
-				storageEntity.Add(new ItemStorageUpdated());
+			if (itemStorage.AllowDestroyIfEmpty) {
+				var items = GetItemsForOwner(storageId);
+				var isStorageEmpty = !items.Any();
+				if (isStorageEmpty) {
+					Debug.Log($"Storage {storageId} is empty and allows destruction. Destroying storage entity.");
+					storageEntity.Add<ItemStorageRemoved>();
+					return;
+				}
 			}
+			storageEntity.Add<ItemStorageUpdated>();
 		}
 
 		public bool TryGetStorageCellPosition(long storageId, out Vector2Int cellPosition) {

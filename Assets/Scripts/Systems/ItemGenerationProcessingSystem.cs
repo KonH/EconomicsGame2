@@ -67,7 +67,7 @@ namespace Systems {
 
 					if (generator.CurrentCapacity >= generator.MaxCapacity) {
 						Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, destroying");
-						World.Destroy(generationEvent.GeneratorEntity);
+						generationEvent.GeneratorEntity.Add<DestroyEntity>();
 					}
 				} else {
 					Debug.LogWarning($"Failed to create item {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");

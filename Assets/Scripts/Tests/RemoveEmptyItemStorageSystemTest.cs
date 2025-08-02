@@ -24,7 +24,7 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenEntityHasItemStorageRemovedAndPrefabLink_ShouldAddPrefabLinkRemoved() {
+		public void WhenEntityHasItemStorageRemovedAndPrefabLink_ShouldAddDestroyEntity() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new ItemStorageRemoved());
@@ -34,11 +34,11 @@ namespace Tests {
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsTrue(entity.Has<PrefabLinkRemoved>(), "Entity should have PrefabLinkRemoved component added");
+			Assert.IsTrue(entity.Has<DestroyEntity>(), "Entity should have DestroyEntity component added");
 		}
 
 		[Test]
-		public void WhenEntityDoesNotHavePrefabLink_ShouldNotAddPrefabLinkRemoved() {
+		public void WhenEntityDoesNotHavePrefabLink_ShouldNotAddDestroyEntity() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new ItemStorageRemoved());
@@ -48,11 +48,11 @@ namespace Tests {
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsFalse(entity.Has<PrefabLinkRemoved>(), "Entity should not have PrefabLinkRemoved component if it doesn't have PrefabLink");
+			Assert.IsFalse(entity.Has<DestroyEntity>(), "Entity should not have DestroyEntity component if it doesn't have PrefabLink");
 		}
 
 		[Test]
-		public void WhenEntityDoesNotHaveItemStorageRemoved_ShouldNotAddPrefabLinkRemoved() {
+		public void WhenEntityDoesNotHaveItemStorageRemoved_ShouldNotAddDestroyEntity() {
 			// Arrange
 			var entity = _world.Create();
 			// No ItemStorageRemoved component
@@ -62,22 +62,22 @@ namespace Tests {
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsFalse(entity.Has<PrefabLinkRemoved>(), "Entity should not have PrefabLinkRemoved component if it doesn't have ItemStorageRemoved");
+			Assert.IsFalse(entity.Has<DestroyEntity>(), "Entity should not have DestroyEntity component if it doesn't have ItemStorageRemoved");
 		}
 
 		[Test]
-		public void WhenEntityAlreadyHasPrefabLinkRemoved_ShouldNotProcessAgain() {
+		public void WhenEntityAlreadyHasDestroyEntity_ShouldNotProcessAgain() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new ItemStorageRemoved());
 			entity.Add(new PrefabLink { ID = "TestStorage" });
-			entity.Add(new PrefabLinkRemoved()); // Already has this component
+			entity.Add(new DestroyEntity()); // Already has this component
 
 			// Act - we can't directly test that the query didn't match, but we can verify the system's behavior is correct
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsTrue(entity.Has<PrefabLinkRemoved>(), "Entity should still have PrefabLinkRemoved component");
+			Assert.IsTrue(entity.Has<DestroyEntity>(), "Entity should still have DestroyEntity component");
 		}
 
 		[Test]
@@ -99,9 +99,9 @@ namespace Tests {
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsTrue(entity1.Has<PrefabLinkRemoved>(), "First entity should have PrefabLinkRemoved component");
-			Assert.IsTrue(entity2.Has<PrefabLinkRemoved>(), "Second entity should have PrefabLinkRemoved component");
-			Assert.IsTrue(entity3.Has<PrefabLinkRemoved>(), "Third entity should have PrefabLinkRemoved component");
+			Assert.IsTrue(entity1.Has<DestroyEntity>(), "First entity should have DestroyEntity component");
+			Assert.IsTrue(entity2.Has<DestroyEntity>(), "Second entity should have DestroyEntity component");
+			Assert.IsTrue(entity3.Has<DestroyEntity>(), "Third entity should have DestroyEntity component");
 		}
 
 		[Test]
@@ -122,16 +122,16 @@ namespace Tests {
 			var alreadyRemovedEntity = _world.Create();
 			alreadyRemovedEntity.Add(new ItemStorageRemoved());
 			alreadyRemovedEntity.Add(new PrefabLink { ID = "TestStorage" });
-			alreadyRemovedEntity.Add(new PrefabLinkRemoved());
+			alreadyRemovedEntity.Add(new DestroyEntity());
 
 			// Act
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsTrue(qualifyingEntity.Has<PrefabLinkRemoved>(), "Qualifying entity should have PrefabLinkRemoved component");
-			Assert.IsFalse(missingPrefabLinkEntity.Has<PrefabLinkRemoved>(), "Entity missing PrefabLink should not have PrefabLinkRemoved component");
-			Assert.IsFalse(missingItemStorageRemovedEntity.Has<PrefabLinkRemoved>(), "Entity missing ItemStorageRemoved should not have PrefabLinkRemoved component");
-			Assert.IsTrue(alreadyRemovedEntity.Has<PrefabLinkRemoved>(), "Already processed entity should still have PrefabLinkRemoved component");
+			Assert.IsTrue(qualifyingEntity.Has<DestroyEntity>(), "Qualifying entity should have DestroyEntity component");
+			Assert.IsFalse(missingPrefabLinkEntity.Has<DestroyEntity>(), "Entity missing PrefabLink should not have DestroyEntity component");
+			Assert.IsFalse(missingItemStorageRemovedEntity.Has<DestroyEntity>(), "Entity missing ItemStorageRemoved should not have DestroyEntity component");
+			Assert.IsTrue(alreadyRemovedEntity.Has<DestroyEntity>(), "Already processed entity should still have DestroyEntity component");
 		}
 	}
 }
