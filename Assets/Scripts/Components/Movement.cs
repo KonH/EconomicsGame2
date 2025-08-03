@@ -8,6 +8,7 @@ namespace Components {
 	public struct MoveToPosition {
 		public Vector2 OldPosition;
 		public Vector2 NewPosition;
+		public bool AddJump;
 	}
 
 	[Persistent]

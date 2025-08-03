@@ -32,7 +32,8 @@ namespace Tests {
 			entity.Add(new WorldPosition { Position = _startPosition });
 			entity.Add(new MoveToPosition {
 				OldPosition = _startPosition,
-				NewPosition = _targetPosition
+				NewPosition = _targetPosition,
+				AddJump = false
 			});
 			entity.Add(new ActionFinished());
 			return entity;
@@ -71,7 +72,8 @@ namespace Tests {
 			entity2.Add(new WorldPosition { Position = new Vector2(3.0f, 3.0f) });
 			entity2.Add(new MoveToPosition {
 				OldPosition = new Vector2(3.0f, 3.0f),
-				NewPosition = new Vector2(4.0f, 4.0f)
+				NewPosition = new Vector2(4.0f, 4.0f),
+				AddJump = false
 			});
 			entity2.Add(new ActionFinished());
 
@@ -93,7 +95,8 @@ namespace Tests {
 			entity.Add(new WorldPosition { Position = _startPosition });
 			entity.Add(new MoveToPosition {
 				OldPosition = _startPosition,
-				NewPosition = _targetPosition
+				NewPosition = _targetPosition,
+				AddJump = false
 			});
 			// No ActionFinished component
 
@@ -114,7 +117,8 @@ namespace Tests {
 			entity2.Add(new WorldPosition { Position = new Vector2(3.0f, 3.0f) });
 			entity2.Add(new MoveToPosition {
 				OldPosition = new Vector2(3.0f, 3.0f),
-				NewPosition = new Vector2(4.0f, 4.0f)
+				NewPosition = new Vector2(4.0f, 4.0f),
+				AddJump = false
 			});
 			// No ActionFinished component
 

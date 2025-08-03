@@ -9,9 +9,13 @@ namespace Configs {
 
 		[SerializeField] AnimationCurve? standardCurve;
 
+		[SerializeField] AnimationCurve? jumpCurve;
+
 		public float Speed => speed;
 
 		public AnimationCurve StandardCurve => this.ValidateOrThrow(standardCurve);
+
+		public AnimationCurve JumpCurve => this.ValidateOrThrow(jumpCurve);
 
 		public MovementSettings() {}
 
