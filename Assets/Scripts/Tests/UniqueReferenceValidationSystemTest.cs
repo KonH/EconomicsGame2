@@ -50,7 +50,7 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenReferenceHasEmptyId_ShouldDestroyEntity() {
+		public void WhenReferenceHasEmptyId_ShouldAddDestroyEntity() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new NeedCreateUniqueReference {
@@ -63,11 +63,11 @@ namespace Tests {
 			_system.Initialize();
 
 			// Assert
-			Assert.IsFalse(_world.IsAlive(entity), "Entity with empty ID should be destroyed");
+			Assert.IsTrue(entity.Has<DestroyEntity>(), "Entity with empty ID should have DestroyEntity component added");
 		}
 
 		[Test]
-		public void WhenReferenceHasNullId_ShouldDestroyEntity() {
+		public void WhenReferenceHasNullId_ShouldAddDestroyEntity() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new NeedCreateUniqueReference {
@@ -80,11 +80,11 @@ namespace Tests {
 			_system.Initialize();
 
 			// Assert
-			Assert.IsFalse(_world.IsAlive(entity), "Entity with null ID should be destroyed");
+			Assert.IsTrue(entity.Has<DestroyEntity>(), "Entity with null ID should have DestroyEntity component added");
 		}
 
 		[Test]
-		public void WhenSameIdAlreadyInUse_ShouldDestroyNewEntity() {
+		public void WhenSameIdAlreadyInUse_ShouldAddDestroyEntityToNewEntity() {
 			// Arrange - Create first entity with ID
 			var firstEntity = _world.Create();
 			firstEntity.Add(new UniqueReferenceId { Id = "DuplicateId" });
@@ -102,11 +102,11 @@ namespace Tests {
 
 			// Assert
 			Assert.IsTrue(_world.IsAlive(firstEntity), "First entity with unique ID should not be destroyed");
-			Assert.IsFalse(_world.IsAlive(secondEntity), "Second entity with duplicate ID should be destroyed");
+			Assert.IsTrue(secondEntity.Has<DestroyEntity>(), "Second entity with duplicate ID should have DestroyEntity component added");
 		}
 
 		[Test]
-		public void WhenSameIdInNeedCreateComponents_ShouldDestroyDuplicateEntity() {
+		public void WhenSameIdInNeedCreateComponents_ShouldAddDestroyEntityToDuplicateEntity() {
 			// Arrange - Create first entity with ID in NeedCreateUniqueReference
 			var firstEntity = _world.Create();
 			firstEntity.Add(new NeedCreateUniqueReference {
@@ -128,7 +128,7 @@ namespace Tests {
 
 			// Assert
 			Assert.IsTrue(_world.IsAlive(firstEntity), "First entity with unique ID should not be destroyed");
-			Assert.IsFalse(_world.IsAlive(secondEntity), "Second entity with duplicate ID should be destroyed");
+			Assert.IsTrue(secondEntity.Has<DestroyEntity>(), "Second entity with duplicate ID should have DestroyEntity component added");
 
 			Object.DestroyImmediate(secondGameObject); // Clean up additional test GameObject
 		}

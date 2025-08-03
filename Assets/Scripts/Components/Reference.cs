@@ -19,4 +19,8 @@ namespace Components {
 		public GameObject GameObject;
 		public IList<Action<Entity>> Components;
 	}
+
+	[OneFrame]
+	public struct DestroyEntity {
+	}
 }

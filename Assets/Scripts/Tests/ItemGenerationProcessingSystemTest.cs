@@ -150,7 +150,7 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenGeneratorReachesMaxCapacity_ShouldDestroyGenerator() {
+		public void WhenGeneratorReachesMaxCapacity_ShouldAddDestroyEntity() {
 			// Arrange
 			_generatorEntity = CreateGeneratorEntity(9, 10); // One away from max capacity
 			_collectorEntity = CreateCollectorEntity();
@@ -160,7 +160,7 @@ namespace Tests {
 			_system.Update(new SystemState());
 
 			// Assert
-			Assert.IsFalse(_world.IsAlive(_generatorEntity), "Generator should be destroyed when reaching max capacity");
+			Assert.IsTrue(_generatorEntity.Has<DestroyEntity>(), "Generator should have DestroyEntity component added when reaching max capacity");
 		}
 
 		[Test]

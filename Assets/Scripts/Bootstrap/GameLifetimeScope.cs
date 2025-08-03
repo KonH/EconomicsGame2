@@ -75,6 +75,8 @@ namespace Bootstrap {
 				c.Add<TransferItemSystem>();
 				c.Add<SubscriptionCallSystem>();
 				c.Add<RemoveEmptyItemStorageSystem>();
+				c.Add<UnlockCellOnDestroySystem>();
+				c.Add<DestroyEntitySystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
@@ -92,7 +94,6 @@ namespace Bootstrap {
 				c.Add<FinishMoveToPositionSystem>();
 				c.Add<FinishCellMovementSystem>();
 				c.Add<TransferAvailableSystem>();
-				c.Add<ReleaseRemovedPrefabLinkSystem>();
 				c.Add<SelectAiStateSystem>();
 				c.Add<IdleStateSystem>();
 				c.Add<RandomWalkSystem>();

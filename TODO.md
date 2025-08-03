@@ -49,8 +49,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Pooling 
 - [ ] ECS systems dependencies?
 - Entity management:
-  - [ ] Remove related gameObject when entity destroyed
-  - [ ] Allow to move to cell after obstacle destroyed
+  - [+] Remove related gameObject when entity destroyed
+  - [+] Allow to move to cell after obstacle destroyed
 - Asset management:
   - [ ] Auto-atlas management
 

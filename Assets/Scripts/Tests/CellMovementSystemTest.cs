@@ -23,7 +23,8 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_gridSettings = new GridSettings(2.0f, 2.0f, 5, 5); // 2x2 cell size for distinct world positions
+			_gridSettings = new GridSettings();
+			_gridSettings.TestInit(2.0f, 2.0f, 5, 5); // 2x2 cell size for distinct world positions
 			_cellService = new CellService(_gridSettings);
 			_system = new CellMovementSystem(_world, _cellService);
 

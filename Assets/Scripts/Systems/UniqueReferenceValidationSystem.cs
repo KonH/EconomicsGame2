@@ -7,7 +7,8 @@ using Components;
 namespace Systems {
 	public sealed class UniqueReferenceValidationSystem : UnitySystemBase {
 		readonly QueryDescription _needCreateQuery = new QueryDescription()
-			.WithAll<NeedCreateUniqueReference>();
+			.WithAll<NeedCreateUniqueReference>()
+			.WithNone<DestroyEntity>();
 
 		readonly QueryDescription _uniqueReferenceIdQuery = new QueryDescription()
 			.WithAll<UniqueReferenceId>();
@@ -26,13 +27,13 @@ namespace Systems {
 
 				if (string.IsNullOrEmpty(id)) {
 					Debug.LogError($"UniqueReferenceLink on {gameObject.name} has empty ID!", gameObject);
-					World.Destroy(entity);
+					entity.Add<DestroyEntity>();
 					return;
 				}
 
 				if (IsIdAlreadyInUse(id, entity)) {
 					Debug.LogError($"UniqueReferenceLink ID '{id}' on {gameObject.name} is already in use by another object!", gameObject);
-					World.Destroy(entity);
+					entity.Add<DestroyEntity>();
 					return;
 				}
 			});

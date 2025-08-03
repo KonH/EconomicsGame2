@@ -192,7 +192,9 @@ namespace Tests {
 		}
 
 		GridSettings CreateTestGridSettings() {
-			return new GridSettings(1f, 1f, 10, 10);
+			var gridSettings = new GridSettings();
+			gridSettings.TestInit(1f, 1f, 10, 10);
+			return gridSettings;
 		}
 	}
 } 
