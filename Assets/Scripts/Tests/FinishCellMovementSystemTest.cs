@@ -23,7 +23,8 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_gridSettings = new GridSettings(1.0f, 1.0f, 5, 5);
+			_gridSettings = new GridSettings();
+			_gridSettings.TestInit(1.0f, 1.0f, 5, 5);
 			_cellService = new CellService(_gridSettings);
 			_system = new FinishCellMovementSystem(_world, _cellService);
 

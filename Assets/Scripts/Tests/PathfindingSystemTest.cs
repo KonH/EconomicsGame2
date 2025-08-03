@@ -21,7 +21,8 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_gridSettings = new GridSettings(1.0f, 1.0f, 10, 10);
+			_gridSettings = new GridSettings();
+			_gridSettings.TestInit(1.0f, 1.0f, 10, 10);
 			_cellService = new CellService(_gridSettings);
 			_movementSettings = new MovementSettings(1.0f, null);
 			_positionToEntity = new Dictionary<Vector2Int, Entity>();

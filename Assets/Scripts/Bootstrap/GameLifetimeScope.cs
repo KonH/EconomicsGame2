@@ -75,6 +75,7 @@ namespace Bootstrap {
 				c.Add<TransferItemSystem>();
 				c.Add<SubscriptionCallSystem>();
 				c.Add<RemoveEmptyItemStorageSystem>();
+				c.Add<UnlockCellOnDestroySystem>();
 				c.Add<DestroyEntitySystem>();
 				c.Add<OneFrameComponentCleanupSystem>();
 				c.Add<MouseInputSystem>();

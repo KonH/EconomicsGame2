@@ -18,7 +18,8 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_gridSettings = new GridSettings(1.0f, 1.0f, 5, 5); // 5x5 grid for testing
+			_gridSettings = new GridSettings();
+			_gridSettings.TestInit(1.0f, 1.0f, 5, 5); // 5x5 grid for testing
 			_cellService = new CellService(_gridSettings);
 			_system = new CellInitSystem(_world, _gridSettings, _cellService);
 		}
@@ -98,7 +99,8 @@ namespace Tests {
 				_world = World.Create();
 
 				// Create system with new grid settings
-				_gridSettings = new GridSettings(1.0f, 1.0f, width, height);
+				_gridSettings = new GridSettings();
+				_gridSettings.TestInit(1.0f, 1.0f, width, height);
 				_cellService = new CellService(_gridSettings);
 				_system = new CellInitSystem(_world, _gridSettings, _cellService);
 
