@@ -17,11 +17,10 @@ namespace Configs {
 
 		public AnimationCurve JumpCurve => this.ValidateOrThrow(jumpCurve);
 
-		public MovementSettings() {}
-
-		public MovementSettings(float speed, AnimationCurve? standardCurve) {
+		public void TestInit(float speed, AnimationCurve? standardCurve, AnimationCurve? jumpCurve) {
 			this.speed = speed;
 			this.standardCurve = standardCurve;
+			this.jumpCurve = jumpCurve;
 		}
 	}
 }

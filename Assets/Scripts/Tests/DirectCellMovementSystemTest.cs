@@ -19,7 +19,8 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_movementSettings = new MovementSettings(1.0f, null);
+			_movementSettings = new MovementSettings();
+			_movementSettings.TestInit(1.0f, null, null);
 			_system = new DirectCellMovementSystem(_world, _movementSettings);
 
 			// Create a grid of cells

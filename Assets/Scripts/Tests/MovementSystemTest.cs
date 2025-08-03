@@ -32,10 +32,8 @@ namespace Tests {
 			jumpCurve.AddKey(0.5f, 2.0f);
 			jumpCurve.AddKey(1, 0);
 
-			_movementSettings = new MovementSettings(1.0f, curve);
-			// Set the jump curve using reflection since the constructor doesn't support it
-			var jumpCurveField = typeof(MovementSettings).GetField("jumpCurve", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-			jumpCurveField!.SetValue(_movementSettings, jumpCurve);
+			_movementSettings = new MovementSettings();
+			_movementSettings.TestInit(1.0f, curve, jumpCurve);
 			
 			_system = new MovementSystem(_world, _movementSettings);
 		}
