@@ -27,7 +27,8 @@ namespace Systems {
 
 				World.Add(entity, new MoveToPosition {
 					OldPosition = startPosition,
-					NewPosition = targetPosition
+					NewPosition = targetPosition,
+					AddJump = true
 				});
 			});
 		}

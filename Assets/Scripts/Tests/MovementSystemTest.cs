@@ -26,7 +26,15 @@ namespace Tests {
 			curve.AddKey(0.5f, 0.5f);
 			curve.AddKey(1, 1);
 
-			_movementSettings = new MovementSettings(1.0f, curve);
+			// Create test jump curve
+			var jumpCurve = new AnimationCurve();
+			jumpCurve.AddKey(0, 0);
+			jumpCurve.AddKey(0.5f, 2.0f);
+			jumpCurve.AddKey(1, 0);
+
+			_movementSettings = new MovementSettings();
+			_movementSettings.TestInit(1.0f, curve, jumpCurve);
+			
 			_system = new MovementSystem(_world, _movementSettings);
 		}
 
@@ -38,12 +46,13 @@ namespace Tests {
 			_system = null!;
 		}
 
-		Entity CreateMovingEntity(float progress) {
+		Entity CreateMovingEntity(float progress, bool addJump = false) {
 			var entity = _world.Create();
 			entity.Add(new WorldPosition { Position = _startPosition });
 			entity.Add(new MoveToPosition {
 				OldPosition = _startPosition,
-				NewPosition = _targetPosition
+				NewPosition = _targetPosition,
+				AddJump = addJump
 			});
 			entity.Add(new ActionProgress { Progress = progress });
 			return entity;
@@ -90,13 +99,64 @@ namespace Tests {
 		}
 
 		[Test]
+		public void WhenJumpingMovement_ShouldApplyJumpCurveToY() {
+			// Arrange
+			var entity = CreateMovingEntity(0.5f, addJump: true);
+			var basePosition = Vector2.Lerp(_startPosition, _targetPosition, 0.5f);
+			var jumpValue = _movementSettings.JumpCurve.Evaluate(0.5f);
+			var expectedPosition = new Vector2(basePosition.x, basePosition.y + jumpValue);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.AreEqual(expectedPosition, entity.Get<WorldPosition>().Position,
+				"Jumping entity should have jump curve applied to Y position");
+		}
+
+		[Test]
+		public void WhenJumpingMovementAtPeak_ShouldHaveMaximumJumpHeight() {
+			// Arrange
+			var entity = CreateMovingEntity(0.5f, addJump: true);
+			var basePosition = Vector2.Lerp(_startPosition, _targetPosition, 0.5f);
+			var jumpValue = _movementSettings.JumpCurve.Evaluate(0.5f); // Should be 2.0f from our test curve
+			var expectedPosition = new Vector2(basePosition.x, basePosition.y + jumpValue);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.AreEqual(expectedPosition, entity.Get<WorldPosition>().Position,
+				"Jumping entity at peak should have maximum jump height");
+			Assert.AreEqual(2.0f, jumpValue, "Jump value at 0.5 progress should be 2.0f");
+		}
+
+		[Test]
+		public void WhenJumpingMovementAtStart_ShouldHaveNoJumpHeight() {
+			// Arrange
+			var entity = CreateMovingEntity(0.0f, addJump: true);
+			var basePosition = Vector2.Lerp(_startPosition, _targetPosition, 0.0f);
+			var jumpValue = _movementSettings.JumpCurve.Evaluate(0.0f); // Should be 0.0f
+			var expectedPosition = new Vector2(basePosition.x, basePosition.y + jumpValue);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.AreEqual(expectedPosition, entity.Get<WorldPosition>().Position,
+				"Jumping entity at start should have no jump height");
+			Assert.AreEqual(0.0f, jumpValue, "Jump value at 0.0 progress should be 0.0f");
+		}
+
+		[Test]
 		public void WhenActionFinished_ShouldRemoveMoveToPosition() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new WorldPosition { Position = _targetPosition });
 			entity.Add(new MoveToPosition {
 				OldPosition = _startPosition,
-				NewPosition = _targetPosition
+				NewPosition = _targetPosition,
+				AddJump = false
 			});
 			entity.Add(new ActionFinished());
 
@@ -134,7 +194,8 @@ namespace Tests {
 			entity.Add(new WorldPosition { Position = _startPosition });
 			entity.Add(new MoveToPosition {
 				OldPosition = _startPosition,
-				NewPosition = _targetPosition
+				NewPosition = _targetPosition,
+				AddJump = false
 			});
 			// No ActionProgress component
 

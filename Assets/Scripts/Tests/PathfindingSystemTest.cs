@@ -24,7 +24,8 @@ namespace Tests {
 			_gridSettings = new GridSettings();
 			_gridSettings.TestInit(1.0f, 1.0f, 10, 10);
 			_cellService = new CellService(_gridSettings);
-			_movementSettings = new MovementSettings(1.0f, null);
+			_movementSettings = new MovementSettings();
+			_movementSettings.TestInit(1.0f, null, null);
 			_positionToEntity = new Dictionary<Vector2Int, Entity>();
 			_system = new PathfindingSystem(_world, _cellService, _movementSettings);
 		}
