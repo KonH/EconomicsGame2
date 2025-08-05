@@ -60,7 +60,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] A* pathfinding
 - Input:
   - [ ] Proper way to block input under UI
-  - [ ] Do not handle cell click when scrolling field
+  - [+] Do not handle cell click when scrolling field
 - Inventory:
   - [x] Item storage
   - [x] Item/storage ID factories

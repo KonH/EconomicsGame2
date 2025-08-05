@@ -47,13 +47,10 @@ MonoBehaviour:
   parentReference:
     TypeName: 
   autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  autoInjectGameObjects: []
   mouseInputSettings:
     trackedMouseButtons: 2
+    dragThreshold: 0.33
   keyboardInputSettings:
     movementKeys:
     - key: 273

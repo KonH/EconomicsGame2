@@ -29,4 +29,12 @@ namespace Components {
 	public struct MouseDrag {
 		public Vector2 Delta;
 	}
+
+	[OneFrame]
+	public struct MouseDragStart {}
+
+	[OneFrame]
+	public struct MouseDragEnd {}
+
+	public struct MouseDragging {}
 }

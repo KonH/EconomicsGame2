@@ -9,8 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Systems {
 	public sealed class CellClickSystem : UnitySystemBase {
-		readonly QueryDescription _mouseButtonPressQuery = new QueryDescription()
-			.WithAll<MouseButtonPress>();
+		readonly QueryDescription _mouseButtonReleaseQuery = new QueryDescription()
+			.WithAll<MouseButtonRelease>()
+			.WithNone<MouseDragEnd>();
 
 		readonly QueryDescription _mousePositionQuery = new QueryDescription()
 			.WithAll<MousePosition>();
@@ -25,8 +26,8 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState _) {
-			World.Query(_mouseButtonPressQuery, (ref MouseButtonPress press) => {
-				if (press.Button != MouseButtons.Left) {
+			World.Query(_mouseButtonReleaseQuery, (ref MouseButtonRelease release) => {
+				if (release.Button != MouseButtons.Left) {
 					return;
 				}
 
@@ -40,7 +41,7 @@ namespace Systems {
 				}
 
 				if (_cellService.TryGetCellEntity(cellPos.Value, out var cellEntity)) {
-					cellEntity.Add(new CellClick());
+					cellEntity.Add<CellClick>();
 				} else {
 					Debug.LogWarning($"No cell entity found at position {cellPos}");
 				}

@@ -32,9 +32,21 @@ namespace Systems {
 					e.Add(new MouseButtonHold {
 						Button = mouseButton
 					});
-					e.Add(new MouseDrag {
-						Delta = Input.GetMouseButtonDown(mouseButton) ? Vector2.zero : Input.mousePositionDelta
-					});
+					Debug.Log($"Mouse button {mouseButton} held at frame {Time.frameCount}");
+					if (_mouseDataEntity.Has<MouseDragging>()) {
+						e.Add(new MouseDrag { Delta = Input.mousePositionDelta });
+					} else {
+						if (!Input.GetMouseButtonDown(mouseButton)) {
+							if (Input.mousePositionDelta.magnitude > _mouseInputSettings.DragThreshold) {
+								e.Add(new MouseDrag { Delta = Input.mousePositionDelta });
+								if (!_mouseDataEntity.Has<MouseDragging>()) {
+									e.Add<MouseDragStart>();
+									_mouseDataEntity.Add<MouseDragging>();
+								}
+							}
+						}
+					}
+
 				}
 				if (Input.GetMouseButtonDown(mouseButton)) {
 					var e = this.World.Create();
@@ -43,10 +55,15 @@ namespace Systems {
 					});
 				}
 				if (Input.GetMouseButtonUp(mouseButton)) {
+					Debug.Log($"Mouse button {mouseButton} released at frame {Time.frameCount}");
 					var e = this.World.Create();
 					e.Add(new MouseButtonRelease {
 						Button = mouseButton
 					});
+					if (_mouseDataEntity.Has<MouseDragging>()) {
+						e.Add<MouseDragEnd>();
+						_mouseDataEntity.Remove<MouseDragging>();
+					}
 				}
 			}
 		}
