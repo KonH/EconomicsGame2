@@ -93,6 +93,7 @@ namespace Bootstrap {
 				c.Add<PathfindingSystem>();
 				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
+				c.Add<FlipSpriteMovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
 				c.Add<FinishMoveToPositionSystem>();
