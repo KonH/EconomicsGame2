@@ -26,13 +26,18 @@ namespace Systems {
 				Delta = Input.mousePositionDelta
 			});
 
+			var scrollDelta = Input.mouseScrollDelta.y;
+			if (Mathf.Abs(scrollDelta) > 0.01f) {
+				var e = this.World.Create();
+				e.Add(new MouseScrollDelta { Delta = scrollDelta });
+			}
+
 			for (var mouseButton = 0; mouseButton < _mouseInputSettings.TrackedMouseButtons; mouseButton++) {
 				if (Input.GetMouseButton(mouseButton)) {
 					var e = this.World.Create();
 					e.Add(new MouseButtonHold {
 						Button = mouseButton
 					});
-					Debug.Log($"Mouse button {mouseButton} held at frame {Time.frameCount}");
 					if (_mouseDataEntity.Has<MouseDragging>()) {
 						e.Add(new MouseDrag { Delta = Input.mousePositionDelta });
 					} else {
@@ -55,7 +60,6 @@ namespace Systems {
 					});
 				}
 				if (Input.GetMouseButtonUp(mouseButton)) {
-					Debug.Log($"Mouse button {mouseButton} released at frame {Time.frameCount}");
 					var e = this.World.Create();
 					e.Add(new MouseButtonRelease {
 						Button = mouseButton

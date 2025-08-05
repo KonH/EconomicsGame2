@@ -59,7 +59,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Obstacles & limits
 - [x] A* pathfinding
 - Input:
-  - [ ] Proper way to block input under UI
+  - [+] Camera zoom
   - [+] Do not handle cell click when scrolling field
 - Inventory:
   - [x] Item storage

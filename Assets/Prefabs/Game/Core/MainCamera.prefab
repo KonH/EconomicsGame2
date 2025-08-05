@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 93521970219816102}
   - component: {fileID: 5977746308941669878}
-  - component: {fileID: 6267906017847520653}
   - component: {fileID: 297073779424415527}
   - component: {fileID: 7634683103507975736}
   - component: {fileID: -1001356869335102283}
@@ -70,8 +69,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 2.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -87,26 +86,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &6267906017847520653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2782717909297877947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetsPPU: 100
-  m_RefResolutionX: 1920
-  m_RefResolutionY: 1080
-  m_UpscaleRT: 0
-  m_PixelSnapping: 1
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &297073779424415527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: MainCamera
   useGameObjectNameAsId: 1
-  options: 0
 --- !u!114 &7634683103507975736
 MonoBehaviour:
   m_ObjectHideFlags: 0

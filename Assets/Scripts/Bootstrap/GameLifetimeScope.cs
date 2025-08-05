@@ -17,6 +17,7 @@ namespace Bootstrap {
 		[SerializeField] MovementSettings? movementSettings;
 		[SerializeField] GridSettings? gridSettings;
 		[SerializeField] SceneSettings? sceneSettings;
+		[SerializeField] ZoomSettings? zoomSettings;
 
 		[SerializeField] ItemsConfig? itemsConfig;
 		[SerializeField] PrefabsConfig? prefabsConfig;
@@ -34,6 +35,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(aiConfig);
 			this.ValidateOrThrow(itemGeneratorConfig);
 			this.ValidateOrThrow(sceneSettings);
+			this.ValidateOrThrow(zoomSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
@@ -61,6 +63,7 @@ namespace Bootstrap {
 			builder.RegisterInstance(cameraScrollSettings).AsSelf();
 			builder.RegisterInstance(movementSettings).AsSelf();
 			builder.RegisterInstance(sceneSettings).AsSelf();
+			builder.RegisterInstance(zoomSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<CellInitSystem>();
@@ -81,6 +84,7 @@ namespace Bootstrap {
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
+				c.Add<CameraZoomSystem>();
 				c.Add<CellClickSystem>();
 				c.Add<ItemGenerationIntentSystem>();
 				c.Add<ItemGenerationIntentProcessingSystem>();
