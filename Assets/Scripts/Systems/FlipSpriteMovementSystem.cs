@@ -18,7 +18,7 @@ namespace Systems {
 				}
 				flipSprite.IsFlipped = shouldFlip;
 				var spriteRenderer = spriteRendererRef.SpriteRenderer;
-				if (spriteRenderer.flipX == shouldFlip) {
+				if (spriteRenderer.flipX == flipSprite.IsFlipped) {
 					return;
 				}
 				spriteRenderer.flipX = flipSprite.IsFlipped;
