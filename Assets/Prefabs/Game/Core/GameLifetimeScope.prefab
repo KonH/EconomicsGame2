@@ -139,6 +139,10 @@ MonoBehaviour:
     gridHeight: 10
   sceneSettings:
     entitiesRoot: {fileID: 0}
+  zoomSettings:
+    zoomSensitivity: 1
+    minZoomLevel: 1.5
+    maxZoomLevel: 10
   itemsConfig: {fileID: 11400000, guid: a007d0407c1ec19488a2938c36a7c71c, type: 2}
   prefabsConfig: {fileID: 11400000, guid: 7d82e2b87f2d63d469b0a20937732fc7, type: 2}
   aiConfig: {fileID: 11400000, guid: 57720554386de7b49841a0bd1e780961, type: 2}

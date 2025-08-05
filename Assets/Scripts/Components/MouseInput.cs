@@ -37,4 +37,9 @@ namespace Components {
 	public struct MouseDragEnd {}
 
 	public struct MouseDragging {}
+
+	[OneFrame]
+	public struct MouseScrollDelta {
+		public float Delta;
+	}
 }
