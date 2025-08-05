@@ -28,12 +28,12 @@ namespace Systems {
 						return;
 					}
 
-                    var camera = cameraRef.Camera;
+					var camera = cameraRef.Camera;
 
 					var currentOrthographicSize = camera.orthographicSize;
 					var newOrthographicSize = currentOrthographicSize - zoomDelta;
 					
-                    var minOrthographicSize = _zoomSettings.MinZoomLevel;
+					var minOrthographicSize = _zoomSettings.MinZoomLevel;
 					var maxOrthographicSize = _zoomSettings.MaxZoomLevel;
 					
 					newOrthographicSize = Mathf.Clamp(newOrthographicSize, minOrthographicSize, maxOrthographicSize);
