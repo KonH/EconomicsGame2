@@ -129,4 +129,4 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 
 **Polishing**
 - [x] Better movement with little jump
-- [ ] Flip character sprite when move to other side
+- [x] Flip character sprite when move to other side

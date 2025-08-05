@@ -51,9 +51,9 @@ using EconomicsGame.*; // All project-specific namespaces
 - Private static properties use PascalCase (e.g., `PrivateStaticProperty`)
 - Public fields that should be serialized in Unity Inspector use camelCase without underscore (e.g., `publicFieldSerialized`)
 - Public properties use PascalCase (e.g., `PublicProperty`)
-- Private fields use underscore prefix with camelCase (e.g., `_privateField`)
+- Private non-serialized fields use underscore prefix with camelCase (e.g., `_privateField`)
 - Private properties use PascalCase (e.g., `PrivateProperty`)
-- Private fields that should be serialized in Unity Inspector use underscore prefix with camelCase (e.g., `_privateFieldSerialized`)
+- Private fields that should be serialized in Unity Inspector use camelCase (e.g., `privateFieldSerialized`)
 
 ### Methods and Functions
 - Use PascalCase for public methods
