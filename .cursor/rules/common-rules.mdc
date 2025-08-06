@@ -242,7 +242,6 @@ private World _world = null!;
       public float Value => _value;
   }
   ```
-- Use parameterless constructor for Unity serialization and full constructor for testing
 - Avoid reflection in tests - use constructors instead
 
 ### Data Structures

@@ -276,7 +276,6 @@ This workflow ensures iterative development with proper feedback loops and clear
       public float Value => _value;
   }
   ```
-- Use parameterless constructor for Unity serialization and full constructor for testing
 - Avoid reflection in tests - use constructors instead
 
 ### Data Structures
