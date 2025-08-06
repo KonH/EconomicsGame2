@@ -264,7 +264,7 @@ This workflow ensures iterative development with proper feedback loops and clear
       [SerializeField] int _priority = 1;
       [SerializeField] float _value = 1f;
 
-      public TestInit(int priority, float value) {
+      public void TestInit(int priority, float value) {
           _priority = priority;
           _value = value;
       }
