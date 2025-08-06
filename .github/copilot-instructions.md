@@ -259,6 +259,7 @@ This workflow ensures iterative development with proper feedback loops and clear
 - Register services and configs before systems in the configuration order
 
 ### Config Classes for Testability
+> **Rationale:** Unity serialization requires config classes to have a parameterless constructor, which prevents the use of constructor-based initialization for test data. Using a `TestInit` method allows test code to set up config objects with specific values without relying on reflection or breaking Unity's serialization. This approach ensures both testability and compatibility with Unity's asset pipeline.
 - Always provide TestInit method for config classes (Serializable/Asset):
   ```csharp
   [Serializable]
