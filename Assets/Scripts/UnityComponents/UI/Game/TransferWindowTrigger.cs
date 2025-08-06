@@ -7,7 +7,7 @@ using Services;
 
 namespace UnityComponents.UI.Game {
 	public sealed class TransferWindowTrigger : MonoBehaviour {
-		[SerializeField] PrefabSpawner? prefabSpawner;
+		[SerializeField] private PrefabSpawner? _prefabSpawner;
 
 		WorldSubscriptionService? _subscriptionService;
 
@@ -27,8 +27,8 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void OnTransferAvailable(Entity entity) {
-			if (this.Validate(prefabSpawner)) {
-				prefabSpawner.Spawn();
+			if (this.Validate(_prefabSpawner)) {
+				_prefabSpawner.Spawn();
 			}
 		}
 	}

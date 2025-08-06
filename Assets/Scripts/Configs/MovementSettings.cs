@@ -5,22 +5,22 @@ using Common;
 namespace Configs {
 	[Serializable]
 	public sealed class MovementSettings {
-		[SerializeField] float speed = 1;
+		[SerializeField] private float _speed = 1;
 
-		[SerializeField] AnimationCurve? standardCurve;
+		[SerializeField] private AnimationCurve? _standardCurve;
 
-		[SerializeField] AnimationCurve? jumpCurve;
+		[SerializeField] private AnimationCurve? _jumpCurve;
 
-		public float Speed => speed;
+		public float Speed => _speed;
 
-		public AnimationCurve StandardCurve => this.ValidateOrThrow(standardCurve);
+		public AnimationCurve StandardCurve => this.ValidateOrThrow(_standardCurve);
 
-		public AnimationCurve JumpCurve => this.ValidateOrThrow(jumpCurve);
+		public AnimationCurve JumpCurve => this.ValidateOrThrow(_jumpCurve);
 
 		public void TestInit(float speed, AnimationCurve? standardCurve, AnimationCurve? jumpCurve) {
-			this.speed = speed;
-			this.standardCurve = standardCurve;
-			this.jumpCurve = jumpCurve;
+			_speed = speed;
+			_standardCurve = standardCurve;
+			_jumpCurve = jumpCurve;
 		}
 	}
 }

@@ -5,10 +5,10 @@ using Common;
 namespace Configs {
 	[Serializable]
 	public sealed class PrefabConfig {
-		[SerializeField] string id = string.Empty;
-		[SerializeField] GameObject? prefab;
+		[SerializeField] private string _id = string.Empty;
+		[SerializeField] private GameObject? _prefab;
 
-		public string Id => id;
-		public GameObject Prefab => this.ValidateOrThrow(prefab);
+		public string Id => _id;
+		public GameObject Prefab => this.ValidateOrThrow(_prefab);
 	}
 }

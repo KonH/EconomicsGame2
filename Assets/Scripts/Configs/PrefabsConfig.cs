@@ -5,15 +5,15 @@ using UnityEngine;
 namespace Configs {
 	[CreateAssetMenu(fileName = "PrefabsConfig", menuName = "Configs/PrefabsConfig")]
 	public sealed class PrefabsConfig : ScriptableObject {
-		[SerializeField] PrefabConfig[] prefabs = Array.Empty<PrefabConfig>();
+		[SerializeField] private PrefabConfig[] _prefabs = Array.Empty<PrefabConfig>();
 
 		Dictionary<string, PrefabConfig> _prefabDictionary = new();
 
-		public PrefabConfig[] Prefabs => prefabs;
+		public PrefabConfig[] Prefabs => _prefabs;
 
 		void OnEnable() {
 			_prefabDictionary = new Dictionary<string, PrefabConfig>();
-			foreach (var prefab in prefabs) {
+			foreach (var prefab in _prefabs) {
 				_prefabDictionary.TryAdd(prefab.Id, prefab);
 			}
 		}

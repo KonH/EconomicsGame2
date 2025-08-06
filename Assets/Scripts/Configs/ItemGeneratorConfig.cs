@@ -5,57 +5,57 @@ using UnityEngine;
 namespace Configs {
 	[Serializable]
 	public sealed class ItemGenerationRule {
-		[SerializeField] string itemType = string.Empty;
-		[SerializeField] float probability;
-		[SerializeField] int minCount;
-		[SerializeField] int maxCount;
+		[SerializeField] private string _itemType = string.Empty;
+		[SerializeField] private float _probability;
+		[SerializeField] private int _minCount;
+		[SerializeField] private int _maxCount;
 
-		public string ItemType => itemType;
-		public float Probability => probability;
-		public int MinCount => minCount;
-		public int MaxCount => maxCount;
+		public string ItemType => _itemType;
+		public float Probability => _probability;
+		public int MinCount => _minCount;
+		public int MaxCount => _maxCount;
 
 		public void TestInit(string itemType, float probability, int minCount, int maxCount) {
-			this.itemType = itemType;
-			this.probability = probability;
-			this.minCount = minCount;
-			this.maxCount = maxCount;
+			_itemType = itemType;
+			_probability = probability;
+			_minCount = minCount;
+			_maxCount = maxCount;
 		}
 	}
 
 	[Serializable]
 	public sealed class ItemTypeConfig {
-		[SerializeField] string type = string.Empty;
-		[SerializeField] List<ItemGenerationRule> rules = new();
-		[SerializeField] int minCapacity;
-		[SerializeField] int maxCapacity;
+		[SerializeField] private string _type = string.Empty;
+		[SerializeField] private List<ItemGenerationRule> _rules = new();
+		[SerializeField] private int _minCapacity;
+		[SerializeField] private int _maxCapacity;
 
-		public string Type => type;
-		public List<ItemGenerationRule> Rules => rules;
-		public int MinCapacity => minCapacity;
-		public int MaxCapacity => maxCapacity;
+		public string Type => _type;
+		public List<ItemGenerationRule> Rules => _rules;
+		public int MinCapacity => _minCapacity;
+		public int MaxCapacity => _maxCapacity;
 
 		public void TestInit(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity) {
-			this.type = type;
-			this.rules = rules;
-			this.minCapacity = minCapacity;
-			this.maxCapacity = maxCapacity;
+			_type = type;
+			_rules = rules;
+			_minCapacity = minCapacity;
+			_maxCapacity = maxCapacity;
 		}
 	}
 
 	[CreateAssetMenu(fileName = "ItemGeneratorConfig", menuName = "Economics Game/Configs/Item Generator Config")]
 	public sealed class ItemGeneratorConfig : ScriptableObject {
-		[SerializeField] List<ItemTypeConfig> typeConfigs = new();
+		[SerializeField] private List<ItemTypeConfig> _typeConfigs = new();
 		Dictionary<string, ItemTypeConfig>? _typeConfigLookup;
 
 		public void TestInit(List<ItemTypeConfig> typeConfigs) {
-			this.typeConfigs = typeConfigs;
+			_typeConfigs = typeConfigs;
 		}
 
 		public ItemTypeConfig? GetTypeConfig(string generatorType) {
 			if (_typeConfigLookup == null) {
 				_typeConfigLookup = new Dictionary<string, ItemTypeConfig>();
-				foreach (var config in typeConfigs) {
+				foreach (var config in _typeConfigs) {
 					if (!string.IsNullOrEmpty(config.Type)) {
 						_typeConfigLookup[config.Type] = config;
 					}

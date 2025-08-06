@@ -11,8 +11,8 @@ namespace Configs {
 			public Vector2Int direction;
 		}
 
-		[SerializeField] List<MovementPair> movementKeys = new();
+		[SerializeField] private List<MovementPair> _movementKeys = new();
 
-		public IReadOnlyList<MovementPair> MovementKeys => movementKeys;
+		public IReadOnlyList<MovementPair> MovementKeys => _movementKeys;
 	}
 }

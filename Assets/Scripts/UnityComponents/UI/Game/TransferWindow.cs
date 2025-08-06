@@ -9,18 +9,18 @@ using VContainer;
 
 namespace UnityComponents.UI.Game {
 	public sealed class TransferWindow : MonoBehaviour {
-		[SerializeField] string playerId = "MainCharacter";
+		[SerializeField] private string _playerId = "MainCharacter";
 
 		[Header("Player")]
-		[SerializeField] ItemStorageView? playerStorageView;
-		[SerializeField] Button? moveToOtherButton;
+		[SerializeField] private ItemStorageView? _playerStorageView;
+		[SerializeField] private Button? _moveToOtherButton;
 
 		[Header("Other")]
-		[SerializeField] ItemStorageView? otherStorageView;
-		[SerializeField] Button? moveToPlayerButton;
+		[SerializeField] private ItemStorageView? _otherStorageView;
+		[SerializeField] private Button? _moveToPlayerButton;
 
 		[Header("UI")]
-		[SerializeField] WindowController? windowController;
+		[SerializeField] private WindowController? _windowController;
 
 		Entity _playerEntity;
 		long _playerStorageId;
@@ -35,9 +35,9 @@ namespace UnityComponents.UI.Game {
 		[Inject]
 		void Construct(UniqueReferenceService uniqueReferenceService, ItemStorageService itemStorageService, WorldSubscriptionService subscriptionService) {
 			_subscriptionService = subscriptionService;
-			_playerEntity = uniqueReferenceService.GetEntityByUniqueReference(playerId);
+			_playerEntity = uniqueReferenceService.GetEntityByUniqueReference(_playerId);
 			if (_playerEntity == Entity.Null) {
-				Debug.LogError($"Player entity with unique reference '{playerId}' not found.", gameObject);
+				Debug.LogError($"Player entity with unique reference '{_playerId}' not found.", gameObject);
 			}
 
 			_playerStorageId = itemStorageService.GetStorageId(_playerEntity);
@@ -59,26 +59,26 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void Init() {
-			if (!this.Validate(playerStorageView) ||
-			    !this.Validate(otherStorageView) ||
+			if (!this.Validate(_playerStorageView) ||
+			    !this.Validate(_otherStorageView) ||
 			    !this.Validate(_subscriptionService)) {
 				return;
 			}
-			playerStorageView.Init(_playerEntity, OnPlayerItemSelected);
-			otherStorageView.Init(_otherEntity, OnOtherItemSelected);
+			_playerStorageView.Init(_playerEntity, OnPlayerItemSelected);
+			_otherStorageView.Init(_otherEntity, OnOtherItemSelected);
 			UpdateControls();
 
 			_subscriptionService.Subscribe<ItemStorageRemoved>(OnItemStorageRemoved);
 		}
 
 		void Deinit() {
-			if (!this.Validate(playerStorageView) ||
-			    !this.Validate(otherStorageView) ||
+			if (!this.Validate(_playerStorageView) ||
+			    !this.Validate(_otherStorageView) ||
 			    !this.Validate(_subscriptionService)) {
 				return;
 			}
-			playerStorageView.Deinit();
-			otherStorageView.Deinit();
+			_playerStorageView.Deinit();
+			_otherStorageView.Deinit();
 
 			_subscriptionService.Unsubscribe<ItemStorageRemoved>(OnItemStorageRemoved);
 		}
@@ -120,12 +120,12 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void UpdateControls() {
-			if (!this.Validate(moveToOtherButton) || !this.Validate(moveToPlayerButton)) {
+			if (!this.Validate(_moveToOtherButton) || !this.Validate(_moveToPlayerButton)) {
 				return;
 			}
 
-			moveToOtherButton.interactable = _selectedPlayerItem != null;
-			moveToPlayerButton.interactable = _selectedOtherItem != null;
+			_moveToOtherButton.interactable = _selectedPlayerItem != null;
+			_moveToPlayerButton.interactable = _selectedOtherItem != null;
 		}
 
 		void OnItemStorageRemoved(Entity entity) {
@@ -133,8 +133,8 @@ namespace UnityComponents.UI.Game {
 				return;
 			}
 			Debug.Log($"Storage removed for other entity {entity}, closing transfer window");
-			if (this.Validate(windowController)) {
-				windowController.Hide();
+			if (this.Validate(_windowController)) {
+				_windowController.Hide();
 			}
 		}
 	}

@@ -10,8 +10,8 @@ using UnityComponents.EcsWrappers;
 
 namespace UnityComponents {
 	public sealed class UniqueReferenceLink : MonoBehaviour {
-		[SerializeField] string id = string.Empty;
-		[SerializeField] bool useGameObjectNameAsId = false;
+		[SerializeField] private string _id = string.Empty;
+		[SerializeField] private bool _useGameObjectNameAsId = false;
 
 		World? _world;
 
@@ -25,7 +25,7 @@ namespace UnityComponents {
 				return;
 			}
 
-			var effectiveId = useGameObjectNameAsId ? gameObject.name : id;
+			var effectiveId = _useGameObjectNameAsId ? gameObject.name : _id;
 			var components = CollectComponents();
 			var entity = _world.Create();
 			entity.Add(new NeedCreateUniqueReference {

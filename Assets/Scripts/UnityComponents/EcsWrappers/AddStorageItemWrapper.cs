@@ -8,9 +8,9 @@ using Services;
 
 namespace UnityComponents.EcsWrappers {
 	public sealed class AddStorageItemWrapper : MonoBehaviour, IEcsComponentWrapper {
-		[SerializeField] string itemName = string.Empty;
-		[SerializeField] int itemCount = 1;
-		[SerializeField] int maxCapacity = -1;
+		[SerializeField] private string _itemName = string.Empty;
+		[SerializeField] private int _itemCount = 1;
+		[SerializeField] private int _maxCapacity = -1;
 
 		ItemStorageService? _storageService;
 
@@ -31,13 +31,13 @@ namespace UnityComponents.EcsWrappers {
 			}
 
 			var items = _storageService.GetItemsForOwner(itemStorage.StorageId);
-			if (maxCapacity >= 0) {
-				if (items.Count >= maxCapacity) {
+			if (_maxCapacity >= 0) {
+				if (items.Count >= _maxCapacity) {
 					return;
 				}
 			}
 
-			_storageService.AddNewItem(itemStorage.StorageId, itemName, itemCount, items);
+			_storageService.AddNewItem(itemStorage.StorageId, _itemName, _itemCount, items);
 		}
 	}
 }

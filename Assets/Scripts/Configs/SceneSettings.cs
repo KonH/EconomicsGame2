@@ -5,8 +5,8 @@ using Common;
 namespace Configs {
 	[Serializable]
 	public sealed class SceneSettings {
-		[SerializeField] Transform? entitiesRoot;
+		[SerializeField] private Transform? _entitiesRoot;
 
-		public Transform EntitiesRoot => this.ValidateOrThrow(entitiesRoot);
+		public Transform EntitiesRoot => this.ValidateOrThrow(_entitiesRoot);
 	}
 }

@@ -41,16 +41,16 @@ using EconomicsGame.*; // All project-specific namespaces
 - **ALWAYS place opening braces on the same line** for class and method declarations (e.g., `class MyClass {`)
 
 ### Fields and Properties
-- **NEVER use explicit 'private' keyword** - always omit access modifier for private members
+- Use explicit `private` access modifier for private members
 - Public static fields use PascalCase (e.g., `PublicStaticField`)
 - Public static properties use PascalCase (e.g., `PublicStaticProperty`)
 - Private static fields use underscore prefix with camelCase (e.g., `_privateStaticField`)
 - Private static properties use PascalCase (e.g., `PrivateStaticProperty`)
 - Public fields that should be serialized in Unity Inspector use camelCase without underscore (e.g., `publicFieldSerialized`)
 - Public properties use PascalCase (e.g., `PublicProperty`)
-- Private non-serialized fields use underscore prefix with camelCase (e.g., `_privateField`)
+- Private fields always use underscore prefix with camelCase (e.g., `_privateField`)
+- Private fields that need to be serialized in the Unity Inspector must be marked with `[SerializeField]` (e.g., `[SerializeField] private int _mySerializedField;`).
 - Private properties use PascalCase (e.g., `PrivateProperty`)
-- Private fields that should be serialized in Unity Inspector use camelCase (e.g., `privateFieldSerialized`)
 
 ### Methods and Functions
 - Use PascalCase for public methods
@@ -127,7 +127,7 @@ var count = myList.Count;
 - Use Debug.Log statements for temporary debugging, include meaningful context
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
-- **NEVER use explicit 'private' keyword for private members** - always omit access modifier for private members
+- Use explicit `private` access modifier for private members
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`), add comments only when necessary to explain really complex logic or completely unclear implementations
 - Never use standard or XML comments anywhere at all, they are not useful in this project
@@ -144,9 +144,9 @@ var count = myList.Count;
 ```csharp
 using Common;
 
-[SerializeField] object? serializedMember;
+[SerializeField] private object? _serializedMember;
 
-if (!this.Validate(serializedMember)) {
+if (!this.Validate(_serializedMember)) {
     return;
 }
 ```
@@ -154,13 +154,13 @@ if (!this.Validate(serializedMember)) {
 ```csharp
 using Common;
 
-[SerializeField] object? serializedMember;
+[SerializeField] private object? _serializedMember;
 
-SerializedMember => this.ValidateOrThrow(serializedMember);
+SerializedMember => this.ValidateOrThrow(_serializedMember);
 ```
 - For tests you should use `!`, it is okay:
 ```csharp
-World _world = null!;
+private World _world = null!;
 ```
 - Don't use string?, use string.Empty instead of null for strings that can be empty
 - For collections use empty collections instead of null (e.g., `List<T>()` or `Array.Empty<T>()` instead of `null`)
@@ -247,9 +247,9 @@ This workflow ensures iterative development with proper feedback loops and clear
   ```
 - Always register new configs in GameLifetimeScope:
   ```csharp
-  [SerializeField] NewConfig? newConfig;
-  this.ValidateOrThrow(newConfig);
-  builder.RegisterInstance(newConfig).AsSelf();
+  [SerializeField] private NewConfig? _newConfig;
+  this.ValidateOrThrow(_newConfig);
+  builder.RegisterInstance(_newConfig).AsSelf();
   ```
 - Always register new systems in the ArchApp configuration:
   ```csharp
@@ -258,24 +258,23 @@ This workflow ensures iterative development with proper feedback loops and clear
 - Register services and configs before systems in the configuration order
 
 ### Config Classes for Testability
-- Always provide two constructors for config classes:
+> **Rationale:** Unity serialization requires config classes to have a parameterless constructor, which prevents the use of constructor-based initialization for test data. Using a `TestInit` method allows test code to set up config objects with specific values without relying on reflection or breaking Unity's serialization. This approach ensures both testability and compatibility with Unity's asset pipeline.
+- Always provide TestInit method for config classes (Serializable/Asset):
   ```csharp
   [Serializable]
   public sealed class MyConfig {
-      [SerializeField] int priority = 1;
-      [SerializeField] float value = 1f;
+      [SerializeField] private int _priority = 1;
+      [SerializeField] private float _value = 1f;
 
-      public MyConfig() {} // For Unity serialization
-      public MyConfig(int priority, float value) { // For testing
-          this.priority = priority;
-          this.value = value;
+      public void TestInit(int priority, float value) {
+          _priority = priority;
+          _value = value;
       }
 
-      public int Priority => priority;
-      public float Value => value;
+      public int Priority => _priority;
+      public float Value => _value;
   }
   ```
-- Use parameterless constructor for Unity serialization and full constructor for testing
 - Avoid reflection in tests - use constructors instead
 
 ### Data Structures

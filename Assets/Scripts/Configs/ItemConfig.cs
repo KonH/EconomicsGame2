@@ -7,18 +7,18 @@ using UnityEngine;
 namespace Configs {
 	[Serializable]
 	public sealed class ItemConfig {
-		[SerializeField] string id = string.Empty;
-		[SerializeField] string name = string.Empty;
-		[SerializeField] Sprite? icon;
+		[SerializeField] private string _id = string.Empty;
+		[SerializeField] private string _name = string.Empty;
+		[SerializeField] private Sprite? _icon;
 
-		public string Id => id;
-		public string Name => name;
-		public Sprite Icon => this.ValidateOrThrow(icon);
+		public string Id => _id;
+		public string Name => _name;
+		public Sprite Icon => this.ValidateOrThrow(_icon);
 
 		public void TestInit(string id, string name, Sprite? icon) {
-			this.id = id;
-			this.name = name;
-			this.icon = icon;
+			_id = id;
+			_name = name;
+			_icon = icon;
 		}
 	}
 }
