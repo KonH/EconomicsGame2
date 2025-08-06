@@ -49,7 +49,6 @@ using EconomicsGame.*; // All project-specific namespaces
 - Public fields that should be serialized in Unity Inspector use camelCase without underscore (e.g., `publicFieldSerialized`)
 - Public properties use PascalCase (e.g., `PublicProperty`)
 - Private fields always use underscore prefix with camelCase (e.g., `_privateField`)
-- Private fields that need to be serialized by Unity require `[SerializeField]` attribute.
 - Private fields that need to be serialized in the Unity Inspector must be marked with `[SerializeField]` (e.g., `[SerializeField] private int _mySerializedField;`).
 - Private properties use PascalCase (e.g., `PrivateProperty`)
 
