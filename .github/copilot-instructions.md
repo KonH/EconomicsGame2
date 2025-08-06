@@ -143,7 +143,7 @@ var count = myList.Count;
 ```csharp
 using Common;
 
-[SerializeField] object? _serializedMember;
+[SerializeField] private object? _serializedMember;
 
 if (!this.Validate(_serializedMember)) {
     return;
@@ -153,13 +153,13 @@ if (!this.Validate(_serializedMember)) {
 ```csharp
 using Common;
 
-[SerializeField] object? _serializedMember;
+[SerializeField] private object? _serializedMember;
 
 SerializedMember => this.ValidateOrThrow(_serializedMember);
 ```
 - For tests you should use `!`, it is okay:
 ```csharp
-World _world = null!;
+private World _world = null!;
 ```
 - Don't use string?, use string.Empty instead of null for strings that can be empty
 - For collections use empty collections instead of null (e.g., `List<T>()` or `Array.Empty<T>()` instead of `null`)
@@ -246,7 +246,7 @@ This workflow ensures iterative development with proper feedback loops and clear
   ```
 - Always register new configs in GameLifetimeScope:
   ```csharp
-  [SerializeField] NewConfig? _newConfig;
+  [SerializeField] private NewConfig? _newConfig;
   this.ValidateOrThrow(_newConfig);
   builder.RegisterInstance(_newConfig).AsSelf();
   ```
@@ -261,8 +261,8 @@ This workflow ensures iterative development with proper feedback loops and clear
   ```csharp
   [Serializable]
   public sealed class MyConfig {
-      [SerializeField] int _priority = 1;
-      [SerializeField] float _value = 1f;
+      [SerializeField] private int _priority = 1;
+      [SerializeField] private float _value = 1f;
 
       public void TestInit(int priority, float value) {
           _priority = priority;
