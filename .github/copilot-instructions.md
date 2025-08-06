@@ -41,7 +41,7 @@ using EconomicsGame.*; // All project-specific namespaces
 - **ALWAYS place opening braces on the same line** for class and method declarations (e.g., `class MyClass {`)
 
 ### Fields and Properties
-- **NEVER use explicit 'private' keyword** - always omit access modifier for private members
+- Use explicit `private` access modifier for private members
 - Public static fields use PascalCase (e.g., `PublicStaticField`)
 - Public static properties use PascalCase (e.g., `PublicStaticProperty`)
 - Private static fields use underscore prefix with camelCase (e.g., `_privateStaticField`)
@@ -126,13 +126,7 @@ var count = myList.Count;
 - Use Debug.Log statements for temporary debugging, include meaningful context
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
-- **NEVER use explicit 'private' access modifier keyword for private members** - always drop private access modifier for private members:
-```csharp
-// NEVER
-private int _value;
-// ALWAYS
-int _value;
-```
+- Use explicit `private` access modifier for private members
 - Do not use explicit `this` keyword unless necessary for clarity
 - Do not add obvious comments (e.g., `// If that, then this`), add comments only when necessary to explain really complex logic or completely unclear implementations
 - Never use standard or XML comments anywhere at all, they are not useful in this project
