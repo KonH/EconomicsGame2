@@ -9,10 +9,10 @@ using Components;
 
 namespace UnityComponents.UI.Game {
 	public sealed class ItemView : MonoBehaviour {
-		[SerializeField] Image? iconImage;
-		[SerializeField] TMP_Text? nameText;
-		[SerializeField] TMP_Text? countText;
-		[SerializeField] GameObject? selectedIndicator;
+		[SerializeField] private Image? _iconImage;
+		[SerializeField] private TMP_Text? _nameText;
+		[SerializeField] private TMP_Text? _countText;
+		[SerializeField] private GameObject? _selectedIndicator;
 
 		Entity _entity;
 		Action<ItemView>? _clickCallback;
@@ -22,14 +22,14 @@ namespace UnityComponents.UI.Game {
 		public void Init(ItemConfig config, Entity entity, ref Item item, Action<ItemView> clickCallback) {
 			_entity = entity;
 			gameObject.name = $"Item_{config.Id}_{item.UniqueID}";
-			if (this.Validate(iconImage)) {
-				iconImage.sprite = config.Icon;
+			if (this.Validate(_iconImage)) {
+				_iconImage.sprite = config.Icon;
 			}
-			if (this.Validate(nameText)) {
-				nameText.text = config.Name;
+			if (this.Validate(_nameText)) {
+				_nameText.text = config.Name;
 			}
-			if (this.Validate(countText)) {
-				countText.text = $"x{item.Count}";
+			if (this.Validate(_countText)) {
+				_countText.text = $"x{item.Count}";
 			}
 			_clickCallback = clickCallback;
 		}
@@ -39,8 +39,8 @@ namespace UnityComponents.UI.Game {
 		}
 
 		public void SetSelected(bool isSelected) {
-			if (this.Validate(selectedIndicator)) {
-				selectedIndicator.SetActive(isSelected);
+			if (this.Validate(_selectedIndicator)) {
+				_selectedIndicator.SetActive(isSelected);
 			}
 		}
 	}

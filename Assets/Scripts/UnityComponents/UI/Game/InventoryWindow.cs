@@ -9,18 +9,18 @@ using Services;
 
 namespace UnityComponents.UI.Game {
 	public sealed class InventoryWindow : MonoBehaviour {
-		[SerializeField] ItemStorageView? itemStorageView;
-		[SerializeField] string playerId = "MainCharacter";
-		[SerializeField] Button? dropButton;
+		[SerializeField] private ItemStorageView? _itemStorageView;
+		[SerializeField] private string _playerId = "MainCharacter";
+		[SerializeField] private Button? _dropButton;
 
 		Entity _playerEntity;
 		ItemView? _selectedItem;
 
 		[Inject]
 		void Construct(UniqueReferenceService uniqueReferenceService) {
-			_playerEntity = uniqueReferenceService.GetEntityByUniqueReference(playerId);
+			_playerEntity = uniqueReferenceService.GetEntityByUniqueReference(_playerId);
 			if (_playerEntity == Entity.Null) {
-				Debug.LogError($"Player entity with unique reference '{playerId}' not found.", gameObject);
+				Debug.LogError($"Player entity with unique reference '{_playerId}' not found.", gameObject);
 			}
 		}
 
@@ -33,18 +33,18 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void Init() {
-			if (!this.Validate(itemStorageView)) {
+			if (!this.Validate(_itemStorageView)) {
 				return;
 			}
-			itemStorageView.Init(_playerEntity, OnItemSelected);
+			_itemStorageView.Init(_playerEntity, OnItemSelected);
 			UpdateControls();
 		}
 
 		void Deinit() {
-			if (!this.Validate(itemStorageView)) {
+			if (!this.Validate(_itemStorageView)) {
 				return;
 			}
-			itemStorageView.Deinit();
+			_itemStorageView.Deinit();
 		}
 
 
@@ -63,11 +63,11 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void UpdateControls() {
-			if (!this.Validate(dropButton)) {
+			if (!this.Validate(_dropButton)) {
 				return;
 			}
 
-			dropButton.interactable = _selectedItem != null;
+			_dropButton.interactable = _selectedItem != null;
 		}
 	}
 }

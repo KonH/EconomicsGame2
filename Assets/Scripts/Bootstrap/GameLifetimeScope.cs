@@ -11,31 +11,31 @@ using Systems.AI;
 
 namespace Bootstrap {
 	public sealed class GameLifetimeScope : LifetimeScope {
-		[SerializeField] MouseInputSettings? mouseInputSettings;
-		[SerializeField] KeyboardInputSettings? keyboardInputSettings;
-		[SerializeField] CameraScrollSettings? cameraScrollSettings;
-		[SerializeField] MovementSettings? movementSettings;
-		[SerializeField] GridSettings? gridSettings;
-		[SerializeField] SceneSettings? sceneSettings;
-		[SerializeField] ZoomSettings? zoomSettings;
+		[SerializeField] private MouseInputSettings? _mouseInputSettings;
+		[SerializeField] private KeyboardInputSettings? _keyboardInputSettings;
+		[SerializeField] private CameraScrollSettings? _cameraScrollSettings;
+		[SerializeField] private MovementSettings? _movementSettings;
+		[SerializeField] private GridSettings? _gridSettings;
+		[SerializeField] private SceneSettings? _sceneSettings;
+		[SerializeField] private ZoomSettings? _zoomSettings;
 
-		[SerializeField] ItemsConfig? itemsConfig;
-		[SerializeField] PrefabsConfig? prefabsConfig;
-		[SerializeField] AiConfig? aiConfig;
-		[SerializeField] ItemGeneratorConfig? itemGeneratorConfig;
+		[SerializeField] private ItemsConfig? _itemsConfig;
+		[SerializeField] private PrefabsConfig? _prefabsConfig;
+		[SerializeField] private AiConfig? _aiConfig;
+		[SerializeField] private ItemGeneratorConfig? _itemGeneratorConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
-			this.ValidateOrThrow(mouseInputSettings);
-			this.ValidateOrThrow(keyboardInputSettings);
-			this.ValidateOrThrow(cameraScrollSettings);
-			this.ValidateOrThrow(movementSettings);
-			this.ValidateOrThrow(gridSettings);
-			this.ValidateOrThrow(itemsConfig);
-			this.ValidateOrThrow(prefabsConfig);
-			this.ValidateOrThrow(aiConfig);
-			this.ValidateOrThrow(itemGeneratorConfig);
-			this.ValidateOrThrow(sceneSettings);
-			this.ValidateOrThrow(zoomSettings);
+			this.ValidateOrThrow(_mouseInputSettings);
+			this.ValidateOrThrow(_keyboardInputSettings);
+			this.ValidateOrThrow(_cameraScrollSettings);
+			this.ValidateOrThrow(_movementSettings);
+			this.ValidateOrThrow(_gridSettings);
+			this.ValidateOrThrow(_itemsConfig);
+			this.ValidateOrThrow(_prefabsConfig);
+			this.ValidateOrThrow(_aiConfig);
+			this.ValidateOrThrow(_itemGeneratorConfig);
+			this.ValidateOrThrow(_sceneSettings);
+			this.ValidateOrThrow(_zoomSettings);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
@@ -43,7 +43,7 @@ namespace Bootstrap {
 
 			builder.Register<PersistentDataFileState>(Lifetime.Scoped).As<IState>();
 			builder.Register<PersistentService>(Lifetime.Scoped).AsSelf();
-			builder.RegisterInstance(gridSettings).AsSelf();
+			builder.RegisterInstance(_gridSettings).AsSelf();
 			builder.Register<CellService>(Lifetime.Scoped).AsSelf();
 			builder.Register<StorageIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
@@ -53,17 +53,17 @@ namespace Bootstrap {
 			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
 			builder.Register<AiService>(Lifetime.Scoped).AsSelf();
 
-			builder.RegisterInstance(itemsConfig).AsSelf();
-			builder.RegisterInstance(prefabsConfig).AsSelf();
-			builder.RegisterInstance(aiConfig).AsSelf();
-			builder.RegisterInstance(itemGeneratorConfig).AsSelf();
+			builder.RegisterInstance(_itemsConfig).AsSelf();
+			builder.RegisterInstance(_prefabsConfig).AsSelf();
+			builder.RegisterInstance(_aiConfig).AsSelf();
+			builder.RegisterInstance(_itemGeneratorConfig).AsSelf();
 
-			builder.RegisterInstance(mouseInputSettings).AsSelf();
-			builder.RegisterInstance(keyboardInputSettings).AsSelf();
-			builder.RegisterInstance(cameraScrollSettings).AsSelf();
-			builder.RegisterInstance(movementSettings).AsSelf();
-			builder.RegisterInstance(sceneSettings).AsSelf();
-			builder.RegisterInstance(zoomSettings).AsSelf();
+			builder.RegisterInstance(_mouseInputSettings).AsSelf();
+			builder.RegisterInstance(_keyboardInputSettings).AsSelf();
+			builder.RegisterInstance(_cameraScrollSettings).AsSelf();
+			builder.RegisterInstance(_movementSettings).AsSelf();
+			builder.RegisterInstance(_sceneSettings).AsSelf();
+			builder.RegisterInstance(_zoomSettings).AsSelf();
 
 			builder.UseNewArchApp(Lifetime.Scoped, c => {
 				c.Add<CellInitSystem>();

@@ -5,8 +5,8 @@ using Services;
 
 namespace UnityComponents {
 	public class PrefabSpawner : MonoBehaviour {
-		[SerializeField] GameObject? prefab;
-		[SerializeField] GameObject? root;
+		[SerializeField] private GameObject? _prefab;
+		[SerializeField] private GameObject? _root;
 
 		PrefabSpawnService? _spawnService;
 
@@ -20,10 +20,10 @@ namespace UnityComponents {
 		}
 
 		public GameObject? SpawnAndReturn() {
-			if (!this.Validate(prefab) || !this.Validate(root) || !this.Validate(_spawnService)) {
+			if (!this.Validate(_prefab) || !this.Validate(_root) || !this.Validate(_spawnService)) {
 				return null;
 			}
-			return _spawnService.SpawnAndReturn(prefab, root.transform);
+			return _spawnService.SpawnAndReturn(_prefab, _root.transform);
 		}
 
 		public void Release(GameObject go) {

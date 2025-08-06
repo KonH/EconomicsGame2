@@ -9,49 +9,49 @@ namespace Configs {
 
 	[Serializable]
 	public sealed class IdleStateConfig : IStateConfig {
-		[SerializeField] int priority = 1;
-		[SerializeField] float minTime = 1f;
-		[SerializeField] float maxTime = 5f;
+		[SerializeField] private int _priority = 1;
+		[SerializeField] private float _minTime = 1f;
+		[SerializeField] private float _maxTime = 5f;
 
-		public int Priority => priority;
-		public float MinTime => minTime;
-		public float MaxTime => maxTime;
+		public int Priority => _priority;
+		public float MinTime => _minTime;
+		public float MaxTime => _maxTime;
 
 		public void TestInit(int priority, float minTime, float maxTime) {
-			this.priority = priority;
-			this.minTime = minTime;
-			this.maxTime = maxTime;
+			_priority = priority;
+			_minTime = minTime;
+			_maxTime = maxTime;
 		}
 	}
 
 	[Serializable]
 	public sealed class RandomWalkStateConfig : IStateConfig {
-		[SerializeField] int priority = 1;
-		[SerializeField] int minDistance = 1;
-		[SerializeField] int maxDistance = 5;
+		[SerializeField] private int _priority = 1;
+		[SerializeField] private int _minDistance = 1;
+		[SerializeField] private int _maxDistance = 5;
 
-		public int Priority => priority;
-		public int MinDistance => minDistance;
-		public int MaxDistance => maxDistance;
+		public int Priority => _priority;
+		public int MinDistance => _minDistance;
+		public int MaxDistance => _maxDistance;
 
 		public void TestInit(int priority, int minDistance, int maxDistance) {
-			this.priority = priority;
-			this.minDistance = minDistance;
-			this.maxDistance = maxDistance;
+			_priority = priority;
+			_minDistance = minDistance;
+			_maxDistance = maxDistance;
 		}
 	}
 
 	[CreateAssetMenu(fileName = "AiConfig", menuName = "Configs/AiConfig")]
 	public sealed class AiConfig : ScriptableObject {
-		[SerializeField] IdleStateConfig? idleConfig;
-		[SerializeField] RandomWalkStateConfig? randomWalkConfig;
+		[SerializeField] private IdleStateConfig? _idleConfig;
+		[SerializeField] private RandomWalkStateConfig? _randomWalkConfig;
 
-		public IdleStateConfig IdleConfig => this.ValidateOrThrow(idleConfig);
-		public RandomWalkStateConfig RandomWalkConfig => this.ValidateOrThrow(randomWalkConfig);
+		public IdleStateConfig IdleConfig => this.ValidateOrThrow(_idleConfig);
+		public RandomWalkStateConfig RandomWalkConfig => this.ValidateOrThrow(_randomWalkConfig);
 
 		public void TestInit(IdleStateConfig idleConfig, RandomWalkStateConfig randomWalkConfig) {
-			this.idleConfig = idleConfig;
-			this.randomWalkConfig = randomWalkConfig;
+			_idleConfig = idleConfig;
+			_randomWalkConfig = randomWalkConfig;
 		}
 	}
 } 

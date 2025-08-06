@@ -11,7 +11,7 @@ using Services;
 
 namespace UnityComponents.UI.Game {
 	public class ItemStorageView : MonoBehaviour {
-		[SerializeField] PrefabSpawner? prefabSpawner;
+		[SerializeField] private PrefabSpawner? _prefabSpawner;
 
 		ItemsConfig? _itemsConfig;
 		ItemStorageService? _itemStorageService;
@@ -75,7 +75,7 @@ namespace UnityComponents.UI.Game {
 			ClearSelection();
 			foreach (var instance in _instances) {
 				if (instance) {
-					prefabSpawner?.Release(instance.gameObject);
+					_prefabSpawner?.Release(instance.gameObject);
 				}
 			}
 			_instances.Clear();
@@ -98,7 +98,7 @@ namespace UnityComponents.UI.Game {
 
 		void InitializeItem(Entity itemEntity, ref Item item) {
 			if (!this.Validate(_itemsConfig) ||
-			    !this.Validate(prefabSpawner)) {
+			    !this.Validate(_prefabSpawner)) {
 				return;
 			}
 
@@ -108,7 +108,7 @@ namespace UnityComponents.UI.Game {
 				Debug.LogError($"Item config not found for ID: {item.ResourceID}", gameObject);
 				return;
 			}
-			var instance = prefabSpawner.SpawnAndReturn();
+			var instance = _prefabSpawner.SpawnAndReturn();
 			if (!instance) {
 				return;
 			}

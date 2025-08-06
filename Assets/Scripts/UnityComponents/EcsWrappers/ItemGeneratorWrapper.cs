@@ -7,7 +7,7 @@ using Components;
 
 namespace UnityComponents.EcsWrappers {
 	public sealed class ItemGeneratorWrapper : MonoBehaviour, IEcsComponentWrapper {
-		[SerializeField] string generatorType = string.Empty;
+		[SerializeField] private string _generatorType = string.Empty;
 
 		public void Init(Entity entity) {
 			if (entity.Has<ItemGenerator>()) {
@@ -15,7 +15,7 @@ namespace UnityComponents.EcsWrappers {
 			}
 
 			entity.Add(new ItemGenerator {
-				Type = generatorType,
+				Type = _generatorType,
 				CurrentCapacity = 0,
 				MaxCapacity = 0
 			});
