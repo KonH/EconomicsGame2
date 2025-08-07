@@ -240,12 +240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd701fe08edb4e40805158e59550a1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: MainCharacter
-  playerStorageView: {fileID: 8105034086794569316}
-  moveToOtherButton: {fileID: 5213885474787178226}
-  otherStorageView: {fileID: 4526460375429711702}
-  moveToPlayerButton: {fileID: 8569631056385017498}
-  windowController: {fileID: 2411490955770167095}
+  _playerId: MainCharacter
+  _playerStorageView: {fileID: 8105034086794569316}
+  _moveToOtherButton: {fileID: 5213885474787178226}
+  _otherStorageView: {fileID: 4526460375429711702}
+  _moveToPlayerButton: {fileID: 8569631056385017498}
+  _windowController: {fileID: 2411490955770167095}
 --- !u!114 &2411490955770167095 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3889352327232248438, guid: 2f8793580d071c443a06e322fbe71496, type: 3}

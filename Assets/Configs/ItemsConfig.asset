@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80287122d644ab8a58ff737c9dcb410, type: 3}
   m_Name: ItemsConfig
   m_EditorClassIdentifier: 
-  items:
-  - id: Apple
-    name: Apple
-    icon: {fileID: -7832214784768987486, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}
+  _items:
+  - _id: Apple
+    _name: Apple
+    _icon: {fileID: -7832214784768987486, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}

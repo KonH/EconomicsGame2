@@ -469,10 +469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd4a9c25453415da1a257ae78fadbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 3901543735280775116}
-  nameText: {fileID: 8721216486139545424}
-  countText: {fileID: 8136944115402661952}
-  selectedIndicator: {fileID: 2397872598511927482}
+  _iconImage: {fileID: 3901543735280775116}
+  _nameText: {fileID: 8721216486139545424}
+  _countText: {fileID: 8136944115402661952}
+  _selectedIndicator: {fileID: 2397872598511927482}
 --- !u!114 &984406808140117765
 MonoBehaviour:
   m_ObjectHideFlags: 0

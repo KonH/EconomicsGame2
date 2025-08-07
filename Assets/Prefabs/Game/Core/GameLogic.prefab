@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bbadf16d2545a0a90b7a71d1174cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabSpawner: {fileID: 787487735791915073}
+  _prefabSpawner: {fileID: 787487735791915073}
 --- !u!114 &787487735791915073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,8 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef213c61f9c15b647baed9ef7f203001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2263328298914998029, guid: 245087844b271f44bb9a970de84143a2, type: 3}
-  root: {fileID: 0}
+  _prefab: {fileID: 2263328298914998029, guid: 245087844b271f44bb9a970de84143a2, type: 3}
+  _root: {fileID: 0}
 --- !u!1 &5580873206676107234
 GameObject:
   m_ObjectHideFlags: 0

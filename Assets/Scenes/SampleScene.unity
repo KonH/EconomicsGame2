@@ -8008,6 +8008,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3488889347492059273, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: _root
+      value: 
+      objectReference: {fileID: 497728057}
     - target: {fileID: 6983622196204712339, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
       propertyPath: m_Name
       value: GameHUD
@@ -8032,6 +8036,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
       propertyPath: sceneSettings.entitiesRoot
+      value: 
+      objectReference: {fileID: 1897484515}
+    - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
+      propertyPath: _sceneSettings._entitiesRoot
       value: 
       objectReference: {fileID: 1897484515}
     - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
@@ -8236,6 +8244,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 787487735791915073, guid: 9c9135b80eb4387459f37650d9b734eb, type: 3}
       propertyPath: root
+      value: 
+      objectReference: {fileID: 497728057}
+    - target: {fileID: 787487735791915073, guid: 9c9135b80eb4387459f37650d9b734eb, type: 3}
+      propertyPath: _root
       value: 
       objectReference: {fileID: 497728057}
     - target: {fileID: 6773547692324777749, guid: 9c9135b80eb4387459f37650d9b734eb, type: 3}

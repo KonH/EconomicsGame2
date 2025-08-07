@@ -9,8 +9,8 @@ namespace UnityComponents.Editor {
 		SerializedProperty? _idProperty;
 
 		void OnEnable() {
-			_useGameObjectNameAsIdProperty = serializedObject.FindProperty("useGameObjectNameAsId");
-			_idProperty = serializedObject.FindProperty("id");
+			_useGameObjectNameAsIdProperty = serializedObject.FindProperty("_useGameObjectNameAsId");
+			_idProperty = serializedObject.FindProperty("_id");
 		}
 
 		public override void OnInspectorGUI() {

@@ -445,9 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4353468fb4b424c8affa8ad26d8ccbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemStorageView: {fileID: 2675319437826785142}
-  playerId: MainCharacter
-  dropButton: {fileID: 5201302730656785838}
+  _itemStorageView: {fileID: 2675319437826785142}
+  _playerId: MainCharacter
+  _dropButton: {fileID: 5201302730656785838}
 --- !u!224 &3286234392845159242 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 902025792125767834, guid: 2f8793580d071c443a06e322fbe71496, type: 3}

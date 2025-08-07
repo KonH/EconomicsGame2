@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e6c6ab6e462124db8418cc46968595, type: 3}
   m_Name: ItemGeneratorConfig
   m_EditorClassIdentifier: 
-  typeConfigs:
-  - type: AppleTree
-    rules:
-    - itemType: Apple
-      probability: 1
-      minCount: 1
-      maxCount: 3
-    minCapacity: 10
-    maxCapacity: 12
+  _typeConfigs:
+  - _type: AppleTree
+    _rules:
+    - _itemType: Apple
+      _probability: 1
+      _minCount: 1
+      _maxCount: 3
+    _minCapacity: 10
+    _maxCapacity: 12

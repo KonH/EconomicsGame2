@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff38e6ccd7a29a45857333e8e19624d, type: 3}
   m_Name: AiConfig
   m_EditorClassIdentifier: 
-  idleConfig:
-    priority: 1
-    minTime: 3
-    maxTime: 6
-  randomWalkConfig:
-    priority: 1
-    minDistance: 2
-    maxDistance: 5
+  _idleConfig:
+    _priority: 1
+    _minTime: 3
+    _maxTime: 6
+  _randomWalkConfig:
+    _priority: 1
+    _minDistance: 2
+    _maxDistance: 5

@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f11364d26aa1924c874e2099991ce74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabSpawner: {fileID: 2595985449679202087}
+  _prefabSpawner: {fileID: 2595985449679202087}
 --- !u!114 &2595985449679202087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,5 +941,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef213c61f9c15b647baed9ef7f203001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4260475520807627435, guid: 057a9fc577719944aaf7760fc7b3e8d9, type: 3}
-  root: {fileID: 3561994547874501918}
+  _prefab: {fileID: 4260475520807627435, guid: 057a9fc577719944aaf7760fc7b3e8d9, type: 3}
+  _root: {fileID: 3561994547874501918}

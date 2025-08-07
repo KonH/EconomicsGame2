@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a82bbd55dc4d9f973ee34cb80c99c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: MainCharacter
-  useGameObjectNameAsId: 0
+  _id: MainCharacter
+  _useGameObjectNameAsId: 0
 --- !u!114 &-9156501796032882104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,4 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f138c97008775e4e829980678e9fc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFlipped: 0
+  _isFlipped: 0

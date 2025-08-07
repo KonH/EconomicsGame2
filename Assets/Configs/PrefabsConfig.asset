@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8e1eaf353650d48ac4e4782fdd213a, type: 3}
   m_Name: PrefabsConfig
   m_EditorClassIdentifier: 
-  prefabs:
-  - id: ItemStorage
-    prefab: {fileID: 6750825955823642901, guid: f8678b2f3d8d7914e90f10a6e0bf831a, type: 3}
+  _prefabs:
+  - _id: ItemStorage
+    _prefab: {fileID: 6750825955823642901, guid: f8678b2f3d8d7914e90f10a6e0bf831a, type: 3}

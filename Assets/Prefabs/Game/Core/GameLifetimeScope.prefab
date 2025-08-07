@@ -48,11 +48,11 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  mouseInputSettings:
-    trackedMouseButtons: 2
-    dragThreshold: 0.33
-  keyboardInputSettings:
-    movementKeys:
+  _mouseInputSettings:
+    _trackedMouseButtons: 2
+    _dragThreshold: 0.33
+  _keyboardInputSettings:
+    _movementKeys:
     - key: 273
       direction: {x: 0, y: 1}
     - key: 274
@@ -61,12 +61,12 @@ MonoBehaviour:
       direction: {x: -1, y: 0}
     - key: 275
       direction: {x: 1, y: 0}
-  cameraScrollSettings:
-    targetButton: 0
-    dragSpeed: 10
-  movementSettings:
-    speed: 3.33
-    standardCurve:
+  _cameraScrollSettings:
+    _targetButton: 0
+    _dragSpeed: 10
+  _movementSettings:
+    _speed: 3.33
+    _standardCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
@@ -99,7 +99,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    jumpCurve:
+    _jumpCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
@@ -132,18 +132,18 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  gridSettings:
-    cellWidth: 1
-    cellHeight: 1
-    gridWidth: 10
-    gridHeight: 10
-  sceneSettings:
-    entitiesRoot: {fileID: 0}
-  zoomSettings:
-    zoomSensitivity: 1
-    minZoomLevel: 1.5
-    maxZoomLevel: 10
-  itemsConfig: {fileID: 11400000, guid: a007d0407c1ec19488a2938c36a7c71c, type: 2}
-  prefabsConfig: {fileID: 11400000, guid: 7d82e2b87f2d63d469b0a20937732fc7, type: 2}
-  aiConfig: {fileID: 11400000, guid: 57720554386de7b49841a0bd1e780961, type: 2}
-  itemGeneratorConfig: {fileID: 11400000, guid: 4880d4d83821f304591c5e43ab46efb2, type: 2}
+  _gridSettings:
+    _cellWidth: 1
+    _cellHeight: 1
+    _gridWidth: 10
+    _gridHeight: 10
+  _sceneSettings:
+    _entitiesRoot: {fileID: 0}
+  _zoomSettings:
+    _zoomSensitivity: 1
+    _minZoomLevel: 1.5
+    _maxZoomLevel: 10
+  _itemsConfig: {fileID: 11400000, guid: a007d0407c1ec19488a2938c36a7c71c, type: 2}
+  _prefabsConfig: {fileID: 11400000, guid: 7d82e2b87f2d63d469b0a20937732fc7, type: 2}
+  _aiConfig: {fileID: 11400000, guid: 57720554386de7b49841a0bd1e780961, type: 2}
+  _itemGeneratorConfig: {fileID: 11400000, guid: 4880d4d83821f304591c5e43ab46efb2, type: 2}
