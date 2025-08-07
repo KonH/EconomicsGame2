@@ -70,28 +70,50 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [ ] Merge items after same ID generated
+  - [!] Item consumption
+  - [ ] Transfer by agreement
 - [+] Mining
 - [ ] Crafting
+- Death: 
+  - [!] Transform to dead state, disallow to do anything, stats not updated
 - AI:
   - [+] Idle
   - [+] Random walk
   - [ ] Mining
   - [ ] Crafting
+  - [ ] Relatives take items from dead character
   - [ ] Fix stuck after loading issue
 - Stats:
   - [ ] Traits - personal characteristics
   - [ ] Skills - experience
-  - [ ] Needs - what is required now
+  - Needs - what is required now
+    - [!] Health - increases by food, decreases by Hungry condition
+    - [!] Hunger - decreases by food, increases by time
+  - Conditions
+    - [!] Hungry
+- Roles:
+  - [ ] Miner specialist
+  - [ ] Merchant
+  - [ ] Gravedigger
+  - [ ] Major
+- Social:
+  - [ ] Relatives
+  - [ ] Children
+- [ ] Selected character follow camera when moving
   
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
+  - [!] Stats button
+  - [!] Conditions
 - Windows:
   - Inventory window:
     - [+] Item scroller list, item details - name and unique sprites
     - [+] Ability to select item by click on it
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
+    - [!] Item consumption
+    - [ ] Inactive controls if another character selected
   - Transfer window:
     - [+] Opens when player moves on cell with storage
     - [+] Two panel view
@@ -101,16 +123,24 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - Stats view:
     - [ ] Traits
     - [ ] Skills
-    - [ ] Needs
+    - [!] Needs
+    - [!] Conditions
+  - Game over window:
+    - [!] Pause
+    - [!] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
   - [ ] Item change - over character
   - [ ] Item change - on inventory button (player)
+- [ ] Selected character frame
+- [ ] Ability to select any character
 
 **Art**
 - Characters:
   - [+] Player
+  - [!] Player - dead
   - [+] Bot
+  - [!] Bot - dead
 - Items:
   - [+] Apple
 - Props:
@@ -123,6 +153,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Button
   - [ ] Window background
   - [ ] Inventory button (from backpack)
+  - [ ] Stats button
+  - [ ] Selected character frame
 
 **Sound**
 - [ ] Click
