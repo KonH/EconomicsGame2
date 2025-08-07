@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: -3235510634501668724}
   - component: {fileID: -8270413032537529824}
   - component: {fileID: 5080717780246127711}
+  - component: {fileID: -7323488641951611073}
+  - component: {fileID: 1594083880144791738}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -194,3 +196,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isFlipped: 0
+--- !u!114 &-7323488641951611073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50597514262b9b94182047de51822281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 50
+--- !u!114 &1594083880144791738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615015fe66e81a34ab817ec8890ca14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHunger: 50
