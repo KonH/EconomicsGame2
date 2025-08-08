@@ -75,11 +75,6 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void UpdateControls() {
-			if (!this.Validate(_dropButton) || !this.Validate(_consumeButton)) {
-				return;
-			}
-
-			_dropButton.interactable = _selectedItem != null;
 			if (this.Validate(_dropButton)) {
 				_dropButton.interactable = _selectedItem != null;
 			}
