@@ -23,6 +23,7 @@ namespace Bootstrap {
 		[SerializeField] private PrefabsConfig? _prefabsConfig;
 		[SerializeField] private AiConfig? _aiConfig;
 		[SerializeField] private ItemGeneratorConfig? _itemGeneratorConfig;
+		[SerializeField] private StatsConfig? _statsConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(_mouseInputSettings);
@@ -36,6 +37,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(_itemGeneratorConfig);
 			this.ValidateOrThrow(_sceneSettings);
 			this.ValidateOrThrow(_zoomSettings);
+			this.ValidateOrThrow(_statsConfig);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
@@ -57,7 +59,8 @@ namespace Bootstrap {
 			builder.RegisterInstance(_prefabsConfig).AsSelf();
 			builder.RegisterInstance(_aiConfig).AsSelf();
 			builder.RegisterInstance(_itemGeneratorConfig).AsSelf();
-
+			builder.RegisterInstance(_statsConfig).AsSelf();
+			
 			builder.RegisterInstance(_mouseInputSettings).AsSelf();
 			builder.RegisterInstance(_keyboardInputSettings).AsSelf();
 			builder.RegisterInstance(_cameraScrollSettings).AsSelf();

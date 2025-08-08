@@ -43,7 +43,7 @@ namespace Configs {
 		}
 	}
 
-	[CreateAssetMenu(fileName = "ItemGeneratorConfig", menuName = "Economics Game/Configs/Item Generator Config")]
+	[CreateAssetMenu(fileName = "ItemGeneratorConfig", menuName = "Configs/Item Generator Config")]
 	public sealed class ItemGeneratorConfig : ScriptableObject {
 		[SerializeField] private List<ItemTypeConfig> _typeConfigs = new();
 		Dictionary<string, ItemTypeConfig>? _typeConfigLookup;
