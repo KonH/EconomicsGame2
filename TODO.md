@@ -87,10 +87,10 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Traits - personal characteristics
   - [ ] Skills - experience
   - Needs - what is required now
-    - [!] Health - increases by food, decreases by Hungry condition
-    - [!] Hunger - decreases by food, increases by time
+    - [+] Health - increases by food, decreases by Hungry condition
+    - [+] Hunger - decreases by food, increases by time
   - Conditions
-    - [!] Hungry
+    - [+] Hungry
 - Roles:
   - [ ] Miner specialist
   - [ ] Merchant

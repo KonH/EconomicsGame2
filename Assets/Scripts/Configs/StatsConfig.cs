@@ -14,6 +14,12 @@ namespace Configs {
 		public float HungerIncreaseValue => _hungerIncreaseValue;
 		public float StartAffectingHealthPercent => _startAffectingHealthPercent;
 		public float HealthDecreaseValue => _healthDecreaseValue;
+
+		public void TestInit(float hungerIncreaseValue, float startAffectingHealthPercent, float healthDecreaseValue) {
+			_hungerIncreaseValue = hungerIncreaseValue;
+			_startAffectingHealthPercent = startAffectingHealthPercent;
+			_healthDecreaseValue = healthDecreaseValue;
+		}
 	}
 
 	[CreateAssetMenu(fileName = "StatsConfig", menuName = "Configs/StatsConfig")]
@@ -22,5 +28,9 @@ namespace Configs {
 		[SerializeField] private HungerConfig? _hungerConfig;
 
 		public HungerConfig HungerConfig => this.ValidateOrThrow(_hungerConfig);
+
+		public void TestInit(HungerConfig hungerConfig) {
+			_hungerConfig = hungerConfig;
+		}
 	}
 }

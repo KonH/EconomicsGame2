@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ac8b89b26d744494c90d688cf2033, type: 3}
   m_Name: StatsConfig
   m_EditorClassIdentifier: 
-  _startAffectingHealthPercent: 0.5
-  _healthDecreaseValue: 1
+  _hungerConfig:
+    _hungerIncreaseValue: 1
+    _startAffectingHealthPercent: 0.5
+    _healthDecreaseValue: 0.5

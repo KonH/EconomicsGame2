@@ -10,7 +10,7 @@ namespace UnityComponents.EcsWrappers {
 
 		public void Init(Entity entity) {
 			entity.Add(new Hunger {
-				value = _maxHunger,
+				value = 0,
 				maxValue = _maxHunger
 			});
 		}

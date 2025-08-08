@@ -54,6 +54,7 @@ namespace Bootstrap {
 			builder.Register<WorldSubscriptionService>(Lifetime.Scoped).AsSelf();
 			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
 			builder.Register<AiService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ConditionService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(_itemsConfig).AsSelf();
 			builder.RegisterInstance(_prefabsConfig).AsSelf();
@@ -107,6 +108,9 @@ namespace Bootstrap {
 				c.Add<RandomWalkSystem>();
 				c.Add<ItemGenerationSystem>();
 				c.Add<ItemGenerationProcessingSystem>();
+				c.Add<HungerUpdateSystem>();
+				c.Add<HungrySetSystem>();
+				c.Add<HungryUpdateSystem>();
 			});
 		}
 	}
