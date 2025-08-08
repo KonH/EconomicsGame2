@@ -8,7 +8,8 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 ## General Guidelines
 
 ### Tabs vs Spaces
-- Use tabs for indentation
+- **Always** use tabs for indentation
+- **Never** mix tabs and spaces
 
 ### Namespaces
 - Group related classes under meaningful namespaces (e.g., `Prototype`)
