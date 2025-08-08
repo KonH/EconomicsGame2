@@ -80,7 +80,13 @@ namespace UnityComponents.UI.Game {
 			}
 
 			_dropButton.interactable = _selectedItem != null;
-			_consumeButton.interactable = _selectedItem != null && _selectedItem.Entity.Has<Consumable>();
+			if (this.Validate(_dropButton)) {
+				_dropButton.interactable = _selectedItem != null;
+			}
+
+			if (this.Validate(_consumeButton)) {
+				_consumeButton.interactable = _selectedItem != null && _selectedItem.Entity.Has<Consumable>();
+			}
 		}
 	}
 }
