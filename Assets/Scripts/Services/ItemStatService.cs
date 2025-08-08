@@ -15,10 +15,12 @@ namespace Services {
 	public sealed class ItemStatService {
 		readonly Dictionary<string, Type> _statTypeByName;
 		readonly Dictionary<string, FieldInfo[]> _floatFieldsByName;
+		readonly Dictionary<string, Action<Entity, object>> _addStatDelegatesByName;
 
 		public ItemStatService() {
 			_statTypeByName = new Dictionary<string, Type>(StringComparer.Ordinal);
 			_floatFieldsByName = new Dictionary<string, FieldInfo[]>(StringComparer.Ordinal);
+			_addStatDelegatesByName = new Dictionary<string, Action<Entity, object>>(StringComparer.Ordinal);
 			InitializeCaches();
 		}
 
@@ -45,6 +47,14 @@ namespace Services {
 						.Where(f => f.FieldType == typeof(float))
 						.ToArray();
 					_floatFieldsByName[typeName] = floatFields;
+
+					// Precreate add delegate for this stat type to avoid reflection at runtime
+					var addMethod = typeof(ItemStatService).GetMethod(nameof(AddGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+					if (addMethod != null) {
+						var generic = addMethod.MakeGenericMethod(type);
+						var del = (Action<Entity, object>)Delegate.CreateDelegate(typeof(Action<Entity, object>), this, generic);
+						_addStatDelegatesByName[typeName] = del;
+					}
 				}
 			}
 		}
@@ -62,14 +72,12 @@ namespace Services {
 				fields[i].SetValue(boxed, values[i]);
 			}
 
-			// Use generic Add via reflection
-			var addMethod = typeof(ItemStatService).GetMethod(nameof(AddGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
-			if (addMethod == null) {
-				Debug.LogError("Failed to get AddGeneric method");
+			// Use delegate instead of reflection
+			if (!_addStatDelegatesByName.TryGetValue(statConfig.TypeName, out var addDelegate)) {
+				Debug.LogError($"No delegate found for item stat type: {statConfig.TypeName}");
 				return false;
 			}
-			var generic = addMethod.MakeGenericMethod(type);
-			generic.Invoke(this, new object[] { entity, boxed });
+			addDelegate(entity, boxed);
 			return true;
 		}
 
