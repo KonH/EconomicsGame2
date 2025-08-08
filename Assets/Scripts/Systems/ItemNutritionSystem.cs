@@ -21,7 +21,6 @@ namespace Systems {
 		public override void Update(in SystemState t) {
 			World.Query(_itemConsumeQuery, (Entity itemEntity, ref Item _, ref ItemOwner itemOwner, ref Nutrition nutrition) => {
 				var ownerStorageId = itemOwner.StorageId;
-				// find owner entity by storage id; owner is entity that has ItemStorage with same StorageId?
 				var ownerEntity = _itemStorageService.TryGetStorageEntity(ownerStorageId);
 
 				if (ownerEntity == Entity.Null) {
