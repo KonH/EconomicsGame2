@@ -35,7 +35,7 @@ namespace Tests {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
 			_itemsConfig = CreateTestItemsConfig();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
 			_itemGeneratorConfig = CreateTestConfig();
 			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService);
 		}

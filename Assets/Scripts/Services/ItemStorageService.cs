@@ -11,6 +11,7 @@ namespace Services {
 		readonly World _world;
 		readonly ItemIdService _itemIdService;
 		readonly ItemsConfig _itemsConfig;
+		readonly ItemStatService _itemStatService;
 
 		readonly QueryDescription _itemOwnerQuery = new QueryDescription()
 			.WithAll<ItemOwner>();
@@ -21,10 +22,11 @@ namespace Services {
 		readonly QueryDescription _storageOnCellQuery = new QueryDescription()
 			.WithAll<ItemStorage, OnCell>();
 
-		public ItemStorageService(World world, ItemIdService itemIdService, ItemsConfig itemsConfig) {
+		public ItemStorageService(World world, ItemIdService itemIdService, ItemsConfig itemsConfig, ItemStatService itemStatService) {
 			_world = world;
 			_itemIdService = itemIdService;
 			_itemsConfig = itemsConfig;
+			_itemStatService = itemStatService;
 		}
 
 		public long GetStorageId(Entity storageEntity) {
@@ -64,8 +66,15 @@ namespace Services {
 				UniqueID = _itemIdService.GenerateId(),
 				Count = count
 			});
+			AddItemStats(itemEntity, itemConfig);
 			AttachItemToStorage(storageId, itemEntity, items);
 			return true;
+		}
+
+		public void AddItemStats(Entity itemEntity, ItemConfig itemConfig) {
+			foreach (var stat in itemConfig.Stats) {
+				_itemStatService.AddItemStat(itemEntity, stat);
+			}
 		}
 
 		public void RemoveItemFromStorage(long storageId, Entity itemEntity) {
@@ -169,7 +178,7 @@ namespace Services {
 			return storageEntity;
 		}
 
-		Entity TryGetStorageEntity(long storageId) {
+		public Entity TryGetStorageEntity(long storageId) {
 			var storageEntity = Entity.Null;
 			_world.Query(_storageQuery, (Entity entity, ref ItemStorage itemStorage) => {
 				if (itemStorage.StorageId == storageId) {

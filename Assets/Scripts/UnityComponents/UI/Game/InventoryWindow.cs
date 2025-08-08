@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+
 using VContainer;
 using Arch.Core;
 using Arch.Core.Extensions;
+
 using Common;
 using Components;
 using Services;
@@ -12,6 +14,7 @@ namespace UnityComponents.UI.Game {
 		[SerializeField] private ItemStorageView? _itemStorageView;
 		[SerializeField] private string _playerId = "MainCharacter";
 		[SerializeField] private Button? _dropButton;
+		[SerializeField] private Button? _consumeButton;
 
 		Entity _playerEntity;
 		ItemView? _selectedItem;
@@ -57,17 +60,27 @@ namespace UnityComponents.UI.Game {
 			_selectedItem.Entity.Add(new DropItem());
 		}
 
+		public void ConsumeSelectedItem() {
+			if (!this.Validate(_selectedItem)) {
+				Debug.LogWarning("No item selected to consume.", gameObject);
+				return;
+			}
+			Debug.Log("Consume selected item: " + _selectedItem.Entity, gameObject);
+			_selectedItem.Entity.Add(new ConsumeItem());
+		}
+
 		void OnItemSelected(ItemView item) {
 			_selectedItem = item;
 			UpdateControls();
 		}
 
 		void UpdateControls() {
-			if (!this.Validate(_dropButton)) {
+			if (!this.Validate(_dropButton) || !this.Validate(_consumeButton)) {
 				return;
 			}
 
 			_dropButton.interactable = _selectedItem != null;
+			_consumeButton.interactable = _selectedItem != null && _selectedItem.Entity.Has<Consumable>();
 		}
 	}
 }

@@ -70,7 +70,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [ ] Merge items after same ID generated
-  - [!] Item consumption
+  - [+] Item consumption
   - [ ] Transfer by agreement
 - [+] Mining
 - [ ] Crafting
@@ -112,7 +112,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Ability to select item by click on it
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
-    - [!] Item consumption
+    - [+] Item consumption
     - [ ] Inactive controls if another character selected
   - Transfer window:
     - [+] Opens when player moves on cell with storage

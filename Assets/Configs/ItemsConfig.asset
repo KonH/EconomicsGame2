@@ -17,6 +17,9 @@ MonoBehaviour:
     _name: Apple
     _icon: {fileID: -7832214784768987486, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}
     _stats:
+    - _typeName: Consumable
+      _floatArguments: []
     - _typeName: Nutrition
       _floatArguments:
+      - 50
       - 25

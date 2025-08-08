@@ -7,5 +7,11 @@ namespace Components {
 	[Persistent]
 	public struct Nutrition {
 		public float hungerDecreaseValue;
+		public float healthIncreaseValue;
+	}
+
+	[ItemStat]
+	[Persistent]
+	public struct Consumable {
 	}
 }
