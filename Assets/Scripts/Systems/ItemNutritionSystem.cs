@@ -10,7 +10,7 @@ using Arch.Core.Extensions;
 namespace Systems {
 	public sealed class ItemNutritionSystem : UnitySystemBase {
 		readonly QueryDescription _itemConsumeQuery = new QueryDescription()
-            .WithAll<Item, ItemOwner, Nutrition, ConsumeItem>();
+			.WithAll<Item, ItemOwner, Nutrition, ConsumeItem>();
 
 		readonly ItemStorageService _itemStorageService;
 
@@ -28,7 +28,7 @@ namespace Systems {
 					return;
 				}
 
-                ref var hunger = ref ownerEntity.TryGetRef<Hunger>(out var hasHunger);
+				ref var hunger = ref ownerEntity.TryGetRef<Hunger>(out var hasHunger);
 				if (hasHunger) {
 					hunger.value = Mathf.Max(hunger.value - nutrition.hungerDecreaseValue, 0f);
 				} else {
