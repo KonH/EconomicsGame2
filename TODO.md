@@ -111,7 +111,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
-  - [!] Stats button
+  - [+] Stats button
   - [!] Conditions
   - [.] Version
 - Windows:
