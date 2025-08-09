@@ -8,7 +8,8 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 ## General Guidelines
 
 ### Tabs vs Spaces
-- Use tabs for indentation
+- **Always** use tabs for indentation
+- **Never** mix tabs and spaces
 
 ### Namespaces
 - Group related classes under meaningful namespaces (e.g., `Prototype`)
@@ -22,8 +23,8 @@ using EconomicsGame.*; // All project-specific namespaces
 ```
 
 ### Script Creation and File Management
-- **Use `manage_script` command only for creating new C# scripts with empty content**
-- **Do NOT use `manage_script` for updating existing scripts** - use normal file editing instead
+- **Always use `manage_script` command for creating any new C# scripts, in that case initially fill it with empty content**
+- Then **do NOT use `manage_script` for updating existing scripts** - use normal file editing instead
 - After creating empty script with `manage_script`, add the actual script content using normal file editing
 - All scripts should follow the established code style and naming conventions
 - Unity will automatically generate corresponding `.meta` files for scripts created via `manage_script`
@@ -247,3 +248,9 @@ private World _world = null!;
 ### Data Structures
 - Use appropriate data structures for performance-critical operations
 - Consider memory usage and allocation patterns in frequently executed code
+
+## Unit tests
+- Never use `dotnet test` to run tests, they will be checked manually for now
+
+## Build
+- Never try to use `dotnet build` to check compilation errors, use Unity MCP to check logs

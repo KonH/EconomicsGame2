@@ -7,7 +7,7 @@ using Configs;
 namespace Systems {
 	public sealed class KeyboardMovementSystem : UnitySystemBase {
 		readonly QueryDescription _keyboardMovementQuery = new QueryDescription()
-			.WithAll<OnCell, IsManualMovable>()
+			.WithAll<OnCell, IsManualMovable, Active>()
 			.WithNone<MoveToCell>();
 
 		readonly QueryDescription _buttonPressQuery = new QueryDescription()

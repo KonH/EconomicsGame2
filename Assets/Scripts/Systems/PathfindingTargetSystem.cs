@@ -11,7 +11,7 @@ namespace Systems {
 			.WithAll<Cell, CellClick>();
 
 		readonly QueryDescription _movableEntitiesQuery = new QueryDescription()
-			.WithAll<IsManualMovable, OnCell>()
+			.WithAll<IsManualMovable, OnCell, Active>()
 			.WithNone<MoveToCell>();
 
 		readonly CellService _cellService;

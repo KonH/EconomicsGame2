@@ -7,7 +7,7 @@ using Services;
 namespace Systems {
 	public sealed class CellMovementSystem : UnitySystemBase {
 		readonly QueryDescription _moveToNewCellQuery = new QueryDescription()
-			.WithAll<MoveToCell, StartAction>();
+			.WithAll<MoveToCell, StartAction, Active>();
 
 		readonly CellService _cellService;
 

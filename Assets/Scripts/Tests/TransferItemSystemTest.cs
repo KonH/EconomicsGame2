@@ -35,7 +35,7 @@ namespace Tests {
 			_itemIdService = new ItemIdService();
 			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
 			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
 			_system = new TransferItemSystem(_world, _itemStorageService);
 
 			// Create test storages

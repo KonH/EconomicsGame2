@@ -7,10 +7,10 @@ using Configs;
 namespace Systems {
 	public sealed class MovementSystem : UnitySystemBase {
 		readonly QueryDescription _movementQuery = new QueryDescription()
-			.WithAll<WorldPosition, MoveToPosition, ActionProgress>();
+			.WithAll<WorldPosition, MoveToPosition, ActionProgress, Active>();
 
 		readonly QueryDescription _actionFinishedQuery = new QueryDescription()
-			.WithAll<MoveToPosition, ActionFinished>();
+			.WithAll<MoveToPosition, ActionFinished, Active>();
 
 		readonly MovementSettings _movementSettings;
 

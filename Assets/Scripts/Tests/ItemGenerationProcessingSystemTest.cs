@@ -35,7 +35,7 @@ namespace Tests {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
 			_itemsConfig = CreateTestItemsConfig();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig);
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
 			_itemGeneratorConfig = CreateTestConfig();
 			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService);
 		}
@@ -57,9 +57,9 @@ namespace Tests {
 				new ItemConfig(),
 				new ItemConfig()
 			};
-			items[0].TestInit("TestItem", "Test Item", null);
-			items[1].TestInit("ItemA", "Item A", null);
-			items[2].TestInit("ItemB", "Item B", null);
+			items[0].TestInit("TestItem", "Test Item", null, Array.Empty<ItemStatConfig>());
+			items[1].TestInit("ItemA", "Item A", null, Array.Empty<ItemStatConfig>());
+			items[2].TestInit("ItemB", "Item B", null, Array.Empty<ItemStatConfig>());
 			
 			var config = ScriptableObject.CreateInstance<ItemsConfig>();
 			config.TestInit(items);
