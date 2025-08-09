@@ -20,7 +20,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Nullable reference types usage
 - [x] Test coverage tracking with Codecov
 - [x] Unit tests for regression
-- [ ] CI/CD WebGL build
+- [.] CI/CD WebGL build
 - [x] Fix code coverage upload 
 
 **Tech**
@@ -32,7 +32,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Add optional default code generation for wrappers
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
-- [ ] Unique reference guard & generation
+- Unique reference guard & generation:
   - [ ] Validate entities created after Initialization considering world loading
   - [ ] Reference ID storage, select IDs from dropdown
 - [ ] Localization support
@@ -48,6 +48,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - PrefabSpawner:
   - [ ] Pooling 
 - [ ] ECS systems dependencies?
+- [ ] Rework one frame components? (ordering issues)
 - Entity management:
   - [+] Remove related gameObject when entity destroyed
   - [+] Allow to move to cell after obstacle destroyed
@@ -70,9 +71,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [!] Consume items one by one
-  - [ ] Merge items after same ID generated
+  - [.] Merge items after same ID generated
   - [+] Item consumption
-  - [ ] Transfer by agreement
+  - [.] Transfer by agreement
 - [+] Mining
 - [ ] Crafting
 - Death: 
@@ -80,7 +81,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - AI:
   - [+] Idle
   - [+] Random walk
-  - [ ] Mining
+  - [.] Mining
+  - [.] Merchant
   - [ ] Crafting
   - [ ] Relatives take items from dead character
   - [ ] Fix stuck after loading issue
@@ -93,20 +95,22 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - Conditions
     - [+] Hungry
 - Roles:
-  - [ ] Miner specialist
-  - [ ] Merchant
+  - [.] Miner specialist
+  - [.] Merchant
   - [ ] Gravedigger
   - [ ] Major
 - Social:
   - [ ] Relatives
   - [ ] Children
-- [ ] Selected character follow camera when moving
+- [.] Selected character follow camera when moving
+- [.] Change visual related to roles
   
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
   - [!] Stats button
   - [!] Conditions
+  - [.] Version
 - Windows:
   - Inventory window:
     - [+] Item scroller list, item details - name and unique sprites
@@ -114,7 +118,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
     - [+] Item consumption
-    - [ ] Inactive controls if another character selected
+    - [.] Inactive controls if another character selected
   - Transfer window:
     - [+] Opens when player moves on cell with storage
     - [+] Two panel view
@@ -131,10 +135,10 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [!] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
-  - [ ] Item change - over character
-  - [ ] Item change - on inventory button (player)
-- [ ] Selected character frame
-- [ ] Ability to select any character
+  - [.] Item change - over character
+  - [.] Item change - on inventory button
+- [.] Selected character frame
+- [.] Ability to select any character
 
 **Art**
 - Characters:
@@ -142,6 +146,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [!] Player - dead
   - [+] Bot
   - [!] Bot - dead
+- Role hats:
+  - [.] Collector
+  - [.] Merchant
 - Items:
   - [+] Apple
 - Props:
@@ -151,15 +158,16 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Tiles:
   - [+] Floor
 - UI:
-  - [ ] Button
-  - [ ] Window background
-  - [ ] Inventory button (from backpack)
-  - [ ] Stats button
-  - [ ] Selected character frame
+  - [.] Button
+  - [.] Window background
+  - [.] Inventory button (from backpack)
+  - [.] Stats button
+  - [.] Selected character frame
 
 **Sound**
-- [ ] Click
+- [.] Click
 
 **Polishing**
 - [x] Better movement with little jump
 - [x] Flip character sprite when move to other side
+- [.] Update README
