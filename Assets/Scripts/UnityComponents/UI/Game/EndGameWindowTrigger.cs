@@ -12,7 +12,6 @@ namespace UnityComponents.UI.Game {
 		[SerializeField] private PrefabSpawner? _prefabSpawner;
 
 		WorldSubscriptionService? _subscriptionService;
-		TimeService? _timeService;
 
 		[Inject]
 		public void Construct(WorldSubscriptionService subscriptionService) {
@@ -27,7 +26,6 @@ namespace UnityComponents.UI.Game {
 
 		void OnDisable() {
 			_subscriptionService?.Unsubscribe<Death>(OnDeath);
-			_timeService?.Resume(this);
 		}
 
 		void OnDeath(Entity entity) {
