@@ -4,6 +4,7 @@ using VContainer;
 using Arch.Core;
 using Arch.Core.Extensions;
 
+using Common;
 using Components;
 using Services;
 using UnityComponents.EcsWrappers;
@@ -21,7 +22,7 @@ namespace UnityComponents {
 		}
 
 		public void Init(Entity entity) {
-			if (!_spriteRenderer) {
+			if (!this.Validate(_spriteRenderer)) {
 				return;
 			}
 
