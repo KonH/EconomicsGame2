@@ -79,7 +79,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] Mining
 - [ ] Crafting
 - Death: 
-  - [!] Transform to dead state, disallow to do anything, stats not updated
+  - [+] Transform to dead state, disallow to do anything, stats not updated
 - AI:
   - [+] Idle
   - [+] Random walk
@@ -105,7 +105,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Relatives
   - [ ] Children
 - [.] Selected character follow camera when moving
-- [!] Change visual for dead character
+- [+] Change visual for dead character
 - [.] Change visual related to roles
   
 **UI**
@@ -146,9 +146,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 **Art**
 - Characters:
   - [+] Player
-  - [!] Player - dead
+  - [+] Player - dead
   - [+] Bot
-  - [!] Bot - dead
+  - [+] Bot - dead
 - Role hats:
   - [.] Collector
   - [.] Merchant
