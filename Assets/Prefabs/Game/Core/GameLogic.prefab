@@ -60,6 +60,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 2263328298914998029, guid: 245087844b271f44bb9a970de84143a2, type: 3}
   _root: {fileID: 0}
+--- !u!1 &4599293277880271006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8232185118671894209}
+  - component: {fileID: 8616837759540703960}
+  - component: {fileID: 7642389138814848016}
+  m_Layer: 0
+  m_Name: EndGameWindowTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8232185118671894209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599293277880271006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6773547692324777749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8616837759540703960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599293277880271006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36cbd3d2fd0be2c40bf35516507f57fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerId: MainCharacter
+  _prefabSpawner: {fileID: 7642389138814848016}
+--- !u!114 &7642389138814848016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599293277880271006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef213c61f9c15b647baed9ef7f203001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 1015072258886047807, guid: 62b4a498fb94f8a439b053e5c4fed8c8, type: 3}
+  _root: {fileID: 0}
 --- !u!1 &5580873206676107234
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,5 +196,6 @@ Transform:
   m_Children:
   - {fileID: 107215867696543934}
   - {fileID: 2597182798620385527}
+  - {fileID: 8232185118671894209}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

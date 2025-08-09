@@ -56,6 +56,8 @@ namespace Bootstrap {
 			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
 			builder.Register<AiService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ConditionService>(Lifetime.Scoped).AsSelf();
+			builder.Register<SceneService>(Lifetime.Scoped).AsSelf();
+			builder.Register<TimeService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(_itemsConfig).AsSelf();
 			builder.RegisterInstance(_prefabsConfig).AsSelf();

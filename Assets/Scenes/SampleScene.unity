@@ -8290,6 +8290,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7642389138814848016, guid: 9c9135b80eb4387459f37650d9b734eb, type: 3}
+      propertyPath: _root
+      value: 
+      objectReference: {fileID: 497728057}
     - target: {fileID: 8333653869032122054, guid: 9c9135b80eb4387459f37650d9b734eb, type: 3}
       propertyPath: m_Name
       value: GameLogic

@@ -134,8 +134,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [!] Needs
     - [!] Conditions
   - Game over window:
-    - [!] Pause
-    - [!] Restart/Continue
+    - [+] Pause
+    - [+] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
   - [.] Item change - over character
