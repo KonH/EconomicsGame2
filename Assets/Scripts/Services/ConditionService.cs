@@ -32,7 +32,7 @@ namespace Services {
 				try {
 					types = assembly.GetTypes();
 				} catch (ReflectionTypeLoadException e) {
-					types = e.Types.Where(t => t != null).Cast<Type>().ToArray();
+					types = e.Types.Where(t => t != null).ToArray()!;
 				}
 
 				foreach (var type in types) {
