@@ -10,7 +10,7 @@ using Arch.Core.Extensions;
 namespace Systems {
 	public sealed class ItemNutritionSystem : UnitySystemBase {
 		readonly QueryDescription _itemConsumeQuery = new QueryDescription()
-			.WithAll<Item, ItemOwner, Nutrition, ConsumeItem, Active>();
+			.WithAll<Item, ItemOwner, Nutrition, ConsumeItem>();
 
 		readonly ItemStorageService _itemStorageService;
 
