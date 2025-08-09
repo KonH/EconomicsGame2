@@ -11,10 +11,10 @@ namespace Systems {
 		readonly ConditionService _conditionService;
 
 		readonly QueryDescription _withoutHungryQuery = new QueryDescription()
-			.WithAll<Hunger>()
+			.WithAll<Hunger, Active>()
 			.WithNone<Hungry>();
 		readonly QueryDescription _withHungryQuery = new QueryDescription()
-			.WithAll<Hunger, Hungry>();
+			.WithAll<Hunger, Hungry, Active>();
 
 		public HungrySetSystem(World world, StatsConfig statsConfig, ConditionService conditionService) : base(world) {
 			_statsConfig = statsConfig;

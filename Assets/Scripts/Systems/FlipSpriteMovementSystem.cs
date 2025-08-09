@@ -5,7 +5,7 @@ using Components;
 namespace Systems {
 	public sealed class FlipSpriteMovementSystem : UnitySystemBase {
 		QueryDescription _movingSpriteQuery = new QueryDescription()
-			.WithAll<FlipSprite, SpriteRendererReference, MoveToPosition>();
+			.WithAll<FlipSprite, SpriteRendererReference, MoveToPosition, Active>();
 
 		public FlipSpriteMovementSystem(World world) : base(world) {
 		}

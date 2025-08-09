@@ -114,6 +114,7 @@ namespace Bootstrap {
 				c.Add<HungerUpdateSystem>();
 				c.Add<HungrySetSystem>();
 				c.Add<HungryUpdateSystem>();
+				c.Add<DeathSystem>();
 			});
 		}
 	}

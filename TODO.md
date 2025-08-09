@@ -46,9 +46,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Attach dependencies & entity at MonoBehaviours in scene presentation
 - [+] Ability to listen for ECS events at Unity side
 - PrefabSpawner:
-  - [ ] Pooling 
-- [ ] ECS systems dependencies?
-- [ ] Rework one frame components? (ordering issues)
+  - [ ] Pooling
+- ECS:
+  - [ ] ECS systems dependencies?
+  - [ ] Rework one frame components? (ordering issues)
+  - [ ] Add/remove entities in editor
 - Entity management:
   - [+] Remove related gameObject when entity destroyed
   - [+] Allow to move to cell after obstacle destroyed
@@ -103,6 +105,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Relatives
   - [ ] Children
 - [.] Selected character follow camera when moving
+- [!] Change visual for dead character
 - [.] Change visual related to roles
   
 **UI**

@@ -7,7 +7,8 @@ using Components;
 
 namespace Systems {
 	public sealed class HungryUpdateSystem : UnitySystemBase {
-		readonly QueryDescription _query = new QueryDescription().WithAll<Hungry, Health>();
+		readonly QueryDescription _query = new QueryDescription()
+			.WithAll<Hungry, Health, Active>();
 
 		public HungryUpdateSystem(World world) : base(world) {}
 

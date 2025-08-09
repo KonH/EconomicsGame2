@@ -9,7 +9,7 @@ namespace Systems {
 	public sealed class ItemConsumeSystem : UnitySystemBase {
 		readonly ItemStorageService _storageService;
 		readonly QueryDescription _query = new QueryDescription()
-			.WithAll<Item, ItemOwner, ConsumeItem>();
+			.WithAll<Item, ItemOwner, ConsumeItem, Active>();
 
 		public ItemConsumeSystem(World world, ItemStorageService itemStorageService) : base(world) {
 			_storageService = itemStorageService;

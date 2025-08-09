@@ -9,7 +9,8 @@ using Configs;
 namespace Systems {
 	public sealed class HungerUpdateSystem : UnitySystemBase {
 		readonly StatsConfig _statsConfig;
-		readonly QueryDescription _query = new QueryDescription().WithAll<Hunger>();
+		readonly QueryDescription _query = new QueryDescription()
+			.WithAll<Hunger, Active>();
 
 		public HungerUpdateSystem(World world, StatsConfig statsConfig) : base(world) {
 			_statsConfig = statsConfig;
