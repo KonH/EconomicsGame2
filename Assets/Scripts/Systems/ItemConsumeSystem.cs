@@ -17,8 +17,7 @@ namespace Systems {
 
 		public override void Update(in SystemState t) {
 			World.Query(_query, (Entity itemEntity, ref Item _, ref ItemOwner itemOwner) => {
-				_storageService.RemoveItemFromStorage(itemOwner.StorageId, itemEntity);
-				itemEntity.Add<DestroyEntity>();
+				_storageService.ChangeItemCountInStorage(itemOwner.StorageId, itemEntity, -1);
 			});
 		}
 	}

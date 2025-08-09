@@ -158,6 +158,27 @@ namespace Services {
 			storageEntity.Add(new ItemStorageUpdated());
 		}
 
+		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, int diff) {
+			var storageEntity = TryGetStorageEntity(storageId);
+			if (storageEntity == Entity.Null) {
+				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot change item count.");
+				return;
+			}
+			ref var item = ref itemEntity.TryGetRef<Item>(out var hasItem);
+			if (hasItem) {
+				item.Count += diff;
+				if (item.Count <= 0) {
+					RemoveItemFromStorage(storageId, itemEntity);
+					itemEntity.Add<DestroyEntity>();
+					return;
+				}
+				storageEntity.Add(new ItemStorageUpdated());
+			} else {
+				Debug.LogError($"Item {itemEntity} not found in storage {storageId}. Cannot change item count.");
+				return;
+			}
+		}
+
 		public Entity CreateNewStorageAtCell(Vector2Int cellPosition, bool allowDestroyIfEmpty) {
 			var storageEntity = _world.Create();
 			var storageId = _itemIdService.GenerateId();
