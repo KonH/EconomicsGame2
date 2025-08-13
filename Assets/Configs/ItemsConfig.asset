@@ -23,3 +23,6 @@ MonoBehaviour:
       _floatArguments:
       - 50
       - 25
+  _itemStats:
+  - _typeName: Nutrition
+    _icon: {fileID: 4810234404653598802, guid: 582a5924d45652747b30e9bc186b8d15, type: 3}

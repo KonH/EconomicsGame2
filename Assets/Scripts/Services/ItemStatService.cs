@@ -16,11 +16,13 @@ namespace Services {
 		readonly Dictionary<string, Type> _statTypeByName;
 		readonly Dictionary<string, FieldInfo[]> _floatFieldsByName;
 		readonly Dictionary<string, Action<Entity, object>> _addStatDelegatesByName;
+		readonly Dictionary<string, Func<Entity, bool>> _hasStatDelegatesByName;
 
 		public ItemStatService() {
 			_statTypeByName = new Dictionary<string, Type>(StringComparer.Ordinal);
 			_floatFieldsByName = new Dictionary<string, FieldInfo[]>(StringComparer.Ordinal);
 			_addStatDelegatesByName = new Dictionary<string, Action<Entity, object>>(StringComparer.Ordinal);
+			_hasStatDelegatesByName = new Dictionary<string, Func<Entity, bool>>(StringComparer.Ordinal);
 			InitializeCaches();
 		}
 
@@ -48,12 +50,19 @@ namespace Services {
 						.ToArray();
 					_floatFieldsByName[typeName] = floatFields;
 
-					// Precreate add delegate for this stat type to avoid reflection at runtime
+					// Precreate delegates for this stat type to avoid reflection at runtime
 					var addMethod = typeof(ItemStatService).GetMethod(nameof(AddGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
 					if (addMethod != null) {
 						var generic = addMethod.MakeGenericMethod(type);
 						var del = (Action<Entity, object>)Delegate.CreateDelegate(typeof(Action<Entity, object>), this, generic);
 						_addStatDelegatesByName[typeName] = del;
+					}
+
+					var hasMethod = typeof(ItemStatService).GetMethod(nameof(HasGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+					if (hasMethod != null) {
+						var generic = hasMethod.MakeGenericMethod(type);
+						var del = (Func<Entity, bool>)Delegate.CreateDelegate(typeof(Func<Entity, bool>), this, generic);
+						_hasStatDelegatesByName[typeName] = del;
 					}
 				}
 			}
@@ -85,9 +94,25 @@ namespace Services {
 			return TryCreateAndAddStatComponent(entity, statConfig);
 		}
 
+		public IList<string> GetItemStatTypeNames(Entity entity) {
+			var result = new List<string>();
+			foreach (var (statName, _) in _statTypeByName) {
+				if (_hasStatDelegatesByName.TryGetValue(statName, out var hasDelegate)) {
+					if (hasDelegate(entity)) {
+						result.Add(statName);
+					}
+				}
+			}
+			return result;
+		}
+
 		void AddGeneric<T>(Entity entity, object boxed) where T : struct {
 			var value = (T)boxed;
 			entity.Add(value);
+		}
+
+		bool HasGeneric<T>(Entity entity) where T : struct {
+			return entity.Has<T>();
 		}
 	}
 }

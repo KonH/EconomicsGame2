@@ -121,6 +121,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
     - [+] Item consumption
+    - [+] Item stats
     - [.] Inactive controls if another character selected
   - Transfer window:
     - [+] Opens when player moves on cell with storage
@@ -154,6 +155,13 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [.] Merchant
 - Items:
   - [+] Apple
+- Item stats:
+  - [+] Nutrition
+- Character stats:
+  - [!] Health
+  - [!] Hunger
+- Character conditions:
+  - [!] Hungry
 - Props:
   - [+] Apple Tree
   - [+] Barrel
