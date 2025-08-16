@@ -3,6 +3,7 @@ namespace Components {
 	public struct Active {}
 
 	[Persistent]
+	[Condition]
 	public struct Dead {}
 
 	[OneFrame]

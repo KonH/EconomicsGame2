@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace Tests {
 			var hungerConfig = new HungerConfig();
 			hungerConfig.TestInit(1.0f, 0.5f, 2.0f);
 			_statsConfig = ScriptableObject.CreateInstance<StatsConfig>();
-			_statsConfig.TestInit(hungerConfig);
+			_statsConfig.TestInit(hungerConfig, Array.Empty<CharacterConditionConfig>());
 			_conditionService = new ConditionService();
 			_hungerUpdate = new HungerUpdateSystem(_world, _statsConfig);
 			_hungrySet = new HungrySetSystem(_world, _statsConfig, _conditionService);

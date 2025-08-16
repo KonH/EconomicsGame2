@@ -68,5 +68,25 @@ namespace Services {
 			var id = GetConditionId(typeof(T));
 			entity.Add(new ConditionRemoved { conditionId = id });
 		}
+
+		public IList<int> GetConditionIds(Entity entity) {
+			var result = new List<int>();
+			foreach (var (id, type) in _idToType) {
+				if (entity.Has(type)) {
+					result.Add(id);
+				}
+			}
+			return result;
+		}
+
+		public IList<string> GetConditionTypeNames(Entity entity) {
+			var result = new List<string>();
+			foreach (var (id, type) in _idToType) {
+				if (entity.Has(type)) {
+					result.Add(type.Name);
+				}
+			}
+			return result;
+		}
 	}
 }

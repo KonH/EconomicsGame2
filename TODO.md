@@ -9,6 +9,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 
 ## Tasks
 
+### 0.10
+
 **Dev experience**
 - [x] Set up Rider + Copilot (minimal rules)
 - [x] Set up Cursor (Unity support and minimal rules)
@@ -21,7 +23,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Test coverage tracking with Codecov
 - [x] Unit tests for regression
 - [.] CI/CD WebGL build
-- [x] Fix code coverage upload 
+- [x] Fix code coverage upload
+- [.] Script to move tasks to next version
 
 **Tech**
 - [x] Integrate ECS library - Arch
@@ -96,6 +99,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Hunger - decreases by food, increases by time
   - Conditions
     - [+] Hungry
+    - [+] Dead
 - Roles:
   - [.] Miner specialist
   - [.] Merchant
@@ -112,7 +116,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [+] HUD:
   - [+] Current unit inventory
   - [+] Stats button
-  - [!] Conditions
+  - [+] Conditions
   - [.] Version
 - Windows:
   - Inventory window:
@@ -132,8 +136,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - Stats view:
     - [ ] Traits
     - [ ] Skills
-    - [!] Needs
-    - [!] Conditions
+    - [+] Needs
+    - [+] Conditions
   - Game over window:
     - [+] Pause
     - [+] Restart/Continue
@@ -141,6 +145,10 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Notifications:
   - [.] Item change - over character
   - [.] Item change - on inventory button
+- Tooltips:
+  - [ ] Item stat
+  - [ ] Character stat
+  - [ ] Character condition
 - [.] Selected character frame
 - [.] Ability to select any character
 
@@ -158,10 +166,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Item stats:
   - [+] Nutrition
 - Character stats:
-  - [!] Health
-  - [!] Hunger
+  - [+] Health
+  - [+] Hunger
 - Character conditions:
-  - [!] Hungry
+  - [+] Hungry
+  - [+] Dead
 - Props:
   - [+] Apple Tree
   - [+] Barrel
@@ -182,3 +191,5 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Better movement with little jump
 - [x] Flip character sprite when move to other side
 - [.] Update README
+- [ ] Gradient progress bars for character stats
+- [ ] Condition show/hide animations

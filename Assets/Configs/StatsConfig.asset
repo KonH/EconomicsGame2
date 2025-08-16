@@ -16,3 +16,10 @@ MonoBehaviour:
     _hungerIncreaseValue: 1
     _startAffectingHealthPercent: 0.5
     _healthDecreaseValue: 0.5
+  _characterConditions:
+  - _id: Hungry
+    _name: Hungry
+    _icon: {fileID: 21300000, guid: a54164046c707a8479a9d51fc158e380, type: 3}
+  - _id: Dead
+    _name: Dead
+    _icon: {fileID: 21300000, guid: d41524657bc68a74ebde56b7237267d6, type: 3}

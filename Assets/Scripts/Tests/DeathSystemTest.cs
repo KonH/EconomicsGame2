@@ -1,9 +1,12 @@
 using NUnit.Framework;
+
 using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
+
 using Components;
 using Systems;
+using Services;
 
 namespace Tests {
 	public sealed class DeathSystemTest {
@@ -13,7 +16,7 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_system = new DeathSystem(_world);
+			_system = new DeathSystem(_world, new ConditionService());
 		}
 
 		[TearDown]
