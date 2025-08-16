@@ -18,6 +18,10 @@ GameObject:
   - component: {fileID: -3235510634501668724}
   - component: {fileID: -8270413032537529824}
   - component: {fileID: 5080717780246127711}
+  - component: {fileID: -7323488641951611073}
+  - component: {fileID: 1594083880144791738}
+  - component: {fileID: -4142565626154891013}
+  - component: {fileID: -6001518939907684655}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -84,7 +88,7 @@ SpriteRenderer:
   m_SortingLayerID: 1065698643
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8828270710777343304, guid: 20e952b59b68acc4ebe2908fb09dbd5d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20e952b59b68acc4ebe2908fb09dbd5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -194,3 +198,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isFlipped: 0
+--- !u!114 &-7323488641951611073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50597514262b9b94182047de51822281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 50
+--- !u!114 &1594083880144791738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615015fe66e81a34ab817ec8890ca14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHunger: 50
+--- !u!114 &-4142565626154891013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626e6cbe6a75f224a957a696b3f9e260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6001518939907684655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc28c09f97871b349ab52c9d99c0ffad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 8924408052279598606}
+  _deadSprite: {fileID: 21300000, guid: 7a762e60c2e41524faa6122e8ead2f11, type: 3}

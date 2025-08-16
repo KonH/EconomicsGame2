@@ -55,6 +55,7 @@ namespace Tests {
 				AddJump = addJump
 			});
 			entity.Add(new ActionProgress { Progress = progress });
+			entity.Add(new Active());
 			return entity;
 		}
 

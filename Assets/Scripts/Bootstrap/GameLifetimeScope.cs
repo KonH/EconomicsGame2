@@ -23,6 +23,7 @@ namespace Bootstrap {
 		[SerializeField] private PrefabsConfig? _prefabsConfig;
 		[SerializeField] private AiConfig? _aiConfig;
 		[SerializeField] private ItemGeneratorConfig? _itemGeneratorConfig;
+		[SerializeField] private StatsConfig? _statsConfig;
 
 		protected override void Configure(IContainerBuilder builder) {
 			this.ValidateOrThrow(_mouseInputSettings);
@@ -36,6 +37,7 @@ namespace Bootstrap {
 			this.ValidateOrThrow(_itemGeneratorConfig);
 			this.ValidateOrThrow(_sceneSettings);
 			this.ValidateOrThrow(_zoomSettings);
+			this.ValidateOrThrow(_statsConfig);
 
 			var oneFrameComponentRegistry = new OneFrameComponentRegistry();
 			oneFrameComponentRegistry.RegisterAllOneFrameComponents();
@@ -49,15 +51,20 @@ namespace Bootstrap {
 			builder.Register<ItemIdService>(Lifetime.Scoped).AsSelf();
 			builder.Register<UniqueReferenceService>(Lifetime.Scoped).AsSelf();
 			builder.Register<ItemStorageService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ItemStatService>(Lifetime.Scoped).AsSelf();
 			builder.Register<WorldSubscriptionService>(Lifetime.Scoped).AsSelf();
 			builder.Register<PrefabSpawnService>(Lifetime.Scoped).AsSelf();
 			builder.Register<AiService>(Lifetime.Scoped).AsSelf();
+			builder.Register<ConditionService>(Lifetime.Scoped).AsSelf();
+			builder.Register<SceneService>(Lifetime.Scoped).AsSelf();
+			builder.Register<TimeService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(_itemsConfig).AsSelf();
 			builder.RegisterInstance(_prefabsConfig).AsSelf();
 			builder.RegisterInstance(_aiConfig).AsSelf();
 			builder.RegisterInstance(_itemGeneratorConfig).AsSelf();
-
+			builder.RegisterInstance(_statsConfig).AsSelf();
+			
 			builder.RegisterInstance(_mouseInputSettings).AsSelf();
 			builder.RegisterInstance(_keyboardInputSettings).AsSelf();
 			builder.RegisterInstance(_cameraScrollSettings).AsSelf();
@@ -75,6 +82,8 @@ namespace Bootstrap {
 				c.Add<LoadSystem>();
 				c.Add<StorageIdInitializationSystem>();
 				c.Add<DropItemSystem>();
+				c.Add<ItemNutritionSystem>();
+				c.Add<ItemConsumeSystem>();
 				c.Add<TransferItemSystem>();
 				c.Add<SubscriptionCallSystem>();
 				c.Add<RemoveEmptyItemStorageSystem>();
@@ -104,6 +113,10 @@ namespace Bootstrap {
 				c.Add<RandomWalkSystem>();
 				c.Add<ItemGenerationSystem>();
 				c.Add<ItemGenerationProcessingSystem>();
+				c.Add<HungerUpdateSystem>();
+				c.Add<HungrySetSystem>();
+				c.Add<HungryUpdateSystem>();
+				c.Add<DeathSystem>();
 			});
 		}
 	}

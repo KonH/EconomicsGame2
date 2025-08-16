@@ -26,6 +26,14 @@ namespace UnityComponents {
 			return _spawnService.SpawnAndReturn(_prefab, _root.transform);
 		}
 
+		public T? SpawnAndReturn<T>() where T : MonoBehaviour {
+			var go = SpawnAndReturn();
+			if (go == null) {
+				return null;
+			}
+			return go.GetComponent<T>();
+		}
+
 		public void Release(GameObject go) {
 			Destroy(go);
 		}

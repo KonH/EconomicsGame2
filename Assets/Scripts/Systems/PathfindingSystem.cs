@@ -9,7 +9,7 @@ using Services;
 namespace Systems {
 	public sealed class PathfindingSystem : UnitySystemBase {
 		readonly QueryDescription _pathfindingQuery = new QueryDescription()
-			.WithAll<OnCell, MovementTargetCell>()
+			.WithAll<OnCell, MovementTargetCell, Active>()
 			.WithNone<MoveToCell>();
 
 		readonly CellService _cellService;

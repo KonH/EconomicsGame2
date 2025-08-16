@@ -15,4 +15,14 @@ MonoBehaviour:
   _items:
   - _id: Apple
     _name: Apple
-    _icon: {fileID: -7832214784768987486, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}
+    _icon: {fileID: 21300000, guid: 669ec90657f60d84282861e4b1eb9280, type: 3}
+    _stats:
+    - _typeName: Consumable
+      _floatArguments: []
+    - _typeName: Nutrition
+      _floatArguments:
+      - 50
+      - 25
+  _itemStats:
+  - _typeName: Nutrition
+    _icon: {fileID: 21300000, guid: 582a5924d45652747b30e9bc186b8d15, type: 3}

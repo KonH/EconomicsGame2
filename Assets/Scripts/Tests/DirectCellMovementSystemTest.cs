@@ -50,6 +50,7 @@ namespace Tests {
 			var entity = _world.Create();
 			entity.Add(new OnCell { Position = _entityPosition });
 			entity.Add(new IsManualMovable());
+			entity.Add(new Active());
 			return entity;
 		}
 
@@ -179,6 +180,7 @@ namespace Tests {
 			var entity2 = _world.Create();
 			entity2.Add(new OnCell { Position = new Vector2Int(3, 3) });
 			entity2.Add(new IsManualMovable());
+			entity2.Add(new Active());
 
 			// Click a cell
 			ClickCell(_targetPosition);

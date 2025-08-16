@@ -9,6 +9,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 
 ## Tasks
 
+### 0.10
+
 **Dev experience**
 - [x] Set up Rider + Copilot (minimal rules)
 - [x] Set up Cursor (Unity support and minimal rules)
@@ -20,8 +22,9 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [x] Nullable reference types usage
 - [x] Test coverage tracking with Codecov
 - [x] Unit tests for regression
-- [ ] CI/CD WebGL build
-- [x] Fix code coverage upload 
+- [.] CI/CD WebGL build
+- [x] Fix code coverage upload
+- [.] Script to move tasks to next version
 
 **Tech**
 - [x] Integrate ECS library - Arch
@@ -32,7 +35,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Add optional default code generation for wrappers
 - [ ] Resource management (addressables)
 - [x] ECS viewer filters
-- [ ] Unique reference guard & generation
+- Unique reference guard & generation:
   - [ ] Validate entities created after Initialization considering world loading
   - [ ] Reference ID storage, select IDs from dropdown
 - [ ] Localization support
@@ -46,8 +49,11 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Attach dependencies & entity at MonoBehaviours in scene presentation
 - [+] Ability to listen for ECS events at Unity side
 - PrefabSpawner:
-  - [ ] Pooling 
-- [ ] ECS systems dependencies?
+  - [ ] Pooling
+- ECS:
+  - [ ] ECS systems dependencies?
+  - [ ] Rework one frame components? (ordering issues)
+  - [ ] Add/remove entities in editor
 - Entity management:
   - [+] Remove related gameObject when entity destroyed
   - [+] Allow to move to cell after obstacle destroyed
@@ -69,29 +75,58 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Item transfer (requires unique item ID) - ItemTransfer event, some item moves from one storage to another, order should be updated, ItemStorageUpdated for both triggered
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
-  - [ ] Merge items after same ID generated
+  - [+] Consume items one by one
+  - [.] Merge items after same ID generated
+  - [+] Item consumption
+  - [.] Transfer by agreement
 - [+] Mining
 - [ ] Crafting
+- Death: 
+  - [+] Transform to dead state, disallow to do anything, stats not updated
 - AI:
   - [+] Idle
   - [+] Random walk
-  - [ ] Mining
+  - [.] Mining
+  - [.] Merchant
   - [ ] Crafting
+  - [ ] Relatives take items from dead character
   - [ ] Fix stuck after loading issue
 - Stats:
   - [ ] Traits - personal characteristics
   - [ ] Skills - experience
-  - [ ] Needs - what is required now
+  - Needs - what is required now
+    - [+] Health - increases by food, decreases by Hungry condition
+    - [+] Hunger - decreases by food, increases by time
+  - Conditions
+    - [+] Hungry
+    - [+] Dead
+- Roles:
+  - [.] Miner specialist
+  - [.] Merchant
+  - [ ] Gravedigger
+  - [ ] Major
+- Social:
+  - [ ] Relatives
+  - [ ] Children
+- [.] Selected character follow camera when moving
+- [+] Change visual for dead character
+- [.] Change visual related to roles
   
 **UI**
 - [+] HUD:
   - [+] Current unit inventory
+  - [+] Stats button
+  - [+] Conditions
+  - [.] Version
 - Windows:
   - Inventory window:
     - [+] Item scroller list, item details - name and unique sprites
     - [+] Ability to select item by click on it
     - [+] Update on ItemStorageUpdated
     - [+] Drop button for selected item
+    - [+] Item consumption
+    - [+] Item stats
+    - [.] Inactive controls if another character selected
   - Transfer window:
     - [+] Opens when player moves on cell with storage
     - [+] Two panel view
@@ -101,18 +136,41 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - Stats view:
     - [ ] Traits
     - [ ] Skills
-    - [ ] Needs
+    - [+] Needs
+    - [+] Conditions
+  - Game over window:
+    - [+] Pause
+    - [+] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
-  - [ ] Item change - over character
-  - [ ] Item change - on inventory button (player)
+  - [.] Item change - over character
+  - [.] Item change - on inventory button
+- Tooltips:
+  - [ ] Item stat
+  - [ ] Character stat
+  - [ ] Character condition
+- [.] Selected character frame
+- [.] Ability to select any character
 
 **Art**
 - Characters:
   - [+] Player
+  - [+] Player - dead
   - [+] Bot
+  - [+] Bot - dead
+- Role hats:
+  - [.] Collector
+  - [.] Merchant
 - Items:
   - [+] Apple
+- Item stats:
+  - [+] Nutrition
+- Character stats:
+  - [+] Health
+  - [+] Hunger
+- Character conditions:
+  - [+] Hungry
+  - [+] Dead
 - Props:
   - [+] Apple Tree
   - [+] Barrel
@@ -120,13 +178,18 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - Tiles:
   - [+] Floor
 - UI:
-  - [ ] Button
-  - [ ] Window background
-  - [ ] Inventory button (from backpack)
+  - [.] Button
+  - [.] Window background
+  - [.] Inventory button (from backpack)
+  - [.] Stats button
+  - [.] Selected character frame
 
 **Sound**
-- [ ] Click
+- [.] Click
 
 **Polishing**
 - [x] Better movement with little jump
 - [x] Flip character sprite when move to other side
+- [.] Update README
+- [ ] Gradient progress bars for character stats
+- [ ] Condition show/hide animations

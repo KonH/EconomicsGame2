@@ -24,6 +24,9 @@
 	public struct DropItem {}
 
 	[OneFrame]
+	public struct ConsumeItem {}
+
+	[OneFrame]
 	public struct TransferAvailable {}
 
 	[OneFrame]

@@ -56,6 +56,7 @@ namespace Tests {
 		Entity CreateMovableEntity(Vector2Int position) {
 			var entity = _world.Create();
 			entity.Add(new OnCell { Position = position });
+			entity.Add(new Active());
 			return entity;
 		}
 
@@ -72,7 +73,7 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenEntityAtTargetPosition_RemovesMovementTargetComponent() {
+	public void WhenEntityAtTargetPosition_RemovesMovementTargetComponent() {
 			// Arrange
 			CreateGridOfCells(3, 3);
 			var position = new Vector2Int(1, 1);
