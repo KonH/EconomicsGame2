@@ -9,7 +9,7 @@ namespace Systems {
 		readonly ItemStorageService _storageService;
 
 		readonly QueryDescription _transferItemQuery = new QueryDescription()
-			.WithAll<Item, ItemOwner, TransferItem, Active>();
+			.WithAll<Item, ItemOwner, TransferItem>();
 
 		public TransferItemSystem(World world, ItemStorageService itemStorageService) : base(world) {
 			_storageService = itemStorageService;

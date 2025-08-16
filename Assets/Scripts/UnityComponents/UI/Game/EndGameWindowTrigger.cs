@@ -29,10 +29,8 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void OnDeath(Entity entity) {
-			if (entity.TryGet<UniqueReferenceId>(out var uniqueReferenceId)) {
-				if (uniqueReferenceId.Id != _playerId) {
-					return;
-				}
+			if (!entity.TryGet<UniqueReferenceId>(out var uniqueReferenceId) || (uniqueReferenceId.Id != _playerId)) {
+				return;
 			}
 			if (this.Validate(_prefabSpawner)) {
 				_prefabSpawner.Spawn();

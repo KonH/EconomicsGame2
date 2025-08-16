@@ -56,6 +56,7 @@ namespace Tests {
 			_sourceStorage = _world.Create();
 			_sourceStorage.Add(new ItemStorage { StorageId = _sourceStorageId });
 			_sourceStorage.Add(new OnCell { Position = _cellPosition });
+			_sourceStorage.Add(new Active());
 
 			// Create item in source storage
 			_item = _world.Create();
@@ -81,6 +82,7 @@ namespace Tests {
 			_targetStorage = _world.Create();
 			_targetStorage.Add(new ItemStorage { StorageId = _targetStorageId });
 			_targetStorage.Add(new OnCell { Position = _cellPosition });
+			_targetStorage.Add(new Active());
 		}
 
 		[Test]

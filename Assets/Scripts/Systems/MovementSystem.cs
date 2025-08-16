@@ -10,7 +10,7 @@ namespace Systems {
 			.WithAll<WorldPosition, MoveToPosition, ActionProgress, Active>();
 
 		readonly QueryDescription _actionFinishedQuery = new QueryDescription()
-			.WithAll<MoveToPosition, ActionFinished, Active>();
+			.WithAll<MoveToPosition, ActionFinished>();
 
 		readonly MovementSettings _movementSettings;
 

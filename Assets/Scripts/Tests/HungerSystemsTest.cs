@@ -44,6 +44,7 @@ namespace Tests {
 		public void HungerUpdate_IncreasesValueUpToMax() {
 			var e = _world.Create();
 			e.Add(new Hunger { value = 0f, maxValue = 10f });
+			e.Add(new Active());
 
 			_hungerUpdate.Update(new SystemState { DeltaTime = 1.0f });
 
@@ -60,6 +61,7 @@ namespace Tests {
 		public void HungrySet_AddsAndRemovesConditionByThreshold() {
 			var e = _world.Create();
 			e.Add(new Hunger { value = 6f, maxValue = 10f }); // 0.6 >= 0.5
+			e.Add(new Active());
 
 			_hungrySet.Update(new SystemState { DeltaTime = 0.0f });
 			Assert.IsTrue(e.Has<Hungry>());
@@ -79,6 +81,7 @@ namespace Tests {
 			var e = _world.Create();
 			e.Add(new Health { value = 10f, maxValue = 10f });
 			e.Add(new Hungry { healthDecreaseValue = 2.0f });
+			e.Add(new Active());
 
 			_hungryUpdate.Update(new SystemState { DeltaTime = 1.5f });
 

@@ -10,7 +10,7 @@ namespace Systems {
 		readonly ItemStorageService _storageService;
 
 		readonly QueryDescription _dropItemQuery = new QueryDescription()
-			.WithAll<Item, ItemOwner, DropItem, Active>();
+			.WithAll<Item, ItemOwner, DropItem>();
 
 		public DropItemSystem(World world, ItemStorageService itemStorageService) : base(world) {
 			_storageService = itemStorageService;

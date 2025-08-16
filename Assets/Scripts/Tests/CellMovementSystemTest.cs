@@ -63,6 +63,7 @@ namespace Tests {
 				NewPosition = _targetPosition
 			});
 			entity.Add(new StartAction());
+			entity.Add(new Active());
 			return entity;
 		}
 
@@ -126,6 +127,7 @@ namespace Tests {
 				NewPosition = new Vector2Int(4, 4)
 			});
 			entity2.Add(new StartAction());
+			entity2.Add(new Active());
 
 			// Act
 			_system.Update(new SystemState());
@@ -167,6 +169,7 @@ namespace Tests {
 				NewPosition = new Vector2Int(10, 10) // Out of bounds
 			});
 			entity.Add(new StartAction());
+			entity.Add(new Active());
 
 			// Act - This shouldn't throw an exception
 			_system.Update(new SystemState());
