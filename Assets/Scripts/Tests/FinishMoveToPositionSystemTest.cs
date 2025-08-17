@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Tests {
 	public class FinishMoveToPositionSystemTest {
 		World _world = null!;
-		FinishMoveToPositionSystem _system = null!;
+		MovementSystem _movementSystem = null!;
 
 		readonly Vector2 _startPosition = new Vector2(1.0f, 1.0f);
 		readonly Vector2 _targetPosition = new Vector2(2.0f, 2.0f);
@@ -17,14 +17,22 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_system = new FinishMoveToPositionSystem(_world);
+			var curve = new AnimationCurve();
+			curve.AddKey(0, 0);
+			curve.AddKey(1, 1);
+			var jump = new AnimationCurve();
+			jump.AddKey(0, 0);
+			jump.AddKey(1, 0);
+			var settings = new Configs.MovementSettings();
+			settings.TestInit(1.0f, curve, jump);
+			_movementSystem = new MovementSystem(_world, settings, new Services.CleanupService(_world));
 		}
 
 		[TearDown]
 		public void TearDown() {
 			World.Destroy(_world);
 			_world = null!;
-			_system = null!;
+			_movementSystem = null!;
 		}
 
 		Entity CreateMovingEntity() {
@@ -45,7 +53,8 @@ namespace Tests {
 			var entity = CreateMovingEntity();
 
 			// Act
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Assert
 			Assert.AreEqual(_targetPosition, entity.Get<WorldPosition>().Position, "WorldPosition should be updated to target position");
@@ -57,7 +66,8 @@ namespace Tests {
 			var entity = CreateMovingEntity();
 
 			// Act
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Assert
 			Assert.IsFalse(entity.Has<MoveToPosition>(), "MoveToPosition component should be removed");
@@ -78,7 +88,8 @@ namespace Tests {
 			entity2.Add(new ActionFinished());
 
 			// Act
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Assert
 			Assert.AreEqual(_targetPosition, entity1.Get<WorldPosition>().Position, "First entity's position should be updated");
@@ -101,7 +112,8 @@ namespace Tests {
 			// No ActionFinished component
 
 			// Act
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Assert
 			Assert.AreEqual(_startPosition, entity.Get<WorldPosition>().Position, "Position should not be updated");
@@ -123,13 +135,13 @@ namespace Tests {
 			// No ActionFinished component
 
 			// Act - First update
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Add ActionFinished to second entity after first update
 			entity2.Add(new ActionFinished());
 
 			// Act - Second update
-			_system.Update(new SystemState());
+			_movementSystem.Update(new SystemState());
 
 			// Assert
 			Assert.AreEqual(_targetPosition, entity1.Get<WorldPosition>().Position, "First entity's position should be updated");

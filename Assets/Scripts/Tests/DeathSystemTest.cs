@@ -16,7 +16,7 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_system = new DeathSystem(_world, new ConditionService());
+			_system = new DeathSystem(_world, new ConditionService(), new CleanupService(_world));
 		}
 
 		[TearDown]

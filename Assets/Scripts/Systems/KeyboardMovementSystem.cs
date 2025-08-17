@@ -2,10 +2,13 @@
 using Arch.Core;
 using Arch.Unity.Toolkit;
 using Components;
+using Services;
 using Configs;
 
 namespace Systems {
 	public sealed class KeyboardMovementSystem : UnitySystemBase {
+		readonly QueryDescription _cleanUpStartAction = new QueryDescription()
+			.WithAll<MoveToCell, StartAction>();
 		readonly QueryDescription _keyboardMovementQuery = new QueryDescription()
 			.WithAll<OnCell, IsManualMovable, Active>()
 			.WithNone<MoveToCell>();
@@ -15,10 +18,12 @@ namespace Systems {
 
 		readonly KeyboardInputSettings _keyboardInputSettings;
 		readonly MovementSettings _movementSettings;
+		readonly CleanupService _cleanup;
 
-		public KeyboardMovementSystem(World world, KeyboardInputSettings keyboardInputSettings, MovementSettings movementSettings) : base(world) {
+		public KeyboardMovementSystem(World world, KeyboardInputSettings keyboardInputSettings, MovementSettings movementSettings, CleanupService cleanup) : base(world) {
 			_keyboardInputSettings = keyboardInputSettings;
 			_movementSettings = movementSettings;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
@@ -26,6 +31,10 @@ namespace Systems {
 			if (movementDirection == Vector2.zero) {
 				return;
 			}
+
+			World.Query(_cleanUpStartAction, (Entity entity, ref MoveToCell _, ref StartAction _) => {
+				_cleanup.CleanUp<StartAction>(entity);
+			});
 
 			World.Query(_keyboardMovementQuery, (Entity entity, ref OnCell cellPosition) => {
 				var newPosition = cellPosition.Position + movementDirection;

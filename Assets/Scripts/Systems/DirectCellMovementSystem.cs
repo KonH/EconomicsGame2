@@ -2,10 +2,13 @@
 using Arch.Core;
 using Arch.Unity.Toolkit;
 using Components;
+using Services;
 using Configs;
 
 namespace Systems {
 	public sealed class DirectCellMovementSystem : UnitySystemBase {
+		readonly QueryDescription _cleanUpStartAction = new QueryDescription()
+			.WithAll<MoveToCell, StartAction>();
 		readonly QueryDescription _clickedCellsQuery = new QueryDescription()
 			.WithAll<Cell, CellClick>();
 
@@ -14,9 +17,11 @@ namespace Systems {
 			.WithNone<MoveToCell>();
 
 		readonly MovementSettings _movementSettings;
+		readonly CleanupService _cleanup;
 
-		public DirectCellMovementSystem(World world, MovementSettings movementSettings) : base(world) {
+		public DirectCellMovementSystem(World world, MovementSettings movementSettings, CleanupService cleanup) : base(world) {
 			_movementSettings = movementSettings;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
@@ -24,6 +29,10 @@ namespace Systems {
 			if (targetCell == null) {
 				return;
 			}
+
+			World.Query(_cleanUpStartAction, (Entity entity, ref MoveToCell moveToCell, ref StartAction startAction) => {
+				_cleanup.CleanUp<StartAction>(entity);
+			});
 
 			World.Query(_movableEntitiesQuery, (Entity entity, ref OnCell cellPosition) => {
 				if (cellPosition.Position == targetCell.Value) {
@@ -43,7 +52,7 @@ namespace Systems {
 			});
 
 			World.Query(_clickedCellsQuery, (cellEntity) => {
-				World.Remove<CellClick>(cellEntity);
+				_cleanup.CleanUp<CellClick>(cellEntity);
 			});
 		}
 

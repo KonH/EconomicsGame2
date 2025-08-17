@@ -58,6 +58,7 @@ namespace Bootstrap {
 			builder.Register<ConditionService>(Lifetime.Scoped).AsSelf();
 			builder.Register<SceneService>(Lifetime.Scoped).AsSelf();
 			builder.Register<TimeService>(Lifetime.Scoped).AsSelf();
+			builder.Register<CleanupService>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(_itemsConfig).AsSelf();
 			builder.RegisterInstance(_prefabsConfig).AsSelf();
@@ -89,7 +90,7 @@ namespace Bootstrap {
 				c.Add<RemoveEmptyItemStorageSystem>();
 				c.Add<UnlockCellOnDestroySystem>();
 				c.Add<DestroyEntitySystem>();
-				c.Add<OneFrameComponentCleanupSystem>();
+				c.Add<OneFrameDebugSystem>();
 				c.Add<MouseInputSystem>();
 				c.Add<KeyboardInputSystem>();
 				c.Add<MouseDragScrollCameraSystem>();
@@ -105,8 +106,6 @@ namespace Bootstrap {
 				c.Add<FlipSpriteMovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<WorldPositionSystem>();
-				c.Add<FinishMoveToPositionSystem>();
-				c.Add<FinishCellMovementSystem>();
 				c.Add<TransferAvailableSystem>();
 				c.Add<SelectAiStateSystem>();
 				c.Add<IdleStateSystem>();
@@ -117,6 +116,7 @@ namespace Bootstrap {
 				c.Add<HungrySetSystem>();
 				c.Add<HungryUpdateSystem>();
 				c.Add<DeathSystem>();
+				c.Add<CleanUpItemsOneFrameSystem>();
 			});
 		}
 	}

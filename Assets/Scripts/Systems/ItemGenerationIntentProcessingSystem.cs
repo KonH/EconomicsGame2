@@ -11,9 +11,11 @@ namespace Systems {
 			.WithAll<ItemGenerationIntent, ItemStorage>();
 
 		readonly ItemStorageService _itemStorageService;
+		readonly CleanupService _cleanup;
 
-		public ItemGenerationIntentProcessingSystem(World world, ItemStorageService itemStorageService) : base(world) {
+		public ItemGenerationIntentProcessingSystem(World world, ItemStorageService itemStorageService, CleanupService cleanup) : base(world) {
 			_itemStorageService = itemStorageService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {

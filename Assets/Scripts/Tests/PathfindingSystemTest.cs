@@ -27,7 +27,7 @@ namespace Tests {
 			_movementSettings = new MovementSettings();
 			_movementSettings.TestInit(1.0f, null, null);
 			_positionToEntity = new Dictionary<Vector2Int, Entity>();
-			_system = new PathfindingSystem(_world, _cellService, _movementSettings);
+			_system = new PathfindingSystem(_world, _cellService, _movementSettings, new CleanupService(_world));
 		}
 
 		[TearDown]

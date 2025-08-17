@@ -14,7 +14,7 @@ namespace Tests {
 		World _world = null!;
 		GridSettings _gridSettings = null!;
 		CellService _cellService = null!;
-		FinishCellMovementSystem _system = null!;
+		CellMovementSystem _system = null!;
 		Dictionary<Vector2Int, Entity> _cells = null!;
 
 		readonly Vector2Int _startPosition = new Vector2Int(1, 1);
@@ -26,7 +26,7 @@ namespace Tests {
 			_gridSettings = new GridSettings();
 			_gridSettings.TestInit(1.0f, 1.0f, 5, 5);
 			_cellService = new CellService(_gridSettings);
-			_system = new FinishCellMovementSystem(_world, _cellService);
+			_system = new CellMovementSystem(_world, _cellService, new Services.CleanupService(_world));
 
 			// Create grid and populate cell service
 			SetupGridCells();
@@ -76,6 +76,7 @@ namespace Tests {
 
 			// Act
 			_system.Update(new SystemState());
+			_system.Update(new SystemState());
 
 			// Assert
 			Assert.AreEqual(_targetPosition, entity.Get<OnCell>().Position, "OnCell position should be updated to target position");
@@ -92,6 +93,7 @@ namespace Tests {
 
 			// Act
 			_system.Update(new SystemState());
+			_system.Update(new SystemState());
 
 			// Assert
 			Assert.IsFalse(startCellEntity.Has<LockedCell>(), "Old cell should be unlocked after movement finishes");
@@ -103,6 +105,7 @@ namespace Tests {
 			var entity = CreateMovingEntity();
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert

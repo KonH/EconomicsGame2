@@ -18,12 +18,15 @@ namespace Systems {
 			.WithAll<OnCell, IsManualMovable>();
 
 		readonly CellService _cellService;
+		readonly CleanupService _cleanup;
 
-		public ItemGenerationIntentSystem(World world, CellService cellService) : base(world) {
+		public ItemGenerationIntentSystem(World world, CellService cellService, CleanupService cleanup) : base(world) {
 			_cellService = cellService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<ItemGenerationIntent>();
 			var clickedCellData = GetClickedCellData();
 			if (clickedCellData == null) {
 				return;
@@ -46,7 +49,7 @@ namespace Systems {
 			});
 
 			if (isGeneratorClicked) {
-				World.Remove<CellClick>(clickEntity);
+				_cleanup.CleanUp<CellClick>(clickEntity);
 			}
 		}
 

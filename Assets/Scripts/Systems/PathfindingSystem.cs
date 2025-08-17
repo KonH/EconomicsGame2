@@ -8,19 +8,26 @@ using Services;
 
 namespace Systems {
 	public sealed class PathfindingSystem : UnitySystemBase {
+		readonly QueryDescription _cleanUpStartAction = new QueryDescription()
+			.WithAll<MoveToCell, StartAction>();
 		readonly QueryDescription _pathfindingQuery = new QueryDescription()
 			.WithAll<OnCell, MovementTargetCell, Active>()
 			.WithNone<MoveToCell>();
 
 		readonly CellService _cellService;
 		readonly MovementSettings _movementSettings;
+		readonly CleanupService _cleanup;
 
-		public PathfindingSystem(World world, CellService cellService, MovementSettings movementSettings) : base(world) {
+		public PathfindingSystem(World world, CellService cellService, MovementSettings movementSettings, CleanupService cleanup) : base(world) {
 			_cellService = cellService;
 			_movementSettings = movementSettings;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
+			World.Query(_cleanUpStartAction, (Entity entity, ref MoveToCell moveToCell, ref StartAction startAction) => {
+				_cleanup.CleanUp<StartAction>(entity);
+			});
 			World.Query(_pathfindingQuery, (Entity entity, ref OnCell currentCell, ref MovementTargetCell targetCell) => {
 				// If already at target, remove the target component
 				if (currentCell.Position == targetCell.Position) {

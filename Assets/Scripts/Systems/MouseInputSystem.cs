@@ -4,6 +4,7 @@ using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Configs;
 using Components;
+using Services;
 
 namespace Systems {
 	public sealed class MouseInputSystem : UnitySystemBase {
@@ -11,20 +12,32 @@ namespace Systems {
 
 		Entity _mouseDataEntity;
 
-		public MouseInputSystem(World world, MouseInputSettings mouseInputSettings) : base(world) {
+		readonly CleanupService _cleanup;
+
+		public MouseInputSystem(World world, MouseInputSettings mouseInputSettings, CleanupService cleanup) : base(world) {
 			_mouseInputSettings = mouseInputSettings;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<MouseButtonPress>();
+			_cleanup.CleanUp<MouseButtonRelease>();
+			_cleanup.CleanUp<MouseButtonHold>();
+			_cleanup.CleanUp<MouseDrag>();
+			_cleanup.CleanUp<MouseDragStart>();
+			_cleanup.CleanUp<MouseDragEnd>();
+			_cleanup.CleanUp<MouseScrollDelta>();
+			
 			if (!World.IsAlive(_mouseDataEntity)) {
-				_mouseDataEntity = World.Create(new MousePosition());
+				_mouseDataEntity = this.World.Create();
+				_mouseDataEntity.Add<MousePosition>();
+				_mouseDataEntity.Add<MousePositionDelta>();
 			}
 
 			ref var mousePosition = ref _mouseDataEntity.Get<MousePosition>();
 			mousePosition.Position = Input.mousePosition;
-			_mouseDataEntity.Add(new MousePositionDelta {
-				Delta = Input.mousePositionDelta
-			});
+			ref var mousePositionDelta = ref _mouseDataEntity.Get<MousePositionDelta>();
+			mousePositionDelta.Delta = Input.mousePositionDelta;
 
 			var scrollDelta = Input.mouseScrollDelta.y;
 			if (Mathf.Abs(scrollDelta) > 0.01f) {

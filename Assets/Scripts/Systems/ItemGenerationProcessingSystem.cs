@@ -14,11 +14,13 @@ namespace Systems {
 
 		readonly ItemGeneratorConfig _itemGeneratorConfig;
 		readonly ItemStorageService _itemStorageService;
+		readonly CleanupService _cleanup;
 		readonly System.Random _random;
 
-		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, ItemStorageService itemStorageService) : base(world) {
+		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, ItemStorageService itemStorageService, CleanupService cleanup) : base(world) {
 			_itemGeneratorConfig = itemGeneratorConfig;
 			_itemStorageService = itemStorageService;
+			_cleanup = cleanup;
 			_random = new System.Random();
 		}
 
@@ -26,6 +28,8 @@ namespace Systems {
 			World.Query(_itemGenerationEventQuery, (Entity eventEntity, ref ItemGenerationEvent generationEvent) => {
 				ProcessGenerationEvent(generationEvent);
 			});
+
+			_cleanup.CleanUp<ItemGenerationEvent>();
 		}
 
 		void ProcessGenerationEvent(ItemGenerationEvent generationEvent) {

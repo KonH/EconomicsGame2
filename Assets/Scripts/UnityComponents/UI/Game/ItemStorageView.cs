@@ -25,6 +25,10 @@ namespace UnityComponents.UI.Game {
 
 		readonly List<ItemView> _instances = new();
 
+		void OnDisable() {
+			Deinit();
+		}
+
 		[Inject]
 		public void Construct(ItemsConfig itemsConfig, ItemStorageService itemStorageService, WorldSubscriptionService subscriptionService) {
 			_itemsConfig = itemsConfig;

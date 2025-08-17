@@ -37,7 +37,7 @@ namespace Tests {
 			_itemsConfig = CreateTestItemsConfig();
 			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
 			_itemGeneratorConfig = CreateTestConfig();
-			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService);
+			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService, new CleanupService(_world));
 		}
 
 		[TearDown]
@@ -115,6 +115,7 @@ namespace Tests {
 			_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert
@@ -254,7 +255,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
+			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -262,6 +263,7 @@ namespace Tests {
 			_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
 
 			// Act
+			system.Update(new SystemState());
 			system.Update(new SystemState());
 
 			// Assert
@@ -287,7 +289,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
+			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -295,6 +297,7 @@ namespace Tests {
 			_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
 
 			// Act
+			system.Update(new SystemState());
 			system.Update(new SystemState());
 
 			// Assert
@@ -314,7 +317,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
+			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -322,6 +325,7 @@ namespace Tests {
 			_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
 
 			// Act
+			system.Update(new SystemState());
 			system.Update(new SystemState());
 
 			// Assert
@@ -369,7 +373,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService);
+			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });

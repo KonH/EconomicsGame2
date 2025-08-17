@@ -11,15 +11,19 @@ namespace Systems {
 		readonly QueryDescription _cellChangedQuery = new QueryDescription()
 			.WithAll<OnCell, IsManualMovable, ItemStorage, CellChanged>();
 
-		public TransferAvailableSystem(World world, ItemStorageService itemStorageService) : base(world) {
+		readonly CleanupService _cleanup;
+
+		public TransferAvailableSystem(World world, ItemStorageService itemStorageService, CleanupService cleanup) : base(world) {
 			_itemStorageService = itemStorageService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<TransferAvailable>();
 			World.Query(_cellChangedQuery, entity => {
 				var otherStorageEntity = _itemStorageService.TryGetOtherStorageOnSameCell(entity);
 				if (otherStorageEntity != Entity.Null) {
-					entity.Add(new TransferAvailable());
+					entity.Add<TransferAvailable>();
 				}
 			});
 		}

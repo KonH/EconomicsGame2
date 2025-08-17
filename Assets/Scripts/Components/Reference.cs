@@ -21,6 +21,9 @@ namespace Components {
 	}
 
 	[OneFrame]
+	public struct UniqueReferenceCreated {}
+
+	[OneFrame]
 	public struct DestroyEntity {
 	}
 }

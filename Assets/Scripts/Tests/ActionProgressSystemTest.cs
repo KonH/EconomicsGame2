@@ -13,7 +13,7 @@ namespace Tests {
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_system = new ActionProgressSystem(_world);
+			_system = new ActionProgressSystem(_world, new Services.CleanupService(_world));
 		}
 
 		[TearDown]
