@@ -119,7 +119,6 @@ namespace Tests {
 
 			// Act
 			_system.Update(new SystemState());
-			_system.Update(new SystemState());
 
 			// Assert
 			Assert.IsTrue(entity.Has<CellChanged>(), "CellChanged component should be added after movement finishes");
