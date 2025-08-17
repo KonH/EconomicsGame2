@@ -13,6 +13,7 @@ namespace Services {
 		readonly HashSet<(int, Type)> _seenThisFrame = new();
 		readonly Dictionary<(int, Type), (int updates, bool isReported)> _lifetimes = new();
 		readonly Dictionary<Type, QueryDescription> _cleanupQueries = new();
+		readonly List<(int, Type)> _keysToRemoveBuffer = new();
 
 		public CleanupService(World world) {
 			_world = world;
@@ -84,24 +85,34 @@ namespace Services {
 		}
 
 		void RemoveTrackingForEntity(int entityId, Type type) {
-			var toRemove = new List<(int, Type)>();
+			RemoveFromSeen(entityId, type);
+			RemoveFromLifetimes(entityId, type);
+		}
+
+		void RemoveFromSeen(int entityId, Type type) {
+			_keysToRemoveBuffer.Clear();
 			foreach (var key in _seenThisFrame) {
 				if (key.Item1 == entityId && key.Item2 == type) {
-					toRemove.Add(key);
+					_keysToRemoveBuffer.Add(key);
 				}
 			}
-			foreach (var key in toRemove) {
+			foreach (var key in _keysToRemoveBuffer) {
 				_seenThisFrame.Remove(key);
 			}
-			toRemove.Clear();
+			_keysToRemoveBuffer.Clear();
+		}
+
+		void RemoveFromLifetimes(int entityId, Type type) {
+			_keysToRemoveBuffer.Clear();
 			foreach (var key in _lifetimes.Keys) {
 				if (key.Item1 == entityId && key.Item2 == type) {
-					toRemove.Add(key);
+					_keysToRemoveBuffer.Add(key);
 				}
 			}
-			foreach (var key in toRemove) {
+			foreach (var key in _keysToRemoveBuffer) {
 				_lifetimes.Remove(key);
 			}
+			_keysToRemoveBuffer.Clear();
 		}
 
 		static bool IsOrphan(World world, Entity entity) {
