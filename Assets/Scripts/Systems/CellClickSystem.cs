@@ -74,7 +74,6 @@ namespace Systems {
 		Vector2 GetMousePosition() {
 			var position = Vector2.zero;
 			World.Query(_mousePositionQuery, (ref MousePosition pos) => {
-				Debug.Log($"Mouse position: {pos.Position}");
 				position = pos.Position;
 			});
 			return position;
