@@ -35,7 +35,7 @@ namespace Tests {
 			_movementSettings = new MovementSettings();
 			_movementSettings.TestInit(1.0f, curve, jumpCurve);
 			
-			_system = new MovementSystem(_world, _movementSettings);
+			_system = new MovementSystem(_world, _movementSettings, new Services.CleanupService(_world));
 		}
 
 		[TearDown]
@@ -65,6 +65,7 @@ namespace Tests {
 			var entity = CreateMovingEntity(0.0f);
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert

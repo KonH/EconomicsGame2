@@ -155,7 +155,7 @@ namespace Services {
 				StorageId = storageId,
 				StorageOrder = newOrder
 			});
-			storageEntity.Add(new ItemStorageUpdated());
+			storageEntity.Add<ItemStorageUpdated>();
 		}
 
 		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, int diff) {
@@ -172,7 +172,7 @@ namespace Services {
 					itemEntity.Add<DestroyEntity>();
 					return;
 				}
-				storageEntity.Add(new ItemStorageUpdated());
+				storageEntity.Add<ItemStorageUpdated>();
 			} else {
 				Debug.LogError($"Item {itemEntity} not found in storage {storageId}. Cannot change item count.");
 				return;

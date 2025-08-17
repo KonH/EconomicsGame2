@@ -7,38 +7,28 @@ using Systems;
 namespace Tests {
 	public class OneFrameComponentCleanupSystemTest {
 		World _world = null!;
-		OneFrameComponentRegistry _registry = null!;
-		OneFrameComponentCleanupSystem _system = null!;
 
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
-			_registry = new OneFrameComponentRegistry();
-
-			// Register test one-frame components
-			_registry.Register<TestOneFrameComponent>();
-			_registry.Register<AnotherTestOneFrameComponent>();
-
-			_system = new OneFrameComponentCleanupSystem(_world, _registry);
 		}
 
 		[TearDown]
 		public void TearDown() {
 			World.Destroy(_world);
 			_world = null!;
-			_registry = null!;
-			_system = null!;
 		}
 
 		[Test]
-		public void WhenEntityHasOneFrameComponent_ShouldRemoveComponent() {
+		public void WhenEntityHasOneFrameComponent_ShouldRemoveViaExtension() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new TestOneFrameComponent());
-			entity.Add(new NormalComponent()); // Add another component so entity isn't destroyed
+			entity.Add(new NormalComponent());
 
 			// Act
-			_system.Update(new SystemState());
+			var service = new Services.CleanupService(_world);
+			service.CleanUp<TestOneFrameComponent>();
 
 			// Assert
 			Assert.IsFalse(entity.Has<TestOneFrameComponent>());
@@ -47,44 +37,28 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenEntityHasMultipleOneFrameComponents_ShouldRemoveAllRegistered() {
-			// Arrange
-			var entity = _world.Create();
-			entity.Add(new TestOneFrameComponent());
-			entity.Add(new AnotherTestOneFrameComponent());
-			entity.Add(new NormalComponent()); // Add another component so entity isn't destroyed
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsFalse(entity.Has<TestOneFrameComponent>());
-			Assert.IsFalse(entity.Has<AnotherTestOneFrameComponent>());
-			Assert.IsTrue(entity.Has<NormalComponent>());
-			Assert.IsTrue(_world.IsAlive(entity));
-		}
-
-		[Test]
-		public void WhenEntityHasOnlyOneFrameComponent_ShouldDestroyEntity() {
+		public void WhenEntityHasOnlyOneFrameComponent_ShouldDestroyEntityViaExtension() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new TestOneFrameComponent());
 
 			// Act
-			_system.Update(new SystemState());
+			var service = new Services.CleanupService(_world);
+			service.CleanUp<TestOneFrameComponent>();
 
 			// Assert
 			Assert.IsFalse(_world.IsAlive(entity));
 		}
 
 		[Test]
-		public void WhenEntityHasUnregisteredOneFrameComponent_ShouldNotRemove() {
+		public void WhenEntityHasUnregisteredComponent_NotAffected() {
 			// Arrange
 			var entity = _world.Create();
 			entity.Add(new UnregisteredOneFrameComponent());
 
 			// Act
-			_system.Update(new SystemState());
+			var service = new Services.CleanupService(_world);
+			service.CleanUp<TestOneFrameComponent>();
 
 			// Assert
 			Assert.IsTrue(entity.Has<UnregisteredOneFrameComponent>());
@@ -92,7 +66,7 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenMultipleEntitiesHaveOneFrameComponents_ShouldProcessAll() {
+		public void WhenMultipleEntitiesHaveOneFrameComponents_ShouldProcessAllViaExtension() {
 			// Arrange
 			var entity1 = _world.Create();
 			entity1.Add(new TestOneFrameComponent());
@@ -106,7 +80,9 @@ namespace Tests {
 			entity3.Add(new TestOneFrameComponent());
 
 			// Act
-			_system.Update(new SystemState());
+			var service = new Services.CleanupService(_world);
+			service.CleanUp<TestOneFrameComponent>();
+			service.CleanUp<AnotherTestOneFrameComponent>();
 
 			// Assert
 			Assert.IsFalse(entity1.Has<TestOneFrameComponent>());
@@ -118,6 +94,11 @@ namespace Tests {
 			Assert.IsTrue(_world.IsAlive(entity2));
 
 			Assert.IsFalse(_world.IsAlive(entity3));
+		}
+
+		sealed class DummySystem : UnitySystemBase {
+			public DummySystem(World world) : base(world) {}
+			public override void Update(in SystemState _) {}
 		}
 
 		// Structs needed for testing

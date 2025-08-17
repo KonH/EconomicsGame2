@@ -33,7 +33,7 @@ namespace Tests {
 			_gridSettings = new GridSettings();
 			_gridSettings.TestInit(1.0f, 1.0f, 5, 5);
 			_cellService = new CellService(_gridSettings);
-			_system = new ItemGenerationSystem(_world, _cellService);
+			_system = new ItemGenerationSystem(_world, _cellService, new CleanupService(_world));
 
 			// Create test grid
 			SetupTestGrid();
@@ -93,6 +93,7 @@ namespace Tests {
 
 			// Act
 			_system.Update(new SystemState());
+			_system.Update(new SystemState());
 
 			// Assert
 			Assert.IsTrue(_generatorEntity.Has<ItemGenerationEvent>(), "Generator should have ItemGenerationEvent component");
@@ -109,6 +110,7 @@ namespace Tests {
 			AddTriggerItemGeneration(_generatorEntity, _collectorEntity);
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert
@@ -127,6 +129,7 @@ namespace Tests {
 
 			// Act
 			_system.Update(new SystemState());
+			_system.Update(new SystemState());
 
 			// Assert
 			Assert.IsFalse(_generatorEntity.Has<ItemGenerationEvent>(), "Generator should not have ItemGenerationEvent when collector is dead");
@@ -143,6 +146,7 @@ namespace Tests {
 			_world.Destroy(_generatorEntity);
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert - Since the entity is destroyed, we can't check for components
@@ -162,6 +166,7 @@ namespace Tests {
 			AddTriggerItemGeneration(generator3, collector);
 
 			// Act
+			_system.Update(new SystemState());
 			_system.Update(new SystemState());
 
 			// Assert

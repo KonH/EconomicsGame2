@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Systems {
 	public sealed class CellClickSystem : UnitySystemBase {
+		readonly CleanupService _cleanup;
 		readonly QueryDescription _mouseButtonReleaseQuery = new QueryDescription()
 			.WithAll<MouseButtonRelease>()
 			.WithNone<MouseDragEnd>();
@@ -21,11 +22,13 @@ namespace Systems {
 
 		readonly CellService _cellService;
 
-		public CellClickSystem(World world, CellService cellService) : base(world) {
+		public CellClickSystem(World world, CellService cellService, CleanupService cleanup) : base(world) {
 			_cellService = cellService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<CellClick>();
 			World.Query(_mouseButtonReleaseQuery, (ref MouseButtonRelease release) => {
 				if (release.Button != MouseButtons.Left) {
 					return;
@@ -71,6 +74,7 @@ namespace Systems {
 		Vector2 GetMousePosition() {
 			var position = Vector2.zero;
 			World.Query(_mousePositionQuery, (ref MousePosition pos) => {
+				Debug.Log($"Mouse position: {pos.Position}");
 				position = pos.Position;
 			});
 			return position;

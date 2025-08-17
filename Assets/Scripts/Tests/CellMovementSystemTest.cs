@@ -26,7 +26,7 @@ namespace Tests {
 			_gridSettings = new GridSettings();
 			_gridSettings.TestInit(2.0f, 2.0f, 5, 5); // 2x2 cell size for distinct world positions
 			_cellService = new CellService(_gridSettings);
-			_system = new CellMovementSystem(_world, _cellService);
+			_system = new CellMovementSystem(_world, _cellService, new Services.CleanupService(_world));
 
 			// Create grid and populate cell service
 			SetupGridCells();

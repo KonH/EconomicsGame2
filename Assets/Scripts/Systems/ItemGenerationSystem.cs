@@ -12,9 +12,11 @@ namespace Systems {
 			.WithAll<ItemGenerator, OnCell, TriggerItemGeneration>();
 
 		readonly CellService _cellService;
+		readonly CleanupService _cleanup;
 
-		public ItemGenerationSystem(World world, CellService cellService) : base(world) {
+		public ItemGenerationSystem(World world, CellService cellService, CleanupService cleanup) : base(world) {
 			_cellService = cellService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
@@ -32,6 +34,8 @@ namespace Systems {
 					});
 				}
 			});
+
+			_cleanup.CleanUp<TriggerItemGeneration>();
 		}
 	}
 }

@@ -3,14 +3,23 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Components;
+using Services;
 
 namespace Systems {
 	public sealed class KeyboardInputSystem : UnitySystemBase {
 		readonly KeyCode[] _keyCodes = (KeyCode[])System.Enum.GetValues(typeof(KeyCode));
 
-		public KeyboardInputSystem(World world) : base(world) {}
+		readonly CleanupService _cleanup;
+
+		public KeyboardInputSystem(World world, CleanupService cleanup) : base(world) {
+			_cleanup = cleanup;
+		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<ButtonPress>();
+			_cleanup.CleanUp<ButtonRelease>();
+			_cleanup.CleanUp<ButtonHold>();
+			
 			foreach (var keyCode in _keyCodes) {
 				if (Input.GetKey(keyCode)) {
 					var e = this.World.Create();

@@ -8,21 +8,30 @@ using Services;
 
 namespace Systems {
 	public sealed class PrefabLinkSystem : UnitySystemBase {
+		readonly CleanupService _cleanup;
 		readonly PrefabsConfig _prefabsConfig;
 		readonly SceneSettings _sceneSettings;
 		readonly PrefabSpawnService _spawnService;
+
+		readonly QueryDescription _cleanUpNewEntity = new QueryDescription()
+			.WithAll<NewEntity, PrefabLinkCreated>();
 
 		readonly QueryDescription _createInstanceQuery = new QueryDescription()
 			.WithAll<PrefabLink>()
 			.WithNone<PrefabLinkCreated>();
 
-		public PrefabLinkSystem(World world, PrefabsConfig prefabsConfig, SceneSettings sceneSettings, PrefabSpawnService spawnService) : base(world) {
+		public PrefabLinkSystem(World world, CleanupService cleanup, PrefabsConfig prefabsConfig, SceneSettings sceneSettings, PrefabSpawnService spawnService) : base(world) {
+			_cleanup = cleanup;
 			_prefabsConfig = prefabsConfig;
 			_sceneSettings = sceneSettings;
 			_spawnService = spawnService;
 		}
 
 		public override void Update(in SystemState t) {
+			World.Query(_cleanUpNewEntity, (Entity entity, ref NewEntity _) => {
+				_cleanup.CleanUp<NewEntity>(entity);
+			});
+
 			World.Query(_createInstanceQuery, (Entity entity, ref PrefabLink prefabLink) => {
 				var prefab = _prefabsConfig.GetPrefabById(prefabLink.ID);
 				if (prefab == null) {

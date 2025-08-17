@@ -10,18 +10,23 @@ namespace Systems {
 		readonly StatsConfig _statsConfig;
 		readonly ConditionService _conditionService;
 
+		readonly CleanupService _cleanup;
+
 		readonly QueryDescription _withoutHungryQuery = new QueryDescription()
 			.WithAll<Hunger, Active>()
 			.WithNone<Hungry>();
 		readonly QueryDescription _withHungryQuery = new QueryDescription()
 			.WithAll<Hunger, Hungry, Active>();
 
-		public HungrySetSystem(World world, StatsConfig statsConfig, ConditionService conditionService) : base(world) {
+		public HungrySetSystem(World world, StatsConfig statsConfig, ConditionService conditionService, CleanupService cleanup) : base(world) {
 			_statsConfig = statsConfig;
 			_conditionService = conditionService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState t) {
+			_cleanup.CleanUp<ConditionAdded>();
+			_cleanup.CleanUp<ConditionRemoved>();
 			var threshold = _statsConfig.HungerConfig.StartAffectingHealthPercent;
 			var healthDecrease = _statsConfig.HungerConfig.HealthDecreaseValue;
 

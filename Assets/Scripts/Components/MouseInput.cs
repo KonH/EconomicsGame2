@@ -20,7 +20,6 @@ namespace Components {
 		public int Button;
 	}
 
-	[OneFrame]
 	public struct MousePositionDelta {
 		public Vector2 Delta;
 	}

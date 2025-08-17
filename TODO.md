@@ -25,6 +25,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [.] CI/CD WebGL build
 - [x] Fix code coverage upload
 - [.] Script to move tasks to next version
+- [ ] Stop using codecov?
 
 **Tech**
 - [x] Integrate ECS library - Arch
@@ -52,7 +53,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Pooling
 - ECS:
   - [ ] ECS systems dependencies?
-  - [ ] Rework one frame components? (ordering issues)
+  - [+] Rework one frame components? (ordering issues)
   - [ ] Add/remove entities in editor
 - Entity management:
   - [+] Remove related gameObject when entity destroyed

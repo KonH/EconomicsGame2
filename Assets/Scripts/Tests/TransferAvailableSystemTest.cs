@@ -32,7 +32,7 @@ namespace Tests {
 			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
 			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
 			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
-			_system = new TransferAvailableSystem(_world, _itemStorageService);
+			_system = new TransferAvailableSystem(_world, _itemStorageService, new CleanupService(_world));
 
 			// Create test storages
 			CreateTestStorages();

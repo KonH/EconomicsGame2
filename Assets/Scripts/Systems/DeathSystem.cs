@@ -13,18 +13,22 @@ namespace Systems {
 			.WithAll<Health, Active>()
 			.WithNone<Dead>();
 
-		public DeathSystem(World world, ConditionService conditionService) : base(world) {
+		readonly CleanupService _cleanup;
+
+		public DeathSystem(World world, ConditionService conditionService, CleanupService cleanup) : base(world) {
 			_conditionService = conditionService;
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState t) {
+			_cleanup.CleanUp<Death>();
 			World.Query(_query, (Entity entity, ref Health health) => {
 				if (health.value > 0f) {
 					return;
 				}
 				entity.Remove<Active>();
 				_conditionService.AddCondition(entity, new Dead());
-				entity.Add(new Death());
+				entity.Add<Death>();
 			});
 		}
 	}

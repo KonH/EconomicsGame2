@@ -30,7 +30,7 @@ namespace Tests {
 			_statsConfig.TestInit(hungerConfig, Array.Empty<CharacterConditionConfig>());
 			_conditionService = new ConditionService();
 			_hungerUpdate = new HungerUpdateSystem(_world, _statsConfig);
-			_hungrySet = new HungrySetSystem(_world, _statsConfig, _conditionService);
+			_hungrySet = new HungrySetSystem(_world, _statsConfig, _conditionService, new CleanupService(_world));
 			_hungryUpdate = new HungryUpdateSystem(_world);
 		}
 
