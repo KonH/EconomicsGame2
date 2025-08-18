@@ -218,7 +218,6 @@ namespace Tests {
 		}
 
 		[Test]
-		[Ignore("Item aggregation will be implemented in a separate task")]
 		public void WhenMultipleItemsInStorage_ShouldAggregateCounts() {
 			// Arrange
 			_generatorEntity = CreateGeneratorEntity(0, 10);
@@ -337,7 +336,6 @@ namespace Tests {
 		}
 
 		[Test]
-		[Ignore("Item aggregation will be implemented in a separate task")]
 		public void WhenMultipleGenerationEvents_ShouldProcessAllEvents() {
 			// Arrange
 			_generatorEntity = CreateGeneratorEntity(0, 10);

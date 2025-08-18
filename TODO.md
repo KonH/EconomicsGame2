@@ -77,7 +77,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [+] Consume items one by one
-  - [.] Merge items after same ID generated
+  - [+] Merge items after same ID generated
   - [+] Item consumption
   - [.] Transfer by agreement
 - [+] Mining
