@@ -75,10 +75,6 @@ namespace Tests {
 				UniqueID = 1,
 				Count = 1
 			});
-			_item.Add(new ItemOwner {
-				StorageId = _sourceStorageId,
-				StorageOrder = 0
-			});
 
 			// Register the item with the storage service
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, _item);
@@ -127,10 +123,6 @@ namespace Tests {
 				UniqueID = 2,
 				Count = 1
 			});
-			item2.Add(new ItemOwner {
-				StorageId = _sourceStorageId,
-				StorageOrder = 1
-			});
 			item2.Add(new TransferItem { TargetStorageId = _targetStorageId });
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, item2);
 
@@ -139,10 +131,6 @@ namespace Tests {
 				ResourceID = "TestItem3",
 				UniqueID = 3,
 				Count = 1
-			});
-			item3.Add(new ItemOwner {
-				StorageId = _sourceStorageId,
-				StorageOrder = 2
 			});
 			item3.Add(new TransferItem { TargetStorageId = _targetStorageId });
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, item3);
@@ -210,6 +198,35 @@ namespace Tests {
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_sourceStorageId, _item), "Source storage should not have item");
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Second storage should not have item");
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(thirdStorageId, _item), "Third storage should have item");
+		}
+
+		[Test]
+		public void WhenTransferringToStorageWithExistingSameResource_MergesCountsAndDestroysSource() {
+			// Arrange: target already has an item with same ResourceID
+			var existingTargetItem = _world.Create();
+			existingTargetItem.Add(new Item {
+				ResourceID = "TestItem",
+				UniqueID = 10,
+				Count = 5
+			});
+			_itemStorageService.AttachItemToStorage(_targetStorageId, existingTargetItem);
+
+			// Set source item count > 1 and schedule transfer
+			var sourceItem = _item.Get<Item>();
+			sourceItem.Count = 3;
+			_item.Set(sourceItem);
+			_item.Add(new TransferItem { TargetStorageId = _targetStorageId });
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert: counts merged on target
+			Assert.AreEqual(8, existingTargetItem.Get<Item>().Count, "Target item count should be merged (5 + 3)");
+
+			// Source item should be removed from storages and marked for destruction
+			Assert.IsFalse(_itemStorageService.HasItemInStorage(_sourceStorageId, _item), "Source storage should not contain the source item after merge");
+			Assert.IsFalse(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Target storage should not directly contain the source item after merge");
+			Assert.IsTrue(_item.Has<DestroyEntity>(), "Source item should be marked for destruction after merge");
 		}
 	}
 }

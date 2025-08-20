@@ -54,7 +54,7 @@ namespace Services {
 				.ToList();
 		}
 
-		public bool AddNewItem(long storageId, string itemId, int count, IList<Entity>? items = null) {
+		public bool AddNewItem(long storageId, string itemId, long count, IList<Entity>? items = null) {
 			var itemConfig = _itemsConfig.GetItemById(itemId);
 			if (itemConfig == null) {
 				Debug.LogError($"Item with ID '{itemId}' not found in ItemsConfig. Cannot create item.");
@@ -143,6 +143,12 @@ namespace Services {
 		}
 
 		public void AttachItemToStorage(long storageId, Entity itemEntity, IList<Entity>? items = null) {
+			Debug.Log($"Trying to attach item {itemEntity} to storage {storageId}");
+			var hasItemOwner = itemEntity.Has<ItemOwner>();
+			if (hasItemOwner) {
+				Debug.LogError($"Item {itemEntity} already has ItemOwner component. Cannot attach it to storage, before it is removed from the current storage.");
+				return;
+			}
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
 				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot attach item.");
@@ -155,10 +161,11 @@ namespace Services {
 				StorageId = storageId,
 				StorageOrder = newOrder
 			});
+			Debug.Log($"Attached item {itemEntity} to storage {storageId}");
 			storageEntity.Add<ItemStorageUpdated>();
 		}
 
-		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, int diff) {
+		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, long diff) {
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
 				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot change item count.");
