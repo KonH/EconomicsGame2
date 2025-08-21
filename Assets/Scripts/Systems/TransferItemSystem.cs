@@ -17,38 +17,37 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState t) {
-			World.Query(_transferItemQuery, (Entity itemEntity, ref Item item, ref ItemOwner itemOwner, ref TransferItem transferItem) => {
+			World.Query(_transferItemQuery, (Entity sourceItemEntity, ref Item sourceItem, ref ItemOwner itemOwner, ref TransferItem transferItem) => {
 				var sourceStorageId = itemOwner.StorageId;
 				var targetStorageId = transferItem.TargetStorageId;
 				if (sourceStorageId == targetStorageId) {
-					Debug.LogError($"Trying to transfer item {itemEntity} to the same storage {sourceStorageId}. Skipping.");
+					Debug.LogError($"Trying to transfer item {sourceItemEntity} to the same storage {sourceStorageId}. Skipping.");
 					return;
 				}
-				Debug.Log($"Transferring item {itemEntity} (resource ID = {item.ResourceID}) from storage {sourceStorageId} to storage {targetStorageId}");
+				Debug.Log($"Transferring item {sourceItemEntity} (resource ID = {sourceItem.ResourceID}) from storage {sourceStorageId} to storage {targetStorageId}");
 
 				var targetItems = _storageService.GetItemsForOwner(targetStorageId);
-				var existingItemEntity = Entity.Null;
+				var existingTargetItemEntity = Entity.Null;
 				foreach (var targetItemEntity in targetItems) {
-					if (targetItemEntity == itemEntity) {
+					if (targetItemEntity == sourceItemEntity) {
 						continue;
 					}
 					var targetItem = World.Get<Item>(targetItemEntity);
-					if (targetItem.ResourceID == item.ResourceID) {
-						Debug.Log($"Found existing item {targetItemEntity} with the same resource ID = {item.ResourceID}");
-						existingItemEntity = targetItemEntity;
+					if (targetItem.ResourceID == sourceItem.ResourceID) {
+						Debug.Log($"Found existing item {targetItemEntity} with the same resource ID = {sourceItem.ResourceID}");
+						existingTargetItemEntity = targetItemEntity;
 						break;
 					}
 				}
 
-				if (existingItemEntity != Entity.Null) {
-					Debug.Log($"Merging item {itemEntity} with existing item {existingItemEntity}");
-					_storageService.ChangeItemCountInStorage(targetStorageId, existingItemEntity, item.Count);
-					_storageService.RemoveItemFromStorage(itemOwner.StorageId, itemEntity);
-					itemEntity.Add<DestroyEntity>();
+				_storageService.RemoveItemFromStorage(sourceStorageId, sourceItemEntity);
+				if (existingTargetItemEntity != Entity.Null) {
+					Debug.Log($"Merging item {sourceItemEntity} with existing item {existingTargetItemEntity}");
+					sourceItemEntity.Add<DestroyEntity>();
+					_storageService.ChangeItemCountInStorage(targetStorageId, existingTargetItemEntity, sourceItem.Count);
 				} else {
-					Debug.Log($"Attaching item {itemEntity} to target storage {targetStorageId}");
-					_storageService.RemoveItemFromStorage(itemOwner.StorageId, itemEntity);
-					_storageService.AttachItemToStorage(targetStorageId, itemEntity);
+					Debug.Log($"Attaching item {sourceItemEntity} to target storage {targetStorageId}");
+					_storageService.AttachItemToStorage(targetStorageId, sourceItemEntity);
 				}
 			});
 		}

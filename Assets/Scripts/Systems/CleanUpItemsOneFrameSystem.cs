@@ -16,6 +16,7 @@ namespace Systems {
 			_cleanup.CleanUp<ConsumeItem>();
 			_cleanup.CleanUp<DropItem>();
 			_cleanup.CleanUp<TransferItem>();
+			_cleanup.CleanUp<ItemStorageContentDiff>();
 		}
 	}
 }

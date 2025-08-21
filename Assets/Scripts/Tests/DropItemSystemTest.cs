@@ -35,7 +35,7 @@ namespace Tests {
 			_itemIdService = new ItemIdService();
 			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
 			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_system = new DropItemSystem(_world, _itemStorageService);
 
 			// Create test storage entities and item
@@ -64,10 +64,6 @@ namespace Tests {
 				ResourceID = "TestItem",
 				UniqueID = 1,
 				Count = 1
-			});
-			_item.Add(new ItemOwner {
-				StorageId = _sourceStorageId,
-				StorageOrder = 0
 			});
 
 			// Attach item to the storage service
@@ -184,13 +180,11 @@ namespace Tests {
 			// Create additional items
 			var item2 = _world.Create();
 			item2.Add(new Item { ResourceID = "TestItem2", UniqueID = 2, Count = 1 });
-			item2.Add(new ItemOwner { StorageId = _sourceStorageId, StorageOrder = 1 });
 			item2.Add(new DropItem());
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, item2);
 
 			var item3 = _world.Create();
 			item3.Add(new Item { ResourceID = "TestItem3", UniqueID = 3, Count = 1 });
-			item3.Add(new ItemOwner { StorageId = _sourceStorageId, StorageOrder = 2 });
 			item3.Add(new DropItem());
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, item3);
 

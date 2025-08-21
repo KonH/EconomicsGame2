@@ -194,3 +194,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [.] Update README
 - [ ] Gradient progress bars for character stats
 - [ ] Condition show/hide animations
+
+**Performance**
+- [.] Stable 60 FPS on test scene
+- [.] Low-hangind fruit optimizations

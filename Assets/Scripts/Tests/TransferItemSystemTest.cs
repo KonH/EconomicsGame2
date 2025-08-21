@@ -35,7 +35,7 @@ namespace Tests {
 			_itemIdService = new ItemIdService();
 			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
 			_itemsConfig.TestInit(Array.Empty<ItemConfig>());
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_system = new TransferItemSystem(_world, _itemStorageService);
 
 			// Create test storages
@@ -80,6 +80,23 @@ namespace Tests {
 			_itemStorageService.AttachItemToStorage(_sourceStorageId, _item);
 		}
 
+		void ClearStorageDiffs() {
+			Debug.Log("Clearing storage diffs");
+			_world.Query(new QueryDescription().WithAll<ItemStorageContentDiff>(), (Entity entity, ref ItemStorageContentDiff diff) => {
+				_world.Destroy(entity);
+			});
+		}
+
+		long GetDiffFor(long storageId, string resourceId) {
+			var delta = 0L;
+			_world.Query(new QueryDescription().WithAll<ItemStorageContentDiff>(), (ref ItemStorageContentDiff diff) => {
+				if (diff.StorageId == storageId && diff.ResourceId == resourceId) {
+					delta += diff.Delta;
+				}
+			});
+			return delta;
+		}
+
 		[Test]
 		public void WhenItemHasTransferComponent_MovesItemBetweenStorages() {
 			// Arrange
@@ -92,6 +109,8 @@ namespace Tests {
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(_sourceStorageId, _item), "Source storage should contain the item");
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Target storage should not contain the item yet");
 
+			ClearStorageDiffs();
+
 			// Act
 			_system.Update(new SystemState());
 
@@ -99,6 +118,14 @@ namespace Tests {
 			Assert.AreEqual(_targetStorageId, _item.Get<ItemOwner>().StorageId, "Item should be updated to target storage");
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_sourceStorageId, _item), "Source storage should not contain the item anymore");
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Target storage should contain the item");
+
+			Debug.Log("SourceStorage: " + _sourceStorage);
+			Debug.Log("TargetStorage: " + _targetStorage);
+			Debug.Log("SourceStorageByItemService: " + _itemStorageService.TryGetStorageEntity(_sourceStorageId));
+			Debug.Log("TargetStorageByItemService: " + _itemStorageService.TryGetStorageEntity(_targetStorageId));
+
+			Assert.AreEqual(-1, GetDiffFor(_sourceStorageId, "TestItem"));
+			Assert.AreEqual(1, GetDiffFor(_targetStorageId, "TestItem"));
 		}
 
 		[Test]
@@ -138,6 +165,8 @@ namespace Tests {
 			// Add transfer component to first item too
 			_item.Add(new TransferItem { TargetStorageId = _targetStorageId });
 
+			ClearStorageDiffs();
+
 			// Act
 			_system.Update(new SystemState());
 
@@ -153,6 +182,11 @@ namespace Tests {
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Target should have first item");
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(_targetStorageId, item2), "Target should have second item");
 			Assert.IsTrue(_itemStorageService.HasItemInStorage(_targetStorageId, item3), "Target should have third item");
+
+			var sourceSum = GetDiffFor(_sourceStorageId, "TestItem") + GetDiffFor(_sourceStorageId, "TestItem2") + GetDiffFor(_sourceStorageId, "TestItem3");
+			var targetSum = GetDiffFor(_targetStorageId, "TestItem") + GetDiffFor(_targetStorageId, "TestItem2") + GetDiffFor(_targetStorageId, "TestItem3");
+			Assert.AreEqual(-3, sourceSum);
+			Assert.AreEqual(3, targetSum);
 		}
 
 		[Test]
@@ -217,6 +251,8 @@ namespace Tests {
 			_item.Set(sourceItem);
 			_item.Add(new TransferItem { TargetStorageId = _targetStorageId });
 
+			ClearStorageDiffs();
+
 			// Act
 			_system.Update(new SystemState());
 
@@ -227,6 +263,9 @@ namespace Tests {
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_sourceStorageId, _item), "Source storage should not contain the source item after merge");
 			Assert.IsFalse(_itemStorageService.HasItemInStorage(_targetStorageId, _item), "Target storage should not directly contain the source item after merge");
 			Assert.IsTrue(_item.Has<DestroyEntity>(), "Source item should be marked for destruction after merge");
+
+			Assert.AreEqual(-3, GetDiffFor(_sourceStorageId, "TestItem"));
+			Assert.AreEqual(3, GetDiffFor(_targetStorageId, "TestItem"));
 		}
 	}
 }

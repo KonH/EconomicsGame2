@@ -86,7 +86,6 @@ namespace Bootstrap {
 				c.Add<ItemNutritionSystem>();
 				c.Add<ItemConsumeSystem>();
 				c.Add<TransferItemSystem>();
-				c.Add<SubscriptionCallSystem>();
 				c.Add<RemoveEmptyItemStorageSystem>();
 				c.Add<UnlockCellOnDestroySystem>();
 				c.Add<DestroyEntitySystem>();
@@ -116,6 +115,7 @@ namespace Bootstrap {
 				c.Add<HungrySetSystem>();
 				c.Add<HungryUpdateSystem>();
 				c.Add<DeathSystem>();
+				c.Add<SubscriptionCallSystem>();
 				c.Add<CleanUpItemsOneFrameSystem>();
 			});
 		}
