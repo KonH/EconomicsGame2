@@ -12,6 +12,7 @@ namespace Services {
 		readonly ItemIdService _itemIdService;
 		readonly ItemsConfig _itemsConfig;
 		readonly ItemStatService _itemStatService;
+		readonly StorageIdService _storageIdService;
 
 		readonly QueryDescription _itemOwnerQuery = new QueryDescription()
 			.WithAll<ItemOwner>();
@@ -22,11 +23,12 @@ namespace Services {
 		readonly QueryDescription _storageOnCellQuery = new QueryDescription()
 			.WithAll<ItemStorage, OnCell>();
 
-		public ItemStorageService(World world, ItemIdService itemIdService, ItemsConfig itemsConfig, ItemStatService itemStatService) {
+		public ItemStorageService(World world, ItemIdService itemIdService, ItemsConfig itemsConfig, ItemStatService itemStatService, StorageIdService storageIdService) {
 			_world = world;
 			_itemIdService = itemIdService;
 			_itemsConfig = itemsConfig;
 			_itemStatService = itemStatService;
+			_storageIdService = storageIdService;
 		}
 
 		public long GetStorageId(Entity storageEntity) {
@@ -54,7 +56,7 @@ namespace Services {
 				.ToList();
 		}
 
-		public bool AddNewItem(long storageId, string itemId, int count, IList<Entity>? items = null) {
+		public bool AddNewItem(long storageId, string itemId, long count, IList<Entity>? items = null) {
 			var itemConfig = _itemsConfig.GetItemById(itemId);
 			if (itemConfig == null) {
 				Debug.LogError($"Item with ID '{itemId}' not found in ItemsConfig. Cannot create item.");
@@ -77,13 +79,18 @@ namespace Services {
 			}
 		}
 
-		public void RemoveItemFromStorage(long storageId, Entity itemEntity) {
+		public void RemoveItemFromStorage(long storageId, Entity itemEntity, bool suppressContentDiff = false) {
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
 				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot remove item.");
 				return;
 			}
 			Debug.Log($"Removing item {itemEntity} from storage {storageId}");
+
+			var item = itemEntity.Get<Item>();
+			var resourceId = item.ResourceID;
+			var amountInStorage = item.Count;
+			
 			itemEntity.Remove<ItemOwner>();
 			var itemStorage = storageEntity.Get<ItemStorage>();
 			if (itemStorage.AllowDestroyIfEmpty) {
@@ -94,6 +101,10 @@ namespace Services {
 					storageEntity.Add<ItemStorageRemoved>();
 					return;
 				}
+			}
+
+			if (!suppressContentDiff) {
+				AddContentDiff(storageId, resourceId, -amountInStorage);
 			}
 			storageEntity.Add<ItemStorageUpdated>();
 		}
@@ -143,6 +154,12 @@ namespace Services {
 		}
 
 		public void AttachItemToStorage(long storageId, Entity itemEntity, IList<Entity>? items = null) {
+			Debug.Log($"Trying to attach item {itemEntity} to storage {storageId}");
+			var hasItemOwner = itemEntity.Has<ItemOwner>();
+			if (hasItemOwner) {
+				Debug.LogError($"Item {itemEntity} already has ItemOwner component. Cannot attach it to storage, before it is removed from the current storage.");
+				return;
+			}
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
 				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot attach item.");
@@ -155,33 +172,45 @@ namespace Services {
 				StorageId = storageId,
 				StorageOrder = newOrder
 			});
+			Debug.Log($"Attached item {itemEntity} to storage {storageId}");
+
+			var item = itemEntity.Get<Item>();
+			AddContentDiff(storageId, item.ResourceID, item.Count);
+			
 			storageEntity.Add<ItemStorageUpdated>();
 		}
 
-		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, int diff) {
+		public void ChangeItemCountInStorage(long storageId, Entity itemEntity, long diff) {
 			var storageEntity = TryGetStorageEntity(storageId);
 			if (storageEntity == Entity.Null) {
 				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot change item count.");
 				return;
 			}
 			ref var item = ref itemEntity.TryGetRef<Item>(out var hasItem);
-			if (hasItem) {
-				item.Count += diff;
-				if (item.Count <= 0) {
-					RemoveItemFromStorage(storageId, itemEntity);
-					itemEntity.Add<DestroyEntity>();
-					return;
-				}
-				storageEntity.Add<ItemStorageUpdated>();
-			} else {
-				Debug.LogError($"Item {itemEntity} not found in storage {storageId}. Cannot change item count.");
+			if (!hasItem) {
+				Debug.LogError($"Item {itemEntity} does not have Item component. Cannot change item count.");
 				return;
 			}
+			var oldCount = item.Count;
+			var resourceId = item.ResourceID;
+			var newCount = oldCount + diff;
+
+			item.Count = newCount;
+			if (newCount <= 0) {
+				AddContentDiff(storageId, resourceId, -oldCount);
+				RemoveItemFromStorage(storageId, itemEntity, true);
+				Debug.Log($"Item {itemEntity} completely removed from storage {storageId}");
+				itemEntity.Add<DestroyEntity>();
+				return;
+			}
+
+			AddContentDiff(storageId, resourceId, newCount - oldCount);
+			storageEntity.Add<ItemStorageUpdated>();
 		}
 
 		public Entity CreateNewStorageAtCell(Vector2Int cellPosition, bool allowDestroyIfEmpty) {
 			var storageEntity = _world.Create();
-			var storageId = _itemIdService.GenerateId();
+			var storageId = _storageIdService.GenerateId();
 			storageEntity.Add(new ItemStorage {
 				StorageId = storageId,
 				AllowDestroyIfEmpty = allowDestroyIfEmpty
@@ -207,6 +236,21 @@ namespace Services {
 				}
 			});
 			return storageEntity;
+		}
+
+		void AddContentDiff(long storageId, string resourceId, long delta) {
+			Debug.Log($"Adding content diff for storage {storageId} with resource {resourceId} and delta {delta}");
+			var storageEntity = TryGetStorageEntity(storageId);
+			if (storageEntity == Entity.Null) {
+				Debug.LogError($"Storage entity with ID {storageId} not found. Cannot update content diff.");
+				return;
+			}
+
+			_world.Create(new ItemStorageContentDiff {
+				StorageId = storageId,
+				ResourceId = resourceId,
+				Delta = delta
+			});
 		}
 
 		long GetNewOrder(IList<Entity> items) {

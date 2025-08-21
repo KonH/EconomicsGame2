@@ -25,7 +25,7 @@ namespace Tests {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
 			_itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
-			_storageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
+			_storageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_nutritionSystem = new ItemNutritionSystem(_world, _storageService);
 			_consumeSystem = new ItemConsumeSystem(_world, _storageService);
 		}

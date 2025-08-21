@@ -77,7 +77,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Storage cleanup - any storage with flag AllowDestroyIfEmpty should be destroyed
   - [ ] Split items for partial transfer
   - [+] Consume items one by one
-  - [.] Merge items after same ID generated
+  - [+] Merge items after same ID generated
   - [+] Item consumption
   - [.] Transfer by agreement
 - [+] Mining
@@ -194,3 +194,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [.] Update README
 - [ ] Gradient progress bars for character stats
 - [ ] Condition show/hide animations
+
+**Performance**
+- [.] Stable 60 FPS on test scene
+- [.] Low-hangind fruit optimizations

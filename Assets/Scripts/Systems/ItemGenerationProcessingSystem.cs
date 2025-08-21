@@ -62,8 +62,7 @@ namespace Systems {
 			var selectedItem = SelectItemToGenerate(typeConfig.Rules);
 			if (selectedItem != null) {
 				var count = _random.Next(selectedItem.MinCount, selectedItem.MaxCount + 1);
-				var itemCreated = _itemStorageService.AddNewItem(storageId, selectedItem.ItemType, count);
-				
+				var itemCreated = MergeOrCreateItemInStorage(storageId, selectedItem.ItemType, count);
 				if (itemCreated) {
 					Debug.Log($"Generated {count} {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
 					generator.CurrentCapacity++;
@@ -104,6 +103,26 @@ namespace Systems {
 			}
 
 			return rules[rules.Count - 1];
+		}
+
+		bool MergeOrCreateItemInStorage(long storageId, string itemType, int count) {
+			var itemsInStorage = _itemStorageService.GetItemsForOwner(storageId);
+			var existingItemEntity = Entity.Null;
+			foreach (var itemEntity in itemsInStorage) {
+				var item = World.Get<Item>(itemEntity);
+				if (item.ResourceID == itemType) {
+					existingItemEntity = itemEntity;
+					break;
+				}
+			}
+
+			if (existingItemEntity != Entity.Null) {
+				_itemStorageService.ChangeItemCountInStorage(storageId, existingItemEntity, count);
+				Debug.Log($"Merged {count} {itemType} into existing item in storage {storageId}");
+				return true;
+			}
+
+			return _itemStorageService.AddNewItem(storageId, itemType, count, itemsInStorage);
 		}
 	}
 }

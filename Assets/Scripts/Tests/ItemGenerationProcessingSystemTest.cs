@@ -35,7 +35,7 @@ namespace Tests {
 			_world = World.Create();
 			_itemIdService = new ItemIdService();
 			_itemsConfig = CreateTestItemsConfig();
-			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService());
+			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_itemGeneratorConfig = CreateTestConfig();
 			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService, new CleanupService(_world));
 		}
@@ -218,7 +218,6 @@ namespace Tests {
 		}
 
 		[Test]
-		[Ignore("Item aggregation will be implemented in a separate task")]
 		public void WhenMultipleItemsInStorage_ShouldAggregateCounts() {
 			// Arrange
 			_generatorEntity = CreateGeneratorEntity(0, 10);
@@ -337,7 +336,6 @@ namespace Tests {
 		}
 
 		[Test]
-		[Ignore("Item aggregation will be implemented in a separate task")]
 		public void WhenMultipleGenerationEvents_ShouldProcessAllEvents() {
 			// Arrange
 			_generatorEntity = CreateGeneratorEntity(0, 10);
