@@ -80,29 +80,32 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Merge items after same ID generated
   - [+] Item consumption
   - [.] Transfer by agreement
-- [+] Mining
+- [+] Collecting/Mining
 - [ ] Crafting
 - Death: 
   - [+] Transform to dead state, disallow to do anything, stats not updated
 - AI:
   - [+] Idle
   - [+] Random walk
-  - [.] Mining
+  - [!] Collecting
   - [.] Merchant
   - [ ] Crafting
   - [ ] Relatives take items from dead character
   - [ ] Fix stuck after loading issue
 - Stats:
-  - [ ] Traits - personal characteristics
-  - [ ] Skills - experience
+  - Traits - personal characteristics
+    - [!] Collection lover
+  - Skills - experience
   - Needs - what is required now
     - [+] Health - increases by food, decreases by Hungry condition
     - [+] Hunger - decreases by food, increases by time
   - Conditions
     - [+] Hungry
     - [+] Dead
+  - Skills - what is improved by usage time
+    - [!] Collecting
 - Roles:
-  - [.] Miner specialist
+  - [!] Collector specialist
   - [.] Merchant
   - [ ] Gravedigger
   - [ ] Major
@@ -111,7 +114,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Children
 - [.] Selected character follow camera when moving
 - [+] Change visual for dead character
-- [.] Change visual related to roles
+- [!] Change visual related to roles
+- [!] Time-consuming collection process
   
 **UI**
 - [+] HUD:
@@ -144,14 +148,15 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
-  - [.] Item change - over character
-  - [.] Item change - on inventory button
+  - [!] Item change - over character
+  - [!] Item change - on inventory button
 - Tooltips:
   - [ ] Item stat
   - [ ] Character stat
   - [ ] Character condition
 - [.] Selected character frame
 - [.] Ability to select any character
+- [!] Collection progress-bar 
 
 **Art**
 - Characters:
@@ -160,7 +165,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Bot
   - [+] Bot - dead
 - Role hats:
-  - [.] Collector
+  - [!] Collector
   - [.] Merchant
 - Items:
   - [+] Apple
@@ -184,6 +189,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [.] Inventory button (from backpack)
   - [.] Stats button
   - [.] Selected character frame
+  - [.] Progress bar
 
 **Sound**
 - [.] Click
