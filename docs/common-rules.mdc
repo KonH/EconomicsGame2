@@ -1,0 +1,14 @@
+Commit Message Rules
+
+- Split into header and description separated by a blank line
+- Header: concise, single-line summary
+- Description: describe only the final result of the change (omit intermediate/superseded steps)
+
+Example
+
+Header: UI: Implement item change notifications and follow world transform
+
+- Add ItemChangeView (icon + +/-N) with OnCompleted callback for pooling
+- Add ItemChangeTrigger subscribing to ItemStorageContentDiff for player storage and spawning the view
+- Add FollowWorldTransform to position UI element at target world Transform screen position
+- Include related prefab and animation assets
