@@ -15,6 +15,7 @@ namespace UnityComponents {
 			_spawnService = spawnService;
 		}
 
+		[ContextMenu("Spawn")]
 		public void Spawn() {
 			SpawnAndReturn();
 		}

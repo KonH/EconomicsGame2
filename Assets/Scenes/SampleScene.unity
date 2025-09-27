@@ -682,6 +682,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2782717909297877947, guid: f82c7799b8e8f6a4795bbcf02dfeb3fc, type: 3}
   m_PrefabInstance: {fileID: 6289108395763556491}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &118715497 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5977746308941669878, guid: f82c7799b8e8f6a4795bbcf02dfeb3fc, type: 3}
+  m_PrefabInstance: {fileID: 6289108395763556491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125571188
 GameObject:
   m_ObjectHideFlags: 0
@@ -8016,6 +8021,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1913202165554257609, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 118715497}
+    - target: {fileID: 1913202165554257609, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1232984932}
     - target: {fileID: 2621813825569712905, guid: a0220c3b2d39dd04c9a6a0505b6a61b3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8104,7 +8117,7 @@ PrefabInstance:
       objectReference: {fileID: 1897484515}
     - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
       propertyPath: autoInjectGameObjects.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[0]'
@@ -8125,7 +8138,7 @@ PrefabInstance:
     - target: {fileID: 3461924955323075479, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[4]'
       value: 
-      objectReference: {fileID: 1232757463}
+      objectReference: {fileID: 0}
     - target: {fileID: 3485635510710735234, guid: 30045240997116d4b9af2e2fe6b7a710, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

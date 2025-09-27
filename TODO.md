@@ -148,8 +148,8 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Restart/Continue
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
-  - [!] Item change - over character
-  - [!] Item change - on inventory button
+  - [+] Item change - over character
+  - [+] Item change - on inventory button
 - Tooltips:
   - [ ] Item stat
   - [ ] Character stat
