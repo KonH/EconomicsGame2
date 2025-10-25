@@ -37,7 +37,7 @@ namespace Tests {
 			_itemsConfig = CreateTestItemsConfig();
 			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_itemGeneratorConfig = CreateTestConfig();
-			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, _itemStorageService, new CleanupService(_world));
+			_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, new CleanupService(_world));
 		}
 
 		[TearDown]
@@ -107,29 +107,29 @@ namespace Tests {
 			return entity;
 		}
 
-		[Test]
-		public void WhenValidGenerationEvent_ShouldGenerateItemAndIncrementCapacity() {
-			// Arrange
-			_generatorEntity = CreateGeneratorEntity(0, 10);
-			_collectorEntity = CreateCollectorEntity();
-			_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
+	[Test]
+	public void WhenValidGenerationEvent_ShouldInitiateCollection() {
+		// Arrange
+		_generatorEntity = CreateGeneratorEntity(0, 10);
+		_collectorEntity = CreateCollectorEntity();
+		_collectorEntity.Add<Active>();
+		_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
 
-			// Act
-			_system.Update(new SystemState());
-			_system.Update(new SystemState());
+		// Act
+		_system.Update(new SystemState());
 
-			// Assert
-			var generator = _world.Get<ItemGenerator>(_generatorEntity);
-			Assert.AreEqual(1, generator.CurrentCapacity, "Generator capacity should be incremented");
-
-			// Check that item was added to storage
-			var itemsInStorage = _itemStorageService.GetItemsForOwner(_storageId);
-			Assert.AreEqual(1, itemsInStorage.Count, "Should have one item in storage");
-			var item = _world.Get<Item>(itemsInStorage[0]);
-			Assert.AreEqual(_itemType, item.ResourceID, "Item type should match");
-			Assert.GreaterOrEqual(item.Count, 1, "Item count should be at least 1");
-			Assert.LessOrEqual(item.Count, 3, "Item count should be at most 3");
-		}
+		// Assert - Collection should be initiated
+		Assert.IsTrue(_collectorEntity.Has<CollectionInProgress>(), "Collector should have CollectionInProgress component");
+		Assert.IsFalse(_collectorEntity.Has<Active>(), "Collector should not have Active component during collection");
+		
+		var collection = _collectorEntity.Get<CollectionInProgress>();
+		Assert.AreEqual(_generatorEntity, collection.Generator, "CollectionInProgress should reference the generator");
+		Assert.AreEqual(1.0f, collection.RemainingTime, "Collection time should be set from config (default 1.0s)");
+		
+		// Capacity should NOT be incremented yet (happens in CompleteCollectionSystem)
+		var generator = _world.Get<ItemGenerator>(_generatorEntity);
+		Assert.AreEqual(0, generator.CurrentCapacity, "Generator capacity should not change until collection completes");
+	}
 
 		[Test]
 		public void WhenGeneratorAtMaxCapacity_ShouldNotGenerateItem() {
@@ -254,7 +254,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
+			var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -288,7 +288,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
+			var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -316,7 +316,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
+			var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -371,7 +371,7 @@ namespace Tests {
 			
 			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
 			config.TestInit(new List<ItemTypeConfig> { typeConfig });
-			var system = new ItemGenerationProcessingSystem(_world, config, _itemStorageService, new CleanupService(_world));
+			var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 
 			_generatorEntity = CreateGeneratorEntity(0, 10);
 			_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
