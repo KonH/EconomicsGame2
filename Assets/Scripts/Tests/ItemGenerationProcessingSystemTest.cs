@@ -41,7 +41,7 @@ namespace Tests {
 		_itemGeneratorConfig = CreateTestConfig();
 		_system = new ItemGenerationProcessingSystem(_world, _itemGeneratorConfig, new CleanupService(_world));
 		_progressSystem = new CollectionProgressSystem(_world);
-		_completeSystem = new CompleteCollectionSystem(_world, _itemGeneratorConfig, _itemStorageService);
+		_completeSystem = new CompleteCollectionSystem(_world, _itemGeneratorConfig, _itemStorageService, new CleanupService(_world));
 	}
 
 	[TearDown]
@@ -299,7 +299,7 @@ namespace Tests {
 		config.TestInit(new List<ItemTypeConfig> { typeConfig });
 		var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 		var progressSystem = new CollectionProgressSystem(_world);
-		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService);
+		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 		_generatorEntity = CreateGeneratorEntity(0, 10);
 		_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -336,7 +336,7 @@ namespace Tests {
 		config.TestInit(new List<ItemTypeConfig> { typeConfig });
 		var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 		var progressSystem = new CollectionProgressSystem(_world);
-		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService);
+		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 		_generatorEntity = CreateGeneratorEntity(0, 10);
 		_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -367,7 +367,7 @@ namespace Tests {
 		config.TestInit(new List<ItemTypeConfig> { typeConfig });
 		var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 		var progressSystem = new CollectionProgressSystem(_world);
-		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService);
+		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 		_generatorEntity = CreateGeneratorEntity(0, 10);
 		_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });
@@ -426,7 +426,7 @@ namespace Tests {
 		config.TestInit(new List<ItemTypeConfig> { typeConfig });
 		var system = new ItemGenerationProcessingSystem(_world, config, new CleanupService(_world));
 		var progressSystem = new CollectionProgressSystem(_world);
-		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService);
+		var completeSystem = new CompleteCollectionSystem(_world, config, _itemStorageService, new CleanupService(_world));
 
 		_generatorEntity = CreateGeneratorEntity(0, 10);
 		_generatorEntity.Set(new ItemGenerator { Type = _generatorType, CurrentCapacity = 0, MaxCapacity = 10 });

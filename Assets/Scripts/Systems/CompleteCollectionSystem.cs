@@ -15,17 +15,20 @@ namespace Systems {
 		readonly ItemGeneratorConfig _itemGeneratorConfig;
 		readonly ItemStorageService _itemStorageService;
 		readonly System.Random _random;
+		readonly CleanupService _cleanup;
 
-		public CompleteCollectionSystem(World world, ItemGeneratorConfig itemGeneratorConfig, ItemStorageService itemStorageService) : base(world) {
+		public CompleteCollectionSystem(World world, ItemGeneratorConfig itemGeneratorConfig, ItemStorageService itemStorageService, CleanupService cleanup) : base(world) {
 			_itemGeneratorConfig = itemGeneratorConfig;
 			_itemStorageService = itemStorageService;
 			_random = new System.Random();
+			_cleanup = cleanup;
 		}
 
 		public override void Update(in SystemState _) {
 			World.Query(_collectionCompletedQuery, (Entity collectorEntity, ref CollectionCompleted collectionCompleted) => {
 				ProcessCollectionCompletion(collectorEntity, collectionCompleted);
 			});
+			_cleanup.CleanUp<CollectionCompleted>();
 		}
 
 		void ProcessCollectionCompletion(Entity collectorEntity, CollectionCompleted collectionCompleted) {
