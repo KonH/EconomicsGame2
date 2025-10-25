@@ -165,7 +165,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Bot
   - [+] Bot - dead
 - Role hats:
-  - [!] Collector
+  - [+] Collector
   - [.] Merchant
 - Items:
   - [+] Apple
