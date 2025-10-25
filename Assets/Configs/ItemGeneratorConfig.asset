@@ -21,3 +21,4 @@ MonoBehaviour:
       _maxCount: 3
     _minCapacity: 10
     _maxCapacity: 12
+    _collectionTime: 5

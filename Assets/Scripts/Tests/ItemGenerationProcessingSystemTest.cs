@@ -149,6 +149,34 @@ namespace Tests {
 	}
 
 	[Test]
+	public void WhenCompleteCollectionCycle_ShouldGenerateItemOnce() {
+		// Arrange
+		_generatorEntity = CreateGeneratorEntity(0, 10);
+		_collectorEntity = CreateCollectorEntity();
+		_eventEntity = CreateGenerationEvent(_generatorEntity, _collectorEntity);
+
+		// Act - Run complete collection cycle once
+		RunCompleteCollectionCycle();
+
+		// Assert - Items should be generated exactly once
+		var generator = _world.Get<ItemGenerator>(_generatorEntity);
+		Assert.AreEqual(1, generator.CurrentCapacity, "Generator capacity should be incremented exactly once");
+
+		var itemsInStorage = _itemStorageService.GetItemsForOwner(_storageId);
+		Assert.AreEqual(1, itemsInStorage.Count, "Should have exactly one item entity in storage");
+		
+		var item = _world.Get<Item>(itemsInStorage[0]);
+		Assert.AreEqual(_itemType, item.ResourceID, "Item type should match");
+		Assert.GreaterOrEqual(item.Count, 1, "Item count should be at least 1");
+		Assert.LessOrEqual(item.Count, 3, "Item count should be at most 3 (as per config)");
+		
+		// Verify Active component was restored
+		Assert.IsTrue(_collectorEntity.Has<Active>(), "Collector should have Active component restored after collection");
+		Assert.IsFalse(_collectorEntity.Has<CollectionInProgress>(), "CollectionInProgress should be removed");
+		Assert.IsFalse(_collectorEntity.Has<CollectionCompleted>(), "CollectionCompleted should be cleaned up");
+	}
+
+	[Test]
 	public void WhenGeneratorAtMaxCapacity_ShouldNotInitiateCollection() {
 		// Arrange
 		_generatorEntity = CreateGeneratorEntity(10, 10); // At max capacity
