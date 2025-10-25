@@ -103,8 +103,10 @@ namespace Bootstrap {
 				c.Add<CellMovementSystem>();
 				c.Add<MovementSystem>();
 				c.Add<FlipSpriteMovementSystem>();
-				c.Add<ActionProgressSystem>();
-				c.Add<WorldPositionSystem>();
+			c.Add<ActionProgressSystem>();
+			c.Add<CollectionProgressSystem>();
+			c.Add<CompleteCollectionSystem>();
+			c.Add<WorldPositionSystem>();
 				c.Add<TransferAvailableSystem>();
 				c.Add<SelectAiStateSystem>();
 				c.Add<IdleStateSystem>();

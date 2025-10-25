@@ -84,28 +84,28 @@ Transform the instant item collection process into a time-consuming activity whe
 ## Steps To Implement Checklist
 
 ### Phase 1: Core Components and Configuration
-- [ ] Add `collectionTime` field to ItemGeneratorConfig (default 1.0f)
-- [ ] Create CollectionInProgress component with generator reference and remainingTime
-- [ ] Mark CollectionInProgress with [Persistent] attribute for save/load support
-- [ ] Create CollectionCompleted component with generator reference
-- [ ] Mark CollectionCompleted with [OneFrame] attribute
+- [x] Add `collectionTime` field to ItemGeneratorConfig (default 1.0f)
+- [x] Create CollectionInProgress component with generator reference and remainingTime
+- [x] Mark CollectionInProgress with [Persistent] attribute for save/load support
+- [x] Create CollectionCompleted component with generator reference
+- [x] Mark CollectionCompleted with [OneFrame] attribute
 
 ### Phase 2: Collection Progress System
-- [ ] Implement CollectionProgressSystem to update remainingTime
-- [ ] Add logic to transition from CollectionInProgress to CollectionCompleted when time reaches 0
-- [ ] Register system in GameLifetimeScope with appropriate priority
+- [x] Implement CollectionProgressSystem to update remainingTime
+- [x] Add logic to transition from CollectionInProgress to CollectionCompleted when time reaches 0
+- [x] Register system in GameLifetimeScope with appropriate priority
 
 ### Phase 3: Refactor Collection Initiation
-- [ ] Identify current instant collection logic
-- [ ] Create InitiateCollectionSystem that adds CollectionInProgress and removes Active
-- [ ] Read collectionTime from ItemGeneratorConfig and set in CollectionInProgress
-- [ ] Remove instant collection behavior from existing system
+- [x] Identify current instant collection logic (ItemGenerationProcessingSystem)
+- [x] Refactor ItemGenerationProcessingSystem to add CollectionInProgress and remove Active
+- [x] Read collectionTime from ItemGeneratorConfig and set in CollectionInProgress
+- [x] Remove instant collection behavior from existing system
 
 ### Phase 4: Complete Collection System
-- [ ] Implement CompleteCollectionSystem to process CollectionCompleted events
-- [ ] Move actual item collection logic to this system
-- [ ] Restore Active component to character after collection
-- [ ] Register system after CollectionProgressSystem
+- [x] Implement CompleteCollectionSystem to process CollectionCompleted events
+- [x] Move actual item collection logic to this system
+- [x] Restore Active component to character after collection
+- [x] Register system after CollectionProgressSystem
 
 ### Phase 5: Testing and Validation
 - [ ] Test basic collection flow (start, progress, complete)
