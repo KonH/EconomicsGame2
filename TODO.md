@@ -115,7 +115,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [.] Selected character follow camera when moving
 - [+] Change visual for dead character
 - [!] Change visual related to roles
-- [!] Time-consuming collection process
+- [+] Time-consuming collection process
   
 **UI**
 - [+] HUD:
