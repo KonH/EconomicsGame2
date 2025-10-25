@@ -117,7 +117,7 @@ Transform the instant item collection process into a time-consuming activity whe
 
 ### Phase 6: Documentation and Cleanup
 - [x] Fix test compilation errors (updated constructor calls)
-- [ ] Update remaining tests to match new collection behavior
+- [x] Update remaining tests to match new collection behavior
 - [ ] Update TODO.md with completed feature
 - [ ] Add comments to complex logic if needed
 - [ ] Commit changes with descriptive message
