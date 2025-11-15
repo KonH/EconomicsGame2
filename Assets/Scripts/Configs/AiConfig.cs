@@ -43,7 +43,27 @@ namespace Configs {
 
 	[Serializable]
 	public sealed class FoodCollectionStateConfig : IStateConfig {
-		[SerializeField] private int _priority = 1;
+		[SerializeField] private int _priority = 3;
+		[SerializeField] [Range(0, 1)] private float _hungerThreshold = 0.3f;
+		[SerializeField] private int _targetCollectionCount = 1;
+		[SerializeField] private string _nutritionStatName = "Nutrition";
+
+		public int Priority => _priority;
+		public float HungerThreshold => _hungerThreshold;
+		public int TargetCollectionCount => _targetCollectionCount;
+		public string NutritionStatName => _nutritionStatName;
+
+		public void TestInit(int priority, float hungerThreshold, int targetCollectionCount, string nutritionStatName = "Nutrition") {
+			_priority = priority;
+			_hungerThreshold = hungerThreshold;
+			_targetCollectionCount = targetCollectionCount;
+			_nutritionStatName = nutritionStatName;
+		}
+	}
+
+	[Serializable]
+	public sealed class FoodConsumptionStateConfig : IStateConfig {
+		[SerializeField] private int _priority = 4;
 		[SerializeField] [Range(0, 1)] private float _hungerThreshold = 0.3f;
 		[SerializeField] private string _nutritionStatName = "Nutrition";
 
@@ -63,15 +83,18 @@ namespace Configs {
 		[SerializeField] private IdleStateConfig? _idleConfig;
 		[SerializeField] private RandomWalkStateConfig? _randomWalkConfig;
 		[SerializeField] private FoodCollectionStateConfig? _foodCollectionConfig;
+		[SerializeField] private FoodConsumptionStateConfig? _foodConsumptionConfig;
 
 		public IdleStateConfig IdleConfig => this.ValidateOrThrow(_idleConfig);
 		public RandomWalkStateConfig RandomWalkConfig => this.ValidateOrThrow(_randomWalkConfig);
 		public FoodCollectionStateConfig FoodCollectionConfig => this.ValidateOrThrow(_foodCollectionConfig);
+		public FoodConsumptionStateConfig FoodConsumptionConfig => this.ValidateOrThrow(_foodConsumptionConfig);
 
-		public void TestInit(IdleStateConfig idleConfig, RandomWalkStateConfig randomWalkConfig, FoodCollectionStateConfig foodCollectionConfig) {
+		public void TestInit(IdleStateConfig idleConfig, RandomWalkStateConfig randomWalkConfig, FoodCollectionStateConfig foodCollectionConfig, FoodConsumptionStateConfig foodConsumptionConfig) {
 			_idleConfig = idleConfig;
 			_randomWalkConfig = randomWalkConfig;
 			_foodCollectionConfig = foodCollectionConfig;
+			_foodConsumptionConfig = foodConsumptionConfig;
 		}
 	}
 } 

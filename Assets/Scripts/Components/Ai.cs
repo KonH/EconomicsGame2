@@ -22,5 +22,9 @@ namespace Components {
 	[Persistent]
 	public struct FoodCollectionState {
 		public Entity TargetGenerator;
+		public int CollectedCount;
 	}
+
+	[Persistent]
+	public struct FoodConsumptionState {}
 } 

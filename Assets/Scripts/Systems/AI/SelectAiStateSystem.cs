@@ -17,20 +17,23 @@ namespace Systems.AI {
 		readonly AiService _aiService;
 		readonly AiConfig _aiConfig;
 		readonly FoodGeneratorQueryService _foodGeneratorQueryService;
+		readonly ItemStorageService _itemStorageService;
 		readonly System.Random _random;
 		readonly List<IStateConfig> _cachedConfigs;
 
-		public SelectAiStateSystem(World world, AiService aiService, AiConfig aiConfig, FoodGeneratorQueryService foodGeneratorQueryService) : base(world) {
+		public SelectAiStateSystem(World world, AiService aiService, AiConfig aiConfig, FoodGeneratorQueryService foodGeneratorQueryService, ItemStorageService itemStorageService) : base(world) {
 			_aiService = aiService;
 			_aiConfig = aiConfig;
 			_foodGeneratorQueryService = foodGeneratorQueryService;
+			_itemStorageService = itemStorageService;
 			_random = new System.Random();
-			
+
 			_cachedConfigs = new List<IStateConfig> {
-				_aiConfig.IdleConfig,
-				_aiConfig.RandomWalkConfig,
-				_aiConfig.FoodCollectionConfig
-			};
+			_aiConfig.IdleConfig,
+			_aiConfig.RandomWalkConfig,
+			_aiConfig.FoodCollectionConfig,
+			_aiConfig.FoodConsumptionConfig
+		};
 		}
 
 		public override void Update(in SystemState _) {
@@ -70,17 +73,21 @@ namespace Systems.AI {
 
 		List<IStateConfig> GetAvailableConfigs(Entity entity) {
 			var configs = new List<IStateConfig>();
-			
+
 			foreach (var config in _cachedConfigs) {
-				if (config is FoodCollectionStateConfig foodConfig) {
-					if (IsEligibleForFoodCollection(entity, foodConfig)) {
+				if (config is FoodCollectionStateConfig foodCollectionConfig) {
+					if (IsEligibleForFoodCollection(entity, foodCollectionConfig)) {
+						configs.Add(config);
+					}
+				} else if (config is FoodConsumptionStateConfig foodConsumptionConfig) {
+					if (IsEligibleForFoodConsumption(entity, foodConsumptionConfig)) {
 						configs.Add(config);
 					}
 				} else {
 					configs.Add(config);
 				}
 			}
-			
+
 			return configs;
 		}
 
@@ -93,8 +100,41 @@ namespace Systems.AI {
 			if (hungerRatio < config.HungerThreshold) {
 				return false;
 			}
-			
+
+			if (HasFoodInInventory(entity, config.NutritionStatName)) {
+				return false;
+			}
+
 			return _foodGeneratorQueryService.HasFoodGenerators();
+		}
+
+		bool IsEligibleForFoodConsumption(Entity entity, FoodConsumptionStateConfig config) {
+			if (!entity.Has<Hunger>()) {
+				return false;
+			}
+			var hunger = entity.Get<Hunger>();
+			var hungerRatio = hunger.maxValue <= 0f ? 0f : hunger.value / hunger.maxValue;
+			if (hungerRatio < config.HungerThreshold) {
+				return false;
+			}
+
+			return HasFoodInInventory(entity, config.NutritionStatName);
+		}
+
+		bool HasFoodInInventory(Entity entity, string nutritionStatName) {
+			if (!entity.Has<ItemStorage>()) {
+				return false;
+			}
+			var storage = entity.Get<ItemStorage>();
+			var items = _itemStorageService.GetItemsForOwner(storage.StorageId);
+
+			foreach (var itemEntity in items) {
+				if (itemEntity.Has<Nutrition>()) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		void EnterState(Entity entity, IStateConfig config) {
@@ -113,8 +153,13 @@ namespace Systems.AI {
 
 				case FoodCollectionStateConfig foodCollectionConfig:
 					_aiService.EnterState(entity, new FoodCollectionState {
-						TargetGenerator = Entity.Null
+						TargetGenerator = Entity.Null,
+						CollectedCount = 0
 					});
+					break;
+
+				case FoodConsumptionStateConfig foodConsumptionConfig:
+					_aiService.EnterState(entity, new FoodConsumptionState());
 					break;
 
 				default:
@@ -123,4 +168,4 @@ namespace Systems.AI {
 			}
 		}
 	}
-} 
+}

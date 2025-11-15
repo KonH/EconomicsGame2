@@ -33,7 +33,4 @@
 	public struct TransferItem {
 		public long TargetStorageId;
 	}
-
-	[OneFrame]
-	public struct AutoConsumeItem {}
 }

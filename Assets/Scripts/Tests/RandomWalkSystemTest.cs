@@ -179,20 +179,23 @@ namespace Tests {
 			return cellService;
 		}
 
-		AiConfig CreateTestConfig() {
-			var idleConfig = new IdleStateConfig();
-			idleConfig.TestInit(1, 1f, 3f);
-			
-			var randomWalkConfig = new RandomWalkStateConfig();
-			randomWalkConfig.TestInit(2, 2, 5);
-			
-			var foodCollectionConfig = new FoodCollectionStateConfig();
-			foodCollectionConfig.TestInit(1, 0.3f);
-			
-			var config = ScriptableObject.CreateInstance<AiConfig>();
-			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig);
-			return config;
-		}
+	AiConfig CreateTestConfig() {
+		var idleConfig = new IdleStateConfig();
+		idleConfig.TestInit(1, 1f, 3f);
+		
+		var randomWalkConfig = new RandomWalkStateConfig();
+		randomWalkConfig.TestInit(2, 2, 5);
+		
+		var foodCollectionConfig = new FoodCollectionStateConfig();
+		foodCollectionConfig.TestInit(3, 0.3f, 1, "Nutrition");
+		
+		var foodConsumptionConfig = new FoodConsumptionStateConfig();
+		foodConsumptionConfig.TestInit(4, 0.3f, "Nutrition");
+		
+		var config = ScriptableObject.CreateInstance<AiConfig>();
+		config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
+		return config;
+	}
 
 		GridSettings CreateTestGridSettings() {
 			var gridSettings = new GridSettings();

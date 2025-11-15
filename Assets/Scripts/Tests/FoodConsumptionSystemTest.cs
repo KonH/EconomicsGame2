@@ -2,6 +2,7 @@ using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Components;
+using Configs;
 using NUnit.Framework;
 using Services;
 using Systems.AI;
@@ -11,14 +12,20 @@ namespace Tests {
 	public sealed class FoodConsumptionSystemTest {
 		World _world = null!;
 		FoodConsumptionSystem _system = null!;
-		CleanupService _cleanupService = null!;
+		ItemStorageService _itemStorageService = null!;
+		AiService _aiService = null!;
 
-		[SetUp]
-		public void SetUp() {
-			_world = World.Create();
-			_cleanupService = new CleanupService(_world);
-			_system = new FoodConsumptionSystem(_world, _cleanupService);
-		}
+	[SetUp]
+	public void SetUp() {
+		_world = World.Create();
+		var itemIdService = new ItemIdService();
+		var itemsConfig = ScriptableObject.CreateInstance<ItemsConfig>();
+		var itemStatService = new ItemStatService();
+		var storageIdService = new StorageIdService();
+		_itemStorageService = new ItemStorageService(_world, itemIdService, itemsConfig, itemStatService, storageIdService);
+		_aiService = new AiService(_world);
+		_system = new FoodConsumptionSystem(_world, _itemStorageService, _aiService);
+	}
 
 		[TearDown]
 		public void TearDown() {
@@ -27,90 +34,94 @@ namespace Tests {
 		}
 
 		[Test]
-		public void WhenItemHasAutoConsumeItem_ShouldAddConsumeItem() {
+		public void WhenEntityHasFoodInInventory_ShouldAddConsumeItem() {
 			// Arrange
+			var entity = CreateEntityWithFoodConsumptionState(1);
+			var foodItem = CreateFoodItem(1);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.IsTrue(foodItem.Has<ConsumeItem>(), "Food item should have ConsumeItem component");
+		}
+
+		[Test]
+		public void WhenEntityHasFoodInInventory_ShouldExitState() {
+			// Arrange
+			var entity = CreateEntityWithFoodConsumptionState(1);
+			var foodItem = CreateFoodItem(1);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.IsFalse(entity.Has<FoodConsumptionState>(), "Entity should exit FoodConsumptionState");
+			Assert.IsFalse(entity.Has<HasAiState>(), "Entity should not have HasAiState");
+		}
+
+		[Test]
+		public void WhenEntityHasNoFoodInInventory_ShouldExitState() {
+			// Arrange
+			var entity = CreateEntityWithFoodConsumptionState(1);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.IsFalse(entity.Has<FoodConsumptionState>(), "Entity should exit FoodConsumptionState");
+			Assert.IsFalse(entity.Has<HasAiState>(), "Entity should not have HasAiState");
+		}
+
+		[Test]
+		public void WhenEntityHasNonFoodItemInInventory_ShouldExitState() {
+			// Arrange
+			var entity = CreateEntityWithFoodConsumptionState(1);
+			var nonFoodItem = _world.Create();
+			nonFoodItem.Add(new Item { ResourceID = "Stone", UniqueID = 1, Count = 1 });
+			nonFoodItem.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.IsFalse(entity.Has<FoodConsumptionState>(), "Entity should exit FoodConsumptionState");
+			Assert.IsFalse(nonFoodItem.Has<ConsumeItem>(), "Non-food item should not have ConsumeItem");
+		}
+
+		[Test]
+		public void WhenMultipleEntitiesWithFoodConsumptionState_ShouldProcessAll() {
+			// Arrange
+			var entity1 = CreateEntityWithFoodConsumptionState(1);
+			var foodItem1 = CreateFoodItem(1);
+
+			var entity2 = CreateEntityWithFoodConsumptionState(2);
+			var foodItem2 = CreateFoodItem(2);
+
+			// Act
+			_system.Update(new SystemState());
+
+			// Assert
+			Assert.IsTrue(foodItem1.Has<ConsumeItem>(), "First food item should have ConsumeItem");
+			Assert.IsTrue(foodItem2.Has<ConsumeItem>(), "Second food item should have ConsumeItem");
+			Assert.IsFalse(entity1.Has<FoodConsumptionState>(), "First entity should exit state");
+			Assert.IsFalse(entity2.Has<FoodConsumptionState>(), "Second entity should exit state");
+		}
+
+		Entity CreateEntityWithFoodConsumptionState(long storageId) {
+			var entity = _world.Create();
+			entity.Add(new FoodConsumptionState());
+			entity.Add(new HasAiState());
+			entity.Add(new ItemStorage { StorageId = storageId });
+			return entity;
+		}
+
+		Entity CreateFoodItem(long storageId) {
 			var item = _world.Create();
-			item.Add(new Item { ResourceID = "Apple", UniqueID = 1, Count = 1 });
-			item.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
+			item.Add(new Item { ResourceID = "Apple", UniqueID = storageId, Count = 1 });
+			item.Add(new ItemOwner { StorageId = storageId, StorageOrder = 1 });
 			item.Add(new Nutrition { hungerDecreaseValue = 50f, healthIncreaseValue = 25f });
-			item.Add(new AutoConsumeItem());
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsTrue(item.Has<ConsumeItem>(), "Item should have ConsumeItem component");
-		}
-
-		[Test]
-		public void WhenItemHasAutoConsumeItem_ShouldCleanupAutoConsumeItem() {
-			// Arrange
-			var item = _world.Create();
-			item.Add(new Item { ResourceID = "Apple", UniqueID = 1, Count = 1 });
-			item.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
-			item.Add(new Nutrition { hungerDecreaseValue = 50f, healthIncreaseValue = 25f });
-			item.Add(new AutoConsumeItem());
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsFalse(item.Has<AutoConsumeItem>(), "AutoConsumeItem should be cleaned up");
-		}
-
-		[Test]
-		public void WhenItemWithoutAutoConsumeItem_ShouldNotAddConsumeItem() {
-			// Arrange
-			var item = _world.Create();
-			item.Add(new Item { ResourceID = "Apple", UniqueID = 1, Count = 1 });
-			item.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
-			item.Add(new Nutrition { hungerDecreaseValue = 50f, healthIncreaseValue = 25f });
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsFalse(item.Has<ConsumeItem>(), "Item should not have ConsumeItem component");
-		}
-
-		[Test]
-		public void WhenItemWithoutNutrition_ShouldNotProcess() {
-			// Arrange
-			var item = _world.Create();
-			item.Add(new Item { ResourceID = "Stone", UniqueID = 1, Count = 1 });
-			item.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
-			item.Add(new AutoConsumeItem());
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsFalse(item.Has<ConsumeItem>(), "Item without Nutrition should not get ConsumeItem");
-		}
-
-		[Test]
-		public void WhenMultipleItemsWithAutoConsume_ShouldProcessAll() {
-			// Arrange
-			var item1 = _world.Create();
-			item1.Add(new Item { ResourceID = "Apple", UniqueID = 1, Count = 1 });
-			item1.Add(new ItemOwner { StorageId = 1, StorageOrder = 1 });
-			item1.Add(new Nutrition { hungerDecreaseValue = 50f, healthIncreaseValue = 25f });
-			item1.Add(new AutoConsumeItem());
-
-			var item2 = _world.Create();
-			item2.Add(new Item { ResourceID = "Bread", UniqueID = 2, Count = 1 });
-			item2.Add(new ItemOwner { StorageId = 1, StorageOrder = 2 });
-			item2.Add(new Nutrition { hungerDecreaseValue = 30f, healthIncreaseValue = 15f });
-			item2.Add(new AutoConsumeItem());
-
-			// Act
-			_system.Update(new SystemState());
-
-			// Assert
-			Assert.IsTrue(item1.Has<ConsumeItem>(), "First item should have ConsumeItem");
-			Assert.IsTrue(item2.Has<ConsumeItem>(), "Second item should have ConsumeItem");
-			Assert.IsFalse(item1.Has<AutoConsumeItem>(), "First item AutoConsumeItem should be cleaned up");
-			Assert.IsFalse(item2.Has<AutoConsumeItem>(), "Second item AutoConsumeItem should be cleaned up");
+			return item;
 		}
 	}
 }

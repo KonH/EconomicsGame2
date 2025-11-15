@@ -12,25 +12,30 @@ using UnityEngine;
 
 namespace Tests {
 	public class SelectAiStateSystemTest {
-		World _world = null!;
-		SelectAiStateSystem _system = null!;
-		AiService _aiService = null!;
-		AiConfig _aiConfig = null!;
-		FoodGeneratorQueryService _foodGeneratorQueryService = null!;
+	World _world = null!;
+	SelectAiStateSystem _system = null!;
+	AiService _aiService = null!;
+	AiConfig _aiConfig = null!;
+	FoodGeneratorQueryService _foodGeneratorQueryService = null!;
+	ItemStorageService _itemStorageService = null!;
 
-		ItemGeneratorConfig _itemGeneratorConfig = null!;
-		ItemsConfig _itemsConfig = null!;
+	ItemGeneratorConfig _itemGeneratorConfig = null!;
+	ItemsConfig _itemsConfig = null!;
 
-		[SetUp]
-		public void SetUp() {
-			_world = World.Create();
-			_aiService = new AiService(_world);
-			_aiConfig = CreateTestConfig();
-			_itemGeneratorConfig = CreateTestItemGeneratorConfig();
-			_itemsConfig = CreateTestItemsConfig();
-			_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, _itemGeneratorConfig, _itemsConfig, _aiConfig);
-			_system = new SelectAiStateSystem(_world, _aiService, _aiConfig, _foodGeneratorQueryService);
-		}
+	[SetUp]
+	public void SetUp() {
+		_world = World.Create();
+		_aiService = new AiService(_world);
+		_aiConfig = CreateTestConfig();
+		_itemGeneratorConfig = CreateTestItemGeneratorConfig();
+		_itemsConfig = CreateTestItemsConfig();
+		var itemIdService = new ItemIdService();
+		var itemStatService = new ItemStatService();
+		var storageIdService = new StorageIdService();
+		_itemStorageService = new ItemStorageService(_world, itemIdService, _itemsConfig, itemStatService, storageIdService);
+		_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, _itemGeneratorConfig, _itemsConfig, _aiConfig);
+		_system = new SelectAiStateSystem(_world, _aiService, _aiConfig, _foodGeneratorQueryService, _itemStorageService);
+	}
 
 		[TearDown]
 		public void TearDown() {
@@ -232,19 +237,22 @@ namespace Tests {
 			return config;
 		}
 
-		AiConfig CreateTestConfig() {
-			var idleConfig = new IdleStateConfig();
-			idleConfig.TestInit(1, 1f, 3f);
-			
-			var randomWalkConfig = new RandomWalkStateConfig();
-			randomWalkConfig.TestInit(2, 2, 5);
-			
-			var foodCollectionConfig = new FoodCollectionStateConfig();
-			foodCollectionConfig.TestInit(1, 0.3f);
-			
-			var config = ScriptableObject.CreateInstance<AiConfig>();
-			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig);
-			return config;
-		}
+	AiConfig CreateTestConfig() {
+		var idleConfig = new IdleStateConfig();
+		idleConfig.TestInit(1, 1f, 3f);
+		
+		var randomWalkConfig = new RandomWalkStateConfig();
+		randomWalkConfig.TestInit(2, 2, 5);
+		
+		var foodCollectionConfig = new FoodCollectionStateConfig();
+		foodCollectionConfig.TestInit(3, 0.3f, 1, "Nutrition");
+		
+		var foodConsumptionConfig = new FoodConsumptionStateConfig();
+		foodConsumptionConfig.TestInit(4, 0.3f, "Nutrition");
+		
+		var config = ScriptableObject.CreateInstance<AiConfig>();
+		config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
+		return config;
+	}
 	}
 } 

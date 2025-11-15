@@ -87,7 +87,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - AI:
   - [+] Idle
   - [+] Random walk
-  - [!] Collecting
+  - [+] Collecting
   - [.] Merchant
   - [ ] Crafting
   - [ ] Relatives take items from dead character
