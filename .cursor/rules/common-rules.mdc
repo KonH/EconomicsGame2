@@ -128,6 +128,7 @@ var count = myList.Count;
 - Use descriptive names that clearly indicate purpose
 - Add comments for complex logic or non-obvious implementations
 - Use Debug.Log statements for temporary debugging, include meaningful context
+- **Always prefix Debug.Log, Debug.LogWarning, and Debug.LogError messages with class name in format `[ClassName]`** (e.g., `Debug.Log($"[FoodCollectionSystem] message")`) to simplify log filtering
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
 - Use explicit `private` access modifier for private members

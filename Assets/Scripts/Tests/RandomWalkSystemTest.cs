@@ -186,8 +186,11 @@ namespace Tests {
 			var randomWalkConfig = new RandomWalkStateConfig();
 			randomWalkConfig.TestInit(2, 2, 5);
 			
+			var foodCollectionConfig = new FoodCollectionStateConfig();
+			foodCollectionConfig.TestInit(1, 0.3f);
+			
 			var config = ScriptableObject.CreateInstance<AiConfig>();
-			config.TestInit(idleConfig, randomWalkConfig);
+			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig);
 			return config;
 		}
 

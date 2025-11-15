@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
@@ -14,13 +16,20 @@ namespace Tests {
 		SelectAiStateSystem _system = null!;
 		AiService _aiService = null!;
 		AiConfig _aiConfig = null!;
+		FoodGeneratorQueryService _foodGeneratorQueryService = null!;
+
+		ItemGeneratorConfig _itemGeneratorConfig = null!;
+		ItemsConfig _itemsConfig = null!;
 
 		[SetUp]
 		public void SetUp() {
 			_world = World.Create();
 			_aiService = new AiService(_world);
 			_aiConfig = CreateTestConfig();
-			_system = new SelectAiStateSystem(_world, _aiService, _aiConfig);
+			_itemGeneratorConfig = CreateTestItemGeneratorConfig();
+			_itemsConfig = CreateTestItemsConfig();
+			_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, _itemGeneratorConfig, _itemsConfig, _aiConfig);
+			_system = new SelectAiStateSystem(_world, _aiService, _aiConfig, _foodGeneratorQueryService);
 		}
 
 		[TearDown]
@@ -126,6 +135,103 @@ namespace Tests {
 			Assert.IsTrue(entity2.Has<IdleState>() || entity2.Has<RandomWalkState>());
 		}
 
+		[Test]
+		public void WhenHungerBelowThreshold_ShouldNotSelectFoodCollection() {
+			// Arrange
+			var entity = _world.Create();
+			entity.Add(new AiControlled());
+			entity.Add(new Hunger { value = 2f, maxValue = 10f });
+
+			// Act
+			_system.Update(new SystemState { DeltaTime = 0.0f });
+
+			// Assert
+			Assert.IsTrue(entity.Has<HasAiState>());
+			Assert.IsFalse(entity.Has<FoodCollectionState>(), "Food collection should not be selected when hunger is below threshold");
+		}
+
+		[Test]
+		public void WhenNoFoodGenerators_ShouldNotSelectFoodCollection() {
+			// Arrange
+			var entity = _world.Create();
+			entity.Add(new AiControlled());
+			entity.Add(new Hunger { value = 5f, maxValue = 10f });
+
+			// Act
+			_system.Update(new SystemState { DeltaTime = 0.0f });
+
+			// Assert
+			Assert.IsTrue(entity.Has<HasAiState>());
+			Assert.IsFalse(entity.Has<FoodCollectionState>(), "Food collection should not be selected when no food generators exist");
+		}
+
+		[Test]
+		public void WhenHungerAboveThresholdAndFoodGeneratorsExist_ShouldSelectFoodCollection() {
+			// Arrange
+			var entity = _world.Create();
+			entity.Add(new AiControlled());
+			entity.Add(new Hunger { value = 5f, maxValue = 10f });
+			CreateFoodGenerator();
+
+			// Act
+			_system.Update(new SystemState { DeltaTime = 0.0f });
+
+			// Assert
+			Assert.IsTrue(entity.Has<HasAiState>());
+			var hasFoodCollection = entity.Has<FoodCollectionState>();
+			var hasIdleOrWalk = entity.Has<IdleState>() || entity.Has<RandomWalkState>();
+			Assert.IsTrue(hasFoodCollection || hasIdleOrWalk, "Should select food collection or other state");
+		}
+
+		[Test]
+		public void WhenEntityWithoutHunger_ShouldNotSelectFoodCollection() {
+			// Arrange
+			var entity = _world.Create();
+			entity.Add(new AiControlled());
+			CreateFoodGenerator();
+
+			// Act
+			_system.Update(new SystemState { DeltaTime = 0.0f });
+
+			// Assert
+			Assert.IsTrue(entity.Has<HasAiState>());
+			Assert.IsFalse(entity.Has<FoodCollectionState>(), "Food collection should not be selected when entity has no Hunger component");
+		}
+
+		void CreateFoodGenerator() {
+			var generator = _world.Create();
+			generator.Add(new ItemGenerator {
+				Type = "FoodGenerator",
+				CurrentCapacity = 0,
+				MaxCapacity = 10
+			});
+			generator.Add(new OnCell { Position = new Vector2Int(5, 5) });
+		}
+
+		ItemGeneratorConfig CreateTestItemGeneratorConfig() {
+			var foodRule = new ItemGenerationRule();
+			foodRule.TestInit("Apple", 1.0f, 1, 1);
+
+			var foodTypeConfig = new ItemTypeConfig();
+			foodTypeConfig.TestInit("FoodGenerator", new List<ItemGenerationRule> { foodRule }, 5, 10);
+
+			var config = ScriptableObject.CreateInstance<ItemGeneratorConfig>();
+			config.TestInit(new List<ItemTypeConfig> { foodTypeConfig });
+			return config;
+		}
+
+		ItemsConfig CreateTestItemsConfig() {
+			var nutritionStat = new ItemStatConfig();
+			nutritionStat.TestInit("Nutrition", new float[] { 50f, 25f });
+
+			var foodItem = new ItemConfig();
+			foodItem.TestInit("Apple", "Apple", null, new ItemStatConfig[] { nutritionStat });
+
+			var config = ScriptableObject.CreateInstance<ItemsConfig>();
+			config.TestInit(new ItemConfig[] { foodItem });
+			return config;
+		}
+
 		AiConfig CreateTestConfig() {
 			var idleConfig = new IdleStateConfig();
 			idleConfig.TestInit(1, 1f, 3f);
@@ -133,8 +239,11 @@ namespace Tests {
 			var randomWalkConfig = new RandomWalkStateConfig();
 			randomWalkConfig.TestInit(2, 2, 5);
 			
+			var foodCollectionConfig = new FoodCollectionStateConfig();
+			foodCollectionConfig.TestInit(1, 0.3f);
+			
 			var config = ScriptableObject.CreateInstance<AiConfig>();
-			config.TestInit(idleConfig, randomWalkConfig);
+			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig);
 			return config;
 		}
 	}

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Arch.Core;
 
 namespace Components {
 	[Persistent]
@@ -16,5 +17,10 @@ namespace Components {
 	[Persistent]
 	public struct RandomWalkState {
 		public Vector2Int TargetCell;
+	}
+
+	[Persistent]
+	public struct FoodCollectionState {
+		public Entity TargetGenerator;
 	}
 } 
