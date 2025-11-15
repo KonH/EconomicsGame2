@@ -9,19 +9,24 @@ using Components;
 using Services;
 
 namespace UnityComponents.UI.Game {
+	[RequireComponent(typeof(CharacterTargetBehaviour))]
 	public sealed class ItemChangeTrigger : MonoBehaviour {
 		[SerializeField] private PrefabSpawner? _itemChangePrefab;
-		[SerializeField] private string _playerId = "MainCharacter";
 
 		WorldSubscriptionService? _subscriptionService;
 		ItemsConfig? _itemsConfig;
 		UniqueReferenceService? _uniqueReferenceService;
+		CharacterTargetBehaviour? _characterTarget;
 
 		[Inject]
 		public void Construct(WorldSubscriptionService subscriptionService, ItemsConfig itemsConfig, UniqueReferenceService uniqueReferenceService) {
 			_subscriptionService = subscriptionService;
 			_itemsConfig = itemsConfig;
 			_uniqueReferenceService = uniqueReferenceService;
+		}
+
+		void Awake() {
+			_characterTarget = GetComponent<CharacterTargetBehaviour>();
 		}
 
 		void OnEnable() {
@@ -33,7 +38,7 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void OnItemStorageContentDiff(Entity entity) {
-			if (!this.Validate(_itemsConfig) || !this.Validate(_itemChangePrefab) || !this.Validate(_uniqueReferenceService)) {
+			if (!this.Validate(_itemsConfig) || !this.Validate(_itemChangePrefab) || !this.Validate(_uniqueReferenceService) || !this.Validate(_characterTarget)) {
 				return;
 			}
 
@@ -41,14 +46,14 @@ namespace UnityComponents.UI.Game {
 				return;
 			}
 
-			var playerEntity = _uniqueReferenceService.GetEntityByUniqueReference(_playerId);
-			if (playerEntity == Entity.Null) {
+			var characterEntity = _uniqueReferenceService.GetEntityByUniqueReference(_characterTarget.CharacterId);
+			if (characterEntity == Entity.Null) {
 				return;
 			}
-			if (!playerEntity.TryGet<ItemStorage>(out var playerStorage)) {
+			if (!characterEntity.TryGet<ItemStorage>(out var characterStorage)) {
 				return;
 			}
-			if (playerStorage.StorageId != diff.StorageId) {
+			if (characterStorage.StorageId != diff.StorageId) {
 				return;
 			}
 

@@ -8,16 +8,17 @@ using Components;
 using Services;
 
 namespace UnityComponents.UI.Game {
+	[RequireComponent(typeof(CharacterTargetBehaviour))]
 	public sealed class CollectionProgressBar : MonoBehaviour {
-		[SerializeField] private string _playerId = "MainCharacter";
 		[SerializeField] private GameObject? _progressBarRoot;
 		[SerializeField] private Image? _progressValueImage;
 
-		Entity _playerEntity;
+		Entity _characterEntity;
 		float _maxWidth;
 		float _totalCollectionTime;
 		bool _isCollecting;
 		RectTransform? _progressRectTransform;
+		CharacterTargetBehaviour? _characterTarget;
 
 		UniqueReferenceService? _uniqueReferenceService;
 		WorldSubscriptionService? _subscriptionService;
@@ -29,6 +30,8 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void Awake() {
+			_characterTarget = GetComponent<CharacterTargetBehaviour>();
+			
 			if (this.Validate(_progressValueImage)) {
 				_progressRectTransform = _progressValueImage.rectTransform;
 				_maxWidth = _progressRectTransform.sizeDelta.x;
@@ -48,11 +51,11 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void Update() {
-			if (!_isCollecting || _playerEntity == Entity.Null) {
+			if (!_isCollecting || _characterEntity == Entity.Null) {
 				return;
 			}
 
-			if (_playerEntity.TryGet(out CollectionInProgress collection)) {
+			if (_characterEntity.TryGet(out CollectionInProgress collection)) {
 				UpdateProgress(collection.RemainingTime);
 			} else {
 				OnCollectionFinished();
@@ -60,16 +63,21 @@ namespace UnityComponents.UI.Game {
 		}
 
 		void OnCollectionStarted(Entity entity) {
+			if (!this.Validate(_characterTarget) || !this.Validate(_uniqueReferenceService)) {
+				return;
+			}
+
 			if (!entity.TryGet<CollectionStarted>(out var collectionStarted)) {
 				return;
 			}
 
-			_playerEntity = _uniqueReferenceService?.GetEntityByUniqueReference(_playerId) ?? Entity.Null;
-			if (_playerEntity == Entity.Null) {
-				Debug.LogError($"Player entity with unique reference '{_playerId}' not found.", gameObject);
+			_characterEntity = _uniqueReferenceService.GetEntityByUniqueReference(_characterTarget.CharacterId);
+			if (_characterEntity == Entity.Null) {
+				Debug.LogWarning($"[CollectionProgressBar] Character entity '{_characterTarget.CharacterId}' not found");
+				return;
 			}
 
-			if (collectionStarted.Collector != _playerEntity) {
+			if (collectionStarted.Collector != _characterEntity) {
 				return;
 			}
 

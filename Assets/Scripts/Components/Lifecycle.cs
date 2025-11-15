@@ -1,5 +1,8 @@
 namespace Components {
 	[Persistent]
+	public struct Alive {}
+
+	[Persistent]
 	public struct Active {}
 
 	[Persistent]

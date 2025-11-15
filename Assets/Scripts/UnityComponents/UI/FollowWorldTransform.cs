@@ -18,15 +18,15 @@ namespace UnityComponents.UI {
 
 		void OnEnable() {
 			CacheReferences();
-			UpdatePosition();
 		}
 
 		void LateUpdate() {
 			UpdatePosition();
 		}
 
-		public void SetTarget(Transform? target) {
+		public void SetTarget(Transform? target, Camera? camera) {
 			_target = target;
+			_camera = camera;
 			UpdatePosition();
 		}
 

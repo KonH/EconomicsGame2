@@ -149,7 +149,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
 - [ ] Main menu basics (New game, Load game)
 - Notifications:
   - [+] Item change - over character
-  - [!] Item change - over all characters
+  - [+] Item change - over all characters
   - [+] Item change - on inventory button
 - Tooltips:
   - [ ] Item stat

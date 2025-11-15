@@ -27,6 +27,7 @@ namespace Systems {
 					return;
 				}
 				entity.Remove<Active>();
+				entity.Remove<Alive>();
 				_conditionService.AddCondition(entity, new Dead());
 				entity.Add<Death>();
 			});
