@@ -38,9 +38,9 @@ namespace Systems.AI {
 	}
 
 		public override void Update(in SystemState _) {
+			HandleCollectionCompleted();
 			HandleNewFoodCollectionState();
 			HandleArrivedAtGenerator();
-			HandleCollectionCompleted();
 		}
 
 	void HandleNewFoodCollectionState() {

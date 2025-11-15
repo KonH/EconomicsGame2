@@ -107,13 +107,13 @@ namespace Bootstrap {
 				c.Add<FlipSpriteMovementSystem>();
 				c.Add<ActionProgressSystem>();
 				c.Add<CollectionProgressSystem>();
-				c.Add<CompleteCollectionSystem>();
 				c.Add<WorldPositionSystem>();
 				c.Add<TransferAvailableSystem>();
 				c.Add<SelectAiStateSystem>();
 				c.Add<IdleStateSystem>();
 				c.Add<RandomWalkSystem>();
 				c.Add<FoodCollectionSystem>();
+				c.Add<CompleteCollectionSystem>();
 				c.Add<ItemGenerationSystem>();
 				c.Add<ItemGenerationProcessingSystem>();
 				c.Add<HungerUpdateSystem>();

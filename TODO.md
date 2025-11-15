@@ -105,7 +105,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - Skills - what is improved by usage time
     - [!] Collecting
 - Roles:
-  - [!] Collector specialist
+  - [.] Collector specialist
   - [.] Merchant
   - [ ] Gravedigger
   - [ ] Major
@@ -114,7 +114,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Children
 - [.] Selected character follow camera when moving
 - [+] Change visual for dead character
-- [!] Change visual related to roles
+- [.] Change visual related to roles
 - [+] Time-consuming collection process
   
 **UI**
