@@ -21,6 +21,8 @@ namespace Systems {
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<CollectionStarted>();
+
 			World.Query(_itemGenerationEventQuery, (Entity eventEntity, ref ItemGenerationEvent generationEvent) => {
 				InitiateCollection(generationEvent);
 			});

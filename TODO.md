@@ -156,7 +156,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Character condition
 - [.] Selected character frame
 - [.] Ability to select any character
-- [!] Collection progress-bar 
+- [+] Collection progress-bar 
 
 **Art**
 - Characters:

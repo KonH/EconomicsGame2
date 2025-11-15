@@ -18,14 +18,13 @@ namespace UnityComponents.UI.Game {
 		float _totalCollectionTime;
 		bool _isCollecting;
 		RectTransform? _progressRectTransform;
+
+		UniqueReferenceService? _uniqueReferenceService;
 		WorldSubscriptionService? _subscriptionService;
 
 		[Inject]
 		void Construct(UniqueReferenceService uniqueReferenceService, WorldSubscriptionService subscriptionService) {
-			_playerEntity = uniqueReferenceService.GetEntityByUniqueReference(_playerId);
-			if (_playerEntity == Entity.Null) {
-				Debug.LogError($"Player entity with unique reference '{_playerId}' not found.", gameObject);
-			}
+			_uniqueReferenceService = uniqueReferenceService;
 			_subscriptionService = subscriptionService;
 		}
 
@@ -63,6 +62,11 @@ namespace UnityComponents.UI.Game {
 		void OnCollectionStarted(Entity entity) {
 			if (!entity.TryGet<CollectionStarted>(out var collectionStarted)) {
 				return;
+			}
+
+			_playerEntity = _uniqueReferenceService?.GetEntityByUniqueReference(_playerId) ?? Entity.Null;
+			if (_playerEntity == Entity.Null) {
+				Debug.LogError($"Player entity with unique reference '{_playerId}' not found.", gameObject);
 			}
 
 			if (collectionStarted.Collector != _playerEntity) {

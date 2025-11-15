@@ -205,6 +205,7 @@ private World _world = null!;
 
 ### Development Process
 - Implement features incrementally with small, testable steps
+- Wait for human for approval before commit any changes, commit only when changes approved
 - Commit changes with descriptive messages after each logical step
 - Update TODO.md to track progress on features
 - When implementing complex algorithms, start with a simple version and optimize later
