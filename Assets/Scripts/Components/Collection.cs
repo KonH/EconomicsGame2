@@ -1,6 +1,12 @@
 using Arch.Core;
 
 namespace Components {
+	[OneFrame]
+	public struct CollectionStarted {
+		public Entity Collector;
+		public float TotalTime;
+	}
+
 	[Persistent]
 	public struct CollectionInProgress {
 		public Entity Generator;

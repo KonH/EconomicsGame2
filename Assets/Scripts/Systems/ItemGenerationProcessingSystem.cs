@@ -56,16 +56,23 @@ namespace Systems {
 				return;
 			}
 
+			var collectionTime = typeConfig.CollectionTime;
+
 			generationEvent.CollectorEntity.Add(new CollectionInProgress {
 				Generator = generationEvent.GeneratorEntity,
-				RemainingTime = typeConfig.CollectionTime
+				RemainingTime = collectionTime
+			});
+
+			generationEvent.CollectorEntity.Add(new CollectionStarted {
+				Collector = generationEvent.CollectorEntity,
+				TotalTime = collectionTime
 			});
 			
 			if (generationEvent.CollectorEntity.Has<Active>()) {
 				generationEvent.CollectorEntity.Remove<Active>();
 			}
 
-			Debug.Log($"Started collection from generator {generationEvent.GeneratorEntity} by collector {generationEvent.CollectorEntity}, time: {typeConfig.CollectionTime}s");
+			Debug.Log($"Started collection from generator {generationEvent.GeneratorEntity} by collector {generationEvent.CollectorEntity}, time: {collectionTime}s");
 		}
 	}
 }
