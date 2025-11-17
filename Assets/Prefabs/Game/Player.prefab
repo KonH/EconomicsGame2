@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: -6604085356265414327}
   - component: {fileID: 6768607663689627411}
   - component: {fileID: 647181748396709381}
+  - component: {fileID: 3566405270588285176}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -266,3 +267,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8da4b38b2c64fc45b8104cbf9483f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: EconomicsGame.UnityComponents.EcsWrappers::UnityComponents.EcsWrappers.AliveWrapper
+--- !u!114 &3566405270588285176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690732281320720068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63733395d56894843ba448c57bbe0f27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EconomicsGame.UnityComponents.EcsWrappers::UnityComponents.EcsWrappers.FoodCollectorSkillWrapper
+  _startLevel: 1
+  _startUseCount: 0

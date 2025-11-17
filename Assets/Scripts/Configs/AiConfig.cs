@@ -46,18 +46,18 @@ namespace Configs {
 		[SerializeField] private int _priority = 3;
 		[SerializeField] [Range(0, 1)] private float _hungerThreshold = 0.3f;
 		[SerializeField] private int _targetCollectionCount = 1;
-		[SerializeField] private string _nutritionStatName = "Nutrition";
+		[SerializeField] private int _minFoodCount = 3;
 
 		public int Priority => _priority;
 		public float HungerThreshold => _hungerThreshold;
 		public int TargetCollectionCount => _targetCollectionCount;
-		public string NutritionStatName => _nutritionStatName;
+		public int MinFoodCount => _minFoodCount;
 
-		public void TestInit(int priority, float hungerThreshold, int targetCollectionCount, string nutritionStatName = "Nutrition") {
+		public void TestInit(int priority, float hungerThreshold, int targetCollectionCount, int minFoodCount) {
 			_priority = priority;
 			_hungerThreshold = hungerThreshold;
 			_targetCollectionCount = targetCollectionCount;
-			_nutritionStatName = nutritionStatName;
+			_minFoodCount = minFoodCount;
 		}
 	}
 
@@ -65,16 +65,13 @@ namespace Configs {
 	public sealed class FoodConsumptionStateConfig : IStateConfig {
 		[SerializeField] private int _priority = 4;
 		[SerializeField] [Range(0, 1)] private float _hungerThreshold = 0.3f;
-		[SerializeField] private string _nutritionStatName = "Nutrition";
 
 		public int Priority => _priority;
 		public float HungerThreshold => _hungerThreshold;
-		public string NutritionStatName => _nutritionStatName;
 
-		public void TestInit(int priority, float hungerThreshold, string nutritionStatName = "Nutrition") {
+		public void TestInit(int priority, float hungerThreshold) {
 			_priority = priority;
 			_hungerThreshold = hungerThreshold;
-			_nutritionStatName = nutritionStatName;
 		}
 	}
 

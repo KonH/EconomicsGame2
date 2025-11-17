@@ -94,7 +94,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [ ] Fix stuck after loading issue
 - Stats:
   - Traits - personal characteristics
-    - [!] Collection lover
+    - [+] Collection lover
   - Skills - experience
   - Needs - what is required now
     - [+] Health - increases by food, decreases by Hungry condition
@@ -103,7 +103,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
     - [+] Hungry
     - [+] Dead
   - Skills - what is improved by usage time
-    - [!] Collecting
+    - [+] Collecting
 - Roles:
   - [.] Collector specialist
   - [.] Merchant
@@ -151,6 +151,7 @@ Also, it is maybe useful in combining with modern AI/LLM tools — it is an expe
   - [+] Item change - over character
   - [+] Item change - over all characters
   - [+] Item change - on inventory button
+  - [.] Skill level up
 - Tooltips:
   - [ ] Item stat
   - [ ] Character stat

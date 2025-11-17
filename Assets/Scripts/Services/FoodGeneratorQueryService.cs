@@ -27,10 +27,9 @@ namespace Services {
 		}
 
 		public bool HasFoodGenerators() {
-			var nutritionStatName = _aiConfig.FoodCollectionConfig.NutritionStatName;
 			var hasFoodGenerator = false;
 			_world.Query(_itemGeneratorQuery, (Entity generatorEntity, ref ItemGenerator generator) => {
-				if (IsGeneratorProducesFood(generator.Type, nutritionStatName)) {
+				if (IsGeneratorProducesFood(generator.Type)) {
 					hasFoodGenerator = true;
 				}
 			});
@@ -38,12 +37,11 @@ namespace Services {
 		}
 
 		public Entity FindNearestFoodGenerator(Vector2Int fromPosition) {
-			var nutritionStatName = _aiConfig.FoodCollectionConfig.NutritionStatName;
 			Entity nearestGenerator = Entity.Null;
 			var nearestDistance = float.MaxValue;
 
 			_world.Query(_itemGeneratorQuery, (Entity generatorEntity, ref ItemGenerator generator, ref OnCell generatorPosition) => {
-				if (!IsGeneratorProducesFood(generator.Type, nutritionStatName)) {
+				if (!IsGeneratorProducesFood(generator.Type)) {
 					return;
 				}
 
@@ -62,7 +60,7 @@ namespace Services {
 			return nearestGenerator;
 		}
 
-		bool IsGeneratorProducesFood(string generatorType, string nutritionStatName) {
+		bool IsGeneratorProducesFood(string generatorType) {
 			var typeConfig = _itemGeneratorConfig.GetTypeConfig(generatorType);
 			if (typeConfig == null) {
 				return false;
@@ -75,7 +73,7 @@ namespace Services {
 				}
 
 				foreach (var stat in itemConfig.Stats) {
-					if (stat.TypeName == nutritionStatName) {
+					if (stat.TypeName == nameof(Nutrition)) {
 						return true;
 					}
 				}

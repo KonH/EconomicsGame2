@@ -60,13 +60,18 @@ namespace Bootstrap {
 			builder.Register<TimeService>(Lifetime.Scoped).AsSelf();
 			builder.Register<CleanupService>(Lifetime.Scoped).AsSelf();
 			builder.Register<FoodGeneratorQueryService>(Lifetime.Scoped).AsSelf();
+			builder.Register<SkillProgressionService>(Lifetime.Scoped).AsSelf();
+			builder.Register<IdleStateHandler>(Lifetime.Scoped).AsSelf();
+			builder.Register<RandomWalkStateHandler>(Lifetime.Scoped).AsSelf();
+			builder.Register<FoodCollectionStateHandler>(Lifetime.Scoped).AsSelf();
+			builder.Register<FoodConsumptionStateHandler>(Lifetime.Scoped).AsSelf();
 
 			builder.RegisterInstance(_itemsConfig).AsSelf();
 			builder.RegisterInstance(_prefabsConfig).AsSelf();
 			builder.RegisterInstance(_aiConfig).AsSelf();
 			builder.RegisterInstance(_itemGeneratorConfig).AsSelf();
 			builder.RegisterInstance(_statsConfig).AsSelf();
-			
+
 			builder.RegisterInstance(_mouseInputSettings).AsSelf();
 			builder.RegisterInstance(_keyboardInputSettings).AsSelf();
 			builder.RegisterInstance(_cameraScrollSettings).AsSelf();
@@ -114,6 +119,7 @@ namespace Bootstrap {
 				c.Add<RandomWalkSystem>();
 				c.Add<FoodCollectionSystem>();
 				c.Add<CompleteCollectionSystem>();
+				c.Add<FoodCollectorSkillSystem>();
 				c.Add<ItemGenerationSystem>();
 				c.Add<ItemGenerationProcessingSystem>();
 				c.Add<HungerUpdateSystem>();

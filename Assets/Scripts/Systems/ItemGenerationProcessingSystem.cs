@@ -13,10 +13,12 @@ namespace Systems {
 			.WithAll<ItemGenerationEvent>();
 
 		readonly ItemGeneratorConfig _itemGeneratorConfig;
+		readonly StatsConfig _statsConfig;
 		readonly CleanupService _cleanup;
 
-		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, CleanupService cleanup) : base(world) {
+		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, StatsConfig statsConfig, CleanupService cleanup) : base(world) {
 			_itemGeneratorConfig = itemGeneratorConfig;
+			_statsConfig = statsConfig;
 			_cleanup = cleanup;
 		}
 
@@ -46,7 +48,7 @@ namespace Systems {
 			}
 
 			var generator = World.Get<ItemGenerator>(generationEvent.GeneratorEntity);
-			
+
 			if (generator.CurrentCapacity >= generator.MaxCapacity) {
 				Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, skipping generation");
 				return;
@@ -60,6 +62,16 @@ namespace Systems {
 
 			var collectionTime = typeConfig.CollectionTime;
 
+			if (generationEvent.CollectorEntity.Has<FoodCollectorSkill>()) {
+				var skill = generationEvent.CollectorEntity.Get<FoodCollectorSkill>();
+				var skillConfig = _statsConfig.GetSkillConfig(nameof(FoodCollectorSkill));
+				if (skillConfig != null) {
+					var skillEffect = skillConfig.BaseEffect + (skill.level - 1) * skillConfig.LevelEffectIncrease;
+					collectionTime /= (1f + skillEffect);
+					Debug.Log($"[ItemGenerationProcessingSystem] Collector {generationEvent.CollectorEntity} has FoodCollectorSkill level {skill.level}, collection time reduced to {collectionTime}s (effect: {skillEffect})");
+				}
+			}
+
 			generationEvent.CollectorEntity.Add(new CollectionInProgress {
 				Generator = generationEvent.GeneratorEntity,
 				RemainingTime = collectionTime
@@ -69,7 +81,7 @@ namespace Systems {
 				Collector = generationEvent.CollectorEntity,
 				TotalTime = collectionTime
 			});
-			
+
 			if (generationEvent.CollectorEntity.Has<Active>()) {
 				generationEvent.CollectorEntity.Remove<Active>();
 			}

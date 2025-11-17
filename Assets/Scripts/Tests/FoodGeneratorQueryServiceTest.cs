@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+
 using Arch.Core;
 using Arch.Core.Extensions;
+
 using Components;
+
 using Configs;
+
 using NUnit.Framework;
+
 using Services;
+
 using UnityEngine;
 
 namespace Tests {
@@ -175,20 +181,20 @@ namespace Tests {
 			return config;
 		}
 
-	AiConfig CreateTestAiConfig() {
-		var foodCollectionConfig = new FoodCollectionStateConfig();
-		foodCollectionConfig.TestInit(3, 0.3f, 1, "Nutrition");
+		AiConfig CreateTestAiConfig() {
+			var foodCollectionConfig = new FoodCollectionStateConfig();
+			foodCollectionConfig.TestInit(3, 0.3f, 1, 3);
 
-		var foodConsumptionConfig = new FoodConsumptionStateConfig();
-		foodConsumptionConfig.TestInit(4, 0.3f, "Nutrition");
+			var foodConsumptionConfig = new FoodConsumptionStateConfig();
+			foodConsumptionConfig.TestInit(4, 0.3f);
 
-		var config = ScriptableObject.CreateInstance<AiConfig>();
-		var idleConfig = new IdleStateConfig();
-		idleConfig.TestInit(1, 1f, 3f);
-		var randomWalkConfig = new RandomWalkStateConfig();
-		randomWalkConfig.TestInit(2, 2, 5);
-		config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
-		return config;
-	}
+			var config = ScriptableObject.CreateInstance<AiConfig>();
+			var idleConfig = new IdleStateConfig();
+			idleConfig.TestInit(1, 1f, 3f);
+			var randomWalkConfig = new RandomWalkStateConfig();
+			randomWalkConfig.TestInit(2, 2, 5);
+			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
+			return config;
+		}
 	}
 }

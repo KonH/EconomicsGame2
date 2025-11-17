@@ -1,41 +1,56 @@
 using System;
 using System.Collections.Generic;
+
 using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
+
 using Components;
+
 using Configs;
+
 using NUnit.Framework;
+
 using Services;
+
 using Systems.AI;
+
 using UnityEngine;
 
 namespace Tests {
 	public class SelectAiStateSystemTest {
-	World _world = null!;
-	SelectAiStateSystem _system = null!;
-	AiService _aiService = null!;
-	AiConfig _aiConfig = null!;
-	FoodGeneratorQueryService _foodGeneratorQueryService = null!;
-	ItemStorageService _itemStorageService = null!;
+		World _world = null!;
+		SelectAiStateSystem _system = null!;
+		AiService _aiService = null!;
+		AiConfig _aiConfig = null!;
+		StatsConfig _statsConfig = null!;
+		FoodGeneratorQueryService _foodGeneratorQueryService = null!;
+		ItemStorageService _itemStorageService = null!;
 
-	ItemGeneratorConfig _itemGeneratorConfig = null!;
-	ItemsConfig _itemsConfig = null!;
+		ItemGeneratorConfig _itemGeneratorConfig = null!;
+		ItemsConfig _itemsConfig = null!;
 
-	[SetUp]
-	public void SetUp() {
-		_world = World.Create();
-		_aiService = new AiService(_world);
-		_aiConfig = CreateTestConfig();
-		_itemGeneratorConfig = CreateTestItemGeneratorConfig();
-		_itemsConfig = CreateTestItemsConfig();
-		var itemIdService = new ItemIdService();
-		var itemStatService = new ItemStatService();
-		var storageIdService = new StorageIdService();
-		_itemStorageService = new ItemStorageService(_world, itemIdService, _itemsConfig, itemStatService, storageIdService);
-		_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, _itemGeneratorConfig, _itemsConfig, _aiConfig);
-		_system = new SelectAiStateSystem(_world, _aiService, _aiConfig, _foodGeneratorQueryService, _itemStorageService);
-	}
+		[SetUp]
+		public void SetUp() {
+			_world = World.Create();
+			_aiService = new AiService(_world);
+			_aiConfig = CreateTestConfig();
+			_statsConfig = CreateTestStatsConfig();
+			_itemGeneratorConfig = CreateTestItemGeneratorConfig();
+			_itemsConfig = CreateTestItemsConfig();
+			var itemIdService = new ItemIdService();
+			var itemStatService = new ItemStatService();
+			var storageIdService = new StorageIdService();
+			_itemStorageService = new ItemStorageService(_world, itemIdService, _itemsConfig, itemStatService, storageIdService);
+			_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, _itemGeneratorConfig, _itemsConfig, _aiConfig);
+
+			var idleHandler = new IdleStateHandler(_aiService, _aiConfig);
+			var randomWalkHandler = new RandomWalkStateHandler(_aiService, _aiConfig);
+			var foodCollectionHandler = new FoodCollectionStateHandler(_aiService, _aiConfig, _statsConfig, _foodGeneratorQueryService, _itemStorageService);
+			var foodConsumptionHandler = new FoodConsumptionStateHandler(_aiService, _aiConfig, _itemStorageService);
+
+			_system = new SelectAiStateSystem(_world, idleHandler, randomWalkHandler, foodCollectionHandler, foodConsumptionHandler);
+		}
 
 		[TearDown]
 		public void TearDown() {
@@ -237,22 +252,36 @@ namespace Tests {
 			return config;
 		}
 
-	AiConfig CreateTestConfig() {
-		var idleConfig = new IdleStateConfig();
-		idleConfig.TestInit(1, 1f, 3f);
-		
-		var randomWalkConfig = new RandomWalkStateConfig();
-		randomWalkConfig.TestInit(2, 2, 5);
-		
-		var foodCollectionConfig = new FoodCollectionStateConfig();
-		foodCollectionConfig.TestInit(3, 0.3f, 1, "Nutrition");
-		
-		var foodConsumptionConfig = new FoodConsumptionStateConfig();
-		foodConsumptionConfig.TestInit(4, 0.3f, "Nutrition");
-		
-		var config = ScriptableObject.CreateInstance<AiConfig>();
-		config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
-		return config;
+		AiConfig CreateTestConfig() {
+			var idleConfig = new IdleStateConfig();
+			idleConfig.TestInit(1, 1f, 3f);
+
+			var randomWalkConfig = new RandomWalkStateConfig();
+			randomWalkConfig.TestInit(2, 2, 5);
+
+			var foodCollectionConfig = new FoodCollectionStateConfig();
+			foodCollectionConfig.TestInit(3, 0.3f, 1, 3);
+
+			var foodConsumptionConfig = new FoodConsumptionStateConfig();
+			foodConsumptionConfig.TestInit(4, 0.3f);
+
+			var config = ScriptableObject.CreateInstance<AiConfig>();
+			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
+			return config;
+		}
+
+		StatsConfig CreateTestStatsConfig() {
+			var hungerConfig = new HungerConfig();
+			hungerConfig.TestInit(0.1f, 0.5f, 1f);
+
+			var config = ScriptableObject.CreateInstance<StatsConfig>();
+			config.TestInit(
+				Array.Empty<SkillConfig>(),
+				Array.Empty<TraitConfig>(),
+				hungerConfig,
+				Array.Empty<CharacterConditionConfig>()
+			);
+			return config;
+		}
 	}
-	}
-} 
+}

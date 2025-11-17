@@ -1,27 +1,34 @@
 using System;
 using System.Collections.Generic;
+
 using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
+
 using Components;
+
 using Configs;
+
 using NUnit.Framework;
+
 using Services;
+
 using Systems.AI;
+
 using UnityEngine;
 
 namespace Tests {
 	public sealed class FoodCollectionSystemTest {
-	World _world = null!;
-	FoodCollectionSystem _system = null!;
-	FoodGeneratorQueryService _foodGeneratorQueryService = null!;
-	CellService _cellService = null!;
-	AiService _aiService = null!;
-	AiConfig _aiConfig = null!;
-	ItemStorageService _itemStorageService = null!;
-	ItemIdService _itemIdService = null!;
-	ItemsConfig _itemsConfig = null!;
-	GridSettings _gridSettings = null!;
+		World _world = null!;
+		FoodCollectionSystem _system = null!;
+		FoodGeneratorQueryService _foodGeneratorQueryService = null!;
+		CellService _cellService = null!;
+		AiService _aiService = null!;
+		AiConfig _aiConfig = null!;
+		ItemStorageService _itemStorageService = null!;
+		ItemIdService _itemIdService = null!;
+		ItemsConfig _itemsConfig = null!;
+		GridSettings _gridSettings = null!;
 
 		readonly string _foodGeneratorType = "FoodGenerator";
 		readonly string _foodItemType = "Apple";
@@ -35,12 +42,12 @@ namespace Tests {
 			_itemStorageService = new ItemStorageService(_world, _itemIdService, _itemsConfig, new ItemStatService(), new StorageIdService());
 			_gridSettings = new GridSettings();
 			_gridSettings.TestInit(1f, 1f, 10, 10);
-		_cellService = CreateTestCellService();
-		_aiService = new AiService(_world);
-		var itemGeneratorConfig = CreateTestItemGeneratorConfig();
-		_aiConfig = CreateTestAiConfig();
-		_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, itemGeneratorConfig, _itemsConfig, _aiConfig);
-		_system = new FoodCollectionSystem(_world, _foodGeneratorQueryService, _cellService, _aiService, _aiConfig);
+			_cellService = CreateTestCellService();
+			_aiService = new AiService(_world);
+			var itemGeneratorConfig = CreateTestItemGeneratorConfig();
+			_aiConfig = CreateTestAiConfig();
+			_foodGeneratorQueryService = new FoodGeneratorQueryService(_world, itemGeneratorConfig, _itemsConfig, _aiConfig);
+			_system = new FoodCollectionSystem(_world, _foodGeneratorQueryService, _cellService, _aiService, _aiConfig);
 		}
 
 		[TearDown]
@@ -162,7 +169,7 @@ namespace Tests {
 		public void WhenCollectionCompleted_AndTargetCountNotReached_ShouldContinueCollecting() {
 			// Arrange
 			var targetCount = 3;
-			_aiConfig.FoodCollectionConfig.TestInit(3, 0.3f, targetCount);
+			_aiConfig.FoodCollectionConfig.TestInit(3, 0.3f, targetCount, 3);
 
 			var generator = CreateFoodGenerator(new Vector2Int(5, 5));
 			var entity = CreateBotEntity(new Vector2Int(5, 5));
@@ -265,20 +272,22 @@ namespace Tests {
 			return config;
 		}
 
-	AiConfig CreateTestAiConfig() {
-		var foodCollectionConfig = new FoodCollectionStateConfig();
-		foodCollectionConfig.TestInit(3, 0.3f, 1, "Nutrition");
+		AiConfig CreateTestAiConfig() {
+			var foodCollectionConfig = new FoodCollectionStateConfig();
+			foodCollectionConfig.TestInit(3, 0.3f, 1, 3);
 
-		var foodConsumptionConfig = new FoodConsumptionStateConfig();
-		foodConsumptionConfig.TestInit(4, 0.3f, "Nutrition");
+			var foodConsumptionConfig = new FoodConsumptionStateConfig();
+			foodConsumptionConfig.TestInit(4, 0.3f);
 
-		var config = ScriptableObject.CreateInstance<AiConfig>();
-		var idleConfig = new IdleStateConfig();
-		idleConfig.TestInit(1, 1f, 3f);
-		var randomWalkConfig = new RandomWalkStateConfig();
-		randomWalkConfig.TestInit(2, 2, 5);
-		config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
-		return config;
-	}
+			var idleConfig = new IdleStateConfig();
+			idleConfig.TestInit(1, 1f, 3f);
+
+			var randomWalkConfig = new RandomWalkStateConfig();
+			randomWalkConfig.TestInit(2, 2, 5);
+
+			var config = ScriptableObject.CreateInstance<AiConfig>();
+			config.TestInit(idleConfig, randomWalkConfig, foodCollectionConfig, foodConsumptionConfig);
+			return config;
+		}
 	}
 }

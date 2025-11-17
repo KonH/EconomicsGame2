@@ -10,6 +10,7 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 ### Tabs vs Spaces
 - **Always** use tabs for indentation
 - **Never** mix tabs and spaces
+- Pay extra attention to current level of indentation for existing code and keep it when make edits
 
 ### Namespaces
 - Group related classes under meaningful namespaces (e.g., `Prototype`)
