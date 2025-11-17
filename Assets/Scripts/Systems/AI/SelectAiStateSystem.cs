@@ -1,81 +1,79 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Arch.Core;
-using Arch.Core.Extensions;
 using Arch.Unity.Toolkit;
 using Components;
-using Configs;
 using Services;
 
 namespace Systems.AI {
 	public sealed class SelectAiStateSystem : UnitySystemBase {
-		readonly QueryDescription _aiWithoutStateQuery = new QueryDescription()
+		private readonly QueryDescription _aiWithoutStateQuery = new QueryDescription()
 			.WithAll<AiControlled>()
 			.WithNone<HasAiState>();
 
-		readonly AiService _aiService;
-		readonly AiConfig _aiConfig;
-		readonly System.Random _random;
-		readonly List<IStateConfig> _cachedConfigs;
-		readonly int _totalPriority;
+		private readonly System.Random _random;
+		private readonly List<IStateHandler> _handlers;
 
-		public SelectAiStateSystem(World world, AiService aiService, AiConfig aiConfig) : base(world) {
-			_aiService = aiService;
-			_aiConfig = aiConfig;
+		public SelectAiStateSystem(
+			World world,
+			IdleStateHandler idleHandler,
+			RandomWalkStateHandler randomWalkHandler,
+			FoodCollectionStateHandler foodCollectionHandler,
+			FoodConsumptionStateHandler foodConsumptionHandler) : base(world) {
 			_random = new System.Random();
-			
-			// Cache configs and calculate total priority once
-			_cachedConfigs = new List<IStateConfig> {
-				_aiConfig.IdleConfig,
-				_aiConfig.RandomWalkConfig
+			_handlers = new List<IStateHandler> {
+				idleHandler,
+				randomWalkHandler,
+				foodCollectionHandler,
+				foodConsumptionHandler
 			};
-			
-			_totalPriority = 0;
-			foreach (var config in _cachedConfigs) {
-				_totalPriority += config.Priority;
-			}
 		}
 
 		public override void Update(in SystemState _) {
 			World.Query(_aiWithoutStateQuery, (Entity entity) => {
-				var selectedConfig = SelectRandomState();
-				EnterState(entity, selectedConfig);
+				var selectedHandler = SelectRandomHandler(entity);
+				selectedHandler.EnterState(entity);
 			});
 		}
 
-		IStateConfig SelectRandomState() {
-			var randomValue = _random.Next(_totalPriority);
+		private IStateHandler SelectRandomHandler(Entity entity) {
+			var eligibleHandlers = GetEligibleHandlers(entity);
+			if (eligibleHandlers.Count == 0) {
+				return _handlers[0];
+			}
+
+			var totalPriority = 0;
+			foreach (var handler in eligibleHandlers) {
+				totalPriority += handler.GetPriority(entity);
+			}
+
+			if (totalPriority == 0) {
+				return eligibleHandlers[0];
+			}
+
+			var randomValue = _random.Next(totalPriority);
 			var currentPriority = 0;
 
-			foreach (var config in _cachedConfigs) {
-				currentPriority += config.Priority;
+			foreach (var handler in eligibleHandlers) {
+				currentPriority += handler.GetPriority(entity);
 				if (randomValue < currentPriority) {
-					return config;
+					return handler;
 				}
 			}
 
-			return _cachedConfigs[_cachedConfigs.Count - 1];
+			return eligibleHandlers[eligibleHandlers.Count - 1];
 		}
 
-		void EnterState(Entity entity, IStateConfig config) {
-			switch (config) {
-				case IdleStateConfig idleConfig:
-					var idleTime = UnityEngine.Random.Range(idleConfig.MinTime, idleConfig.MaxTime);
-					_aiService.EnterState(entity, new IdleState {
-						Timer = 0f,
-						MaxTime = idleTime
-					});
-					break;
+		private List<IStateHandler> GetEligibleHandlers(Entity entity) {
+			var eligible = new List<IStateHandler>();
 
-				case RandomWalkStateConfig randomWalkConfig:
-					_aiService.EnterState(entity, new RandomWalkState());
-					break;
-
-				default:
-					Debug.LogError($"Unexpected state config type: {config.GetType().Name} for entity {entity}");
-					break;
+			foreach (var handler in _handlers) {
+				if (handler.IsEligible(entity)) {
+					eligible.Add(handler);
+				}
 			}
+
+			return eligible;
 		}
 	}
-} 
+}

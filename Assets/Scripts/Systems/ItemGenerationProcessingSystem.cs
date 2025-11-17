@@ -13,26 +13,26 @@ namespace Systems {
 			.WithAll<ItemGenerationEvent>();
 
 		readonly ItemGeneratorConfig _itemGeneratorConfig;
-		readonly ItemStorageService _itemStorageService;
+		readonly StatsConfig _statsConfig;
 		readonly CleanupService _cleanup;
-		readonly System.Random _random;
 
-		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, ItemStorageService itemStorageService, CleanupService cleanup) : base(world) {
+		public ItemGenerationProcessingSystem(World world, ItemGeneratorConfig itemGeneratorConfig, StatsConfig statsConfig, CleanupService cleanup) : base(world) {
 			_itemGeneratorConfig = itemGeneratorConfig;
-			_itemStorageService = itemStorageService;
+			_statsConfig = statsConfig;
 			_cleanup = cleanup;
-			_random = new System.Random();
 		}
 
 		public override void Update(in SystemState _) {
+			_cleanup.CleanUp<CollectionStarted>();
+
 			World.Query(_itemGenerationEventQuery, (Entity eventEntity, ref ItemGenerationEvent generationEvent) => {
-				ProcessGenerationEvent(generationEvent);
+				InitiateCollection(generationEvent);
 			});
 
 			_cleanup.CleanUp<ItemGenerationEvent>();
 		}
 
-		void ProcessGenerationEvent(ItemGenerationEvent generationEvent) {
+		void InitiateCollection(ItemGenerationEvent generationEvent) {
 			if (!World.IsAlive(generationEvent.GeneratorEntity)) {
 				Debug.LogWarning("Generator entity no longer exists, skipping generation event");
 				return;
@@ -43,8 +43,12 @@ namespace Systems {
 				return;
 			}
 
+			if (generationEvent.CollectorEntity.Has<CollectionInProgress>()) {
+				return;
+			}
+
 			var generator = World.Get<ItemGenerator>(generationEvent.GeneratorEntity);
-			
+
 			if (generator.CurrentCapacity >= generator.MaxCapacity) {
 				Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, skipping generation");
 				return;
@@ -56,73 +60,33 @@ namespace Systems {
 				return;
 			}
 
-			var collectorStorage = World.Get<ItemStorage>(generationEvent.CollectorEntity);
-			var storageId = collectorStorage.StorageId;
+			var collectionTime = typeConfig.CollectionTime;
 
-			var selectedItem = SelectItemToGenerate(typeConfig.Rules);
-			if (selectedItem != null) {
-				var count = _random.Next(selectedItem.MinCount, selectedItem.MaxCount + 1);
-				var itemCreated = MergeOrCreateItemInStorage(storageId, selectedItem.ItemType, count);
-				if (itemCreated) {
-					Debug.Log($"Generated {count} {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
-					generator.CurrentCapacity++;
-					World.Set(generationEvent.GeneratorEntity, generator);
-
-					if (generator.CurrentCapacity >= generator.MaxCapacity) {
-						Debug.Log($"Generator {generationEvent.GeneratorEntity} has reached max capacity, destroying");
-						generationEvent.GeneratorEntity.Add<DestroyEntity>();
-					}
-				} else {
-					Debug.LogWarning($"Failed to create item {selectedItem.ItemType} from generator {generationEvent.GeneratorEntity}");
-				}
-			}
-		}
-
-		ItemGenerationRule? SelectItemToGenerate(List<ItemGenerationRule> rules) {
-			if (rules.Count == 0) {
-				return null;
-			}
-
-			var totalProbability = 0.0;
-			foreach (var rule in rules) {
-				totalProbability += rule.Probability;
-			}
-
-			if (totalProbability <= 0) {
-				return null;
-			}
-
-			var randomValue = _random.NextDouble() * totalProbability;
-			var currentProbability = 0.0;
-
-			foreach (var rule in rules) {
-				currentProbability += rule.Probability;
-				if (randomValue < currentProbability) {
-					return rule;
+			if (generationEvent.CollectorEntity.Has<FoodCollectorSkill>()) {
+				var skill = generationEvent.CollectorEntity.Get<FoodCollectorSkill>();
+				var skillConfig = _statsConfig.GetSkillConfig(nameof(FoodCollectorSkill));
+				if (skillConfig != null) {
+					var skillEffect = skillConfig.BaseEffect + (skill.level - 1) * skillConfig.LevelEffectIncrease;
+					collectionTime /= (1f + skillEffect);
+					Debug.Log($"[ItemGenerationProcessingSystem] Collector {generationEvent.CollectorEntity} has FoodCollectorSkill level {skill.level}, collection time reduced to {collectionTime}s (effect: {skillEffect})");
 				}
 			}
 
-			return rules[rules.Count - 1];
-		}
+			generationEvent.CollectorEntity.Add(new CollectionInProgress {
+				Generator = generationEvent.GeneratorEntity,
+				RemainingTime = collectionTime
+			});
 
-		bool MergeOrCreateItemInStorage(long storageId, string itemType, int count) {
-			var itemsInStorage = _itemStorageService.GetItemsForOwner(storageId);
-			var existingItemEntity = Entity.Null;
-			foreach (var itemEntity in itemsInStorage) {
-				var item = World.Get<Item>(itemEntity);
-				if (item.ResourceID == itemType) {
-					existingItemEntity = itemEntity;
-					break;
-				}
+			generationEvent.CollectorEntity.Add(new CollectionStarted {
+				Collector = generationEvent.CollectorEntity,
+				TotalTime = collectionTime
+			});
+
+			if (generationEvent.CollectorEntity.Has<Active>()) {
+				generationEvent.CollectorEntity.Remove<Active>();
 			}
 
-			if (existingItemEntity != Entity.Null) {
-				_itemStorageService.ChangeItemCountInStorage(storageId, existingItemEntity, count);
-				Debug.Log($"Merged {count} {itemType} into existing item in storage {storageId}");
-				return true;
-			}
-
-			return _itemStorageService.AddNewItem(storageId, itemType, count, itemsInStorage);
+			Debug.Log($"Started collection from generator {generationEvent.GeneratorEntity} by collector {generationEvent.CollectorEntity}, time: {collectionTime}s");
 		}
 	}
 }

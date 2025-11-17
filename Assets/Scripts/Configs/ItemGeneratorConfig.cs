@@ -29,17 +29,20 @@ namespace Configs {
 		[SerializeField] private List<ItemGenerationRule> _rules = new();
 		[SerializeField] private int _minCapacity;
 		[SerializeField] private int _maxCapacity;
+		[SerializeField] private float _collectionTime = 1.0f;
 
 		public string Type => _type;
 		public List<ItemGenerationRule> Rules => _rules;
 		public int MinCapacity => _minCapacity;
 		public int MaxCapacity => _maxCapacity;
+		public float CollectionTime => _collectionTime;
 
-		public void TestInit(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity) {
+		public void TestInit(string type, List<ItemGenerationRule> rules, int minCapacity, int maxCapacity, float collectionTime = 1.0f) {
 			_type = type;
 			_rules = rules;
 			_minCapacity = minCapacity;
 			_maxCapacity = maxCapacity;
+			_collectionTime = collectionTime;
 		}
 	}
 

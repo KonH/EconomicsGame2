@@ -12,6 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ac8b89b26d744494c90d688cf2033, type: 3}
   m_Name: StatsConfig
   m_EditorClassIdentifier: 
+  _skills:
+  - _id: FoodCollectorSkill
+    _name: FoodCollectorSkill
+    _icon: {fileID: 21300000, guid: 12ca1a6a4a3f9d745b6f0c23c232738e, type: 3}
+    _baseEffect: 1
+    _baseUseCount: 3
+    _levelEffectIncrease: 1.5
+    _levelUseCountIncrease: 2
+  _traits:
+  - _id: FoodCollectionLoverTrait
+    _name: FoodCollectionLoverTrait
+    _icon: {fileID: 21300000, guid: c1456e09351ff0d4091300d7ac97a965, type: 3}
+    _effect: 1.5
   _hungerConfig:
     _hungerIncreaseValue: 1
     _startAffectingHealthPercent: 0.5

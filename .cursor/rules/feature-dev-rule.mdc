@@ -13,7 +13,7 @@ alwaysApply: false
    - **Steps To Implement Checklist**: Detailed implementation phases with checkboxes
 3. **Iterative refinement** - User provides feedback on each section, assistant updates document
 4. **Final plan approval** - User approves the complete plan document
-5. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message
+5. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message, **COMMIT YOUR CHANGES ONLY WHEN USER APPROVES AT PREVIOUS STAGE OF THAT PHASE**
 
 ## Implementation Phase
 When working through implementation phases from plan documents:
@@ -26,6 +26,6 @@ When working through implementation phases from plan documents:
    - Example: "- [ ] Fix: Adjust probability calculation in ItemGenerationProcessingSystem"
 5. **Proceed to Next Phase**: Only move to the next phase after user approval of current phase
 6. **Document Progress**: Update TODO.md when features are completed
-7. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message
+7. **Commit Changes**: Commit all changes after completing a phase with descriptive commit message, **COMMIT YOUR CHANGES ONLY WHEN USER APPROVES AT PREVIOUS STAGE OF THAT PHASE**
 
 This workflow ensures iterative development with proper feedback loops and clear tracking of progress and corrections.

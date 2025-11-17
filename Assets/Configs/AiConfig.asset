@@ -20,3 +20,12 @@ MonoBehaviour:
     _priority: 1
     _minDistance: 2
     _maxDistance: 5
+  _foodCollectionConfig:
+    _priority: 3
+    _hungerThreshold: 0.4
+    _targetCollectionCount: 1
+    _nutritionStatName: Nutrition
+  _foodConsumptionConfig:
+    _priority: 4
+    _hungerThreshold: 0.3
+    _nutritionStatName: Nutrition

@@ -10,6 +10,7 @@ You are an AI assistant helping with the EconomicsGame2 Unity project. Please fo
 ### Tabs vs Spaces
 - **Always** use tabs for indentation
 - **Never** mix tabs and spaces
+- Pay extra attention to current level of indentation for existing code and keep it when make edits
 
 ### Namespaces
 - Group related classes under meaningful namespaces (e.g., `Prototype`)
@@ -128,6 +129,7 @@ var count = myList.Count;
 - Use descriptive names that clearly indicate purpose
 - Add comments for complex logic or non-obvious implementations
 - Use Debug.Log statements for temporary debugging, include meaningful context
+- **Always prefix Debug.Log, Debug.LogWarning, and Debug.LogError messages with class name in format `[ClassName]`** (e.g., `Debug.Log($"[FoodCollectionSystem] message")`) to simplify log filtering
 - Avoid public fields unless they need to be serialized in the Inspector
 - Prefer properties over direct field access for public APIs
 - Use explicit `private` access modifier for private members
@@ -205,6 +207,7 @@ private World _world = null!;
 
 ### Development Process
 - Implement features incrementally with small, testable steps
+- Wait for human for approval before commit any changes, commit only when changes approved
 - Commit changes with descriptive messages after each logical step
 - Update TODO.md to track progress on features
 - When implementing complex algorithms, start with a simple version and optimize later
@@ -254,3 +257,18 @@ private World _world = null!;
 
 ## Build
 - Never try to use `dotnet build` to check compilation errors, use Unity MCP to check logs
+
+## Commit Messages
+
+- Split message into a header and a description separated by a blank line
+- Header: concise, single-line summary
+- Description: describe only the final result (omit intermediate/superseded steps)
+- Use short bullet points in the description when helpful
+
+Example
+
+Header: UI: Implement item change notifications and follow world transform
+
+- Add ItemChangeView (icon + +/-N) with OnCompleted callback for pooling
+- Add ItemChangeTrigger subscribing to ItemStorageContentDiff for player storage and spawning the view
+- Add FollowWorldTransform to position UI element at target world Transform screen position
