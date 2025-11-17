@@ -29,11 +29,11 @@ namespace Systems.AI {
 			_random = new System.Random();
 
 			_cachedConfigs = new List<IStateConfig> {
-			_aiConfig.IdleConfig,
-			_aiConfig.RandomWalkConfig,
-			_aiConfig.FoodCollectionConfig,
-			_aiConfig.FoodConsumptionConfig
-		};
+				_aiConfig.IdleConfig,
+				_aiConfig.RandomWalkConfig,
+				_aiConfig.FoodCollectionConfig,
+				_aiConfig.FoodConsumptionConfig
+			};
 		}
 
 		public override void Update(in SystemState _) {
